@@ -6,8 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.*
-import ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.HomeScreen
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CombatResultRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CombatScreenRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.DetailRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.RankedRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectComRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectMapRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.ui.HomeScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectComScreen.SelectCom
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectMapScreen.SelectMap
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.SelectPlayer
