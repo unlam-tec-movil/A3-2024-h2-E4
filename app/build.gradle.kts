@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.daggerHiltAndroid)
     alias(libs.plugins.kover)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kotlin.compose.compiler)
 }
 
@@ -77,4 +78,32 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     androidTestImplementation(libs.google.dagger.hilt.android.testing)
     testImplementation(libs.google.dagger.hilt.android.testing)
+
+    // Dagger + Hilt
+    implementation(libs.google.dagger.hilt.android)
+    ksp(libs.google.dagger.hilt.android.compiler)
+    implementation(libs.google.dagger.hilt.android.testing)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+// Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+// Coil
+    implementation (libs.coil.compose)
+    implementation (libs.androidx.runtime)
+
+    androidTestImplementation(libs.google.dagger.hilt.android.testing)
+    testImplementation(libs.google.dagger.hilt.android.testing)
+
+//Room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.common)
+//constraintLayout
+    implementation(libs.constraintlayout.compose)
+//Serialization and Navigation 2.8.0
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.navigation.compose)
 }
