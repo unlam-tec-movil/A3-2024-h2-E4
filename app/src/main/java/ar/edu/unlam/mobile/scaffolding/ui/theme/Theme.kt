@@ -63,7 +63,7 @@ fun ScaffoldingV2Theme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }
-
+    //MaterialTheme
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
