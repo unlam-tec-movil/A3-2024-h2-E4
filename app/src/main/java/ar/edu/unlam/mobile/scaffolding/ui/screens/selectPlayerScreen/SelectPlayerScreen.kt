@@ -21,6 +21,6 @@ fun SelectPlayer(navController: NavController){
         fontFamily = FontFamily(Font(R.font.font_firestar)),
         fontStyle = FontStyle.Italic,
         fontSize = 28.sp,
-        color = Color.Black
+        color = Color.White
     )
 }
