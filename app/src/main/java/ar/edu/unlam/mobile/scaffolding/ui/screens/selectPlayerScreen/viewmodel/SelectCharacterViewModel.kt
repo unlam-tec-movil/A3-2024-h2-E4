@@ -3,7 +3,7 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetSuperHeroListByName
+import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameService
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetSuperHeroDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -16,7 +16,7 @@ private lateinit var playerListDefault: List<SuperHeroItem>
 
 @HiltViewModel
 class SelectCharacterViewModel @Inject constructor(
-    private val getSuperHeroListByName: GetSuperHeroListByName,
+    private val getSuperHeroListByName: GetSuperHeroListByNameService,
     private val setSuperHeroDetailUseCase: SetSuperHeroDetailUseCase
 ) : ViewModel() {
 
