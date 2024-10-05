@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.QrGenerateScreen
+package ar.edu.unlam.mobile.scaffolding.ui.screens.qrGenerateScreen
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
