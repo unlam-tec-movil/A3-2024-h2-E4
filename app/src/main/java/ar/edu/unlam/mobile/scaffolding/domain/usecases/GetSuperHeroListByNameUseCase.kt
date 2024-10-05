@@ -12,7 +12,11 @@ class GetSuperHeroListByNameUseCase @Inject constructor(
 
     override suspend fun invoke(query: String): List<SuperHeroItem> {
         val heroListFromApi = superHeroRepository.getSuperHeroListByName(query)
-        return checkHeroListNulls(heroListFromApi)
+        return if (heroListFromApi.isNotEmpty()) {
+            checkHeroListNulls(heroListFromApi)
+        } else {
+            emptyList()
+        }
     }
 
     private fun checkHeroListNulls(heroList: List<SuperHeroItem>): List<SuperHeroItem> {

@@ -106,4 +106,9 @@ dependencies {
 //Serialization and Navigation 2.8.0
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
+
+// Coroutines y Mockk
+    implementation(libs.kotlinx.coroutines.android)
+    testImplementation(libs.mockk)
+
 }
