@@ -53,7 +53,7 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.zxing.android.embedded)
     // Base
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
