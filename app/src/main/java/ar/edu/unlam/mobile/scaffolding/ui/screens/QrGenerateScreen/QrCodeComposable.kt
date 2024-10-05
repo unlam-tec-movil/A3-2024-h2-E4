@@ -1,5 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.qrGenerated
-
+package ar.edu.unlam.mobile.scaffolding.ui.screens.QrGenerateScreen
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
@@ -28,40 +27,49 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 
-@Preview (showSystemUi = true, showBackground = true)
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun MyQrCodeComposable() {
 
-
-
-
     Scaffold {
+        Column(
+            modifier = Modifier
+                .background(Color.Black)
+                .padding(it)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.size(width = 0.dp, height = 50.dp))
 
-
-        Column(modifier = Modifier.background(Color.Black)
-            .padding(it)
-            .fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Spacer(modifier = Modifier.size(width = 0.dp, height =50.dp))
-
-            Text(text = "READ THE CODE",color=Color.White,fontSize = 40.sp, fontFamily = FontFamily(Font(
-                R.font.creepster_regular)) )
+            Text(
+                text = "READ THE CODE",
+                color = Color.White,
+                fontSize = 40.sp,
+                fontFamily = FontFamily(
+                    Font(
+                        R.font.creepster_regular
+                    )
+                )
+            )
             Spacer(modifier = Modifier.size(width = 0.dp, height = 180.dp))
-            Image(bitmap=getQrCodeBitMap("no se que poner"),"My qr code")
+            Image(bitmap = getQrCodeBitMap("no se que poner"), "My qr code")
         }
     }
-
 }
-fun getQrCodeBitMap(qrCodeContent:String): ImageBitmap {
-    val size=1024
-    val hints= hashMapOf<EncodeHintType,Int>().also{
-        it[EncodeHintType.MARGIN]=1
+
+fun getQrCodeBitMap(qrCodeContent: String): ImageBitmap {
+    val size = 1024
+    val hints = hashMapOf<EncodeHintType, Int>().also {
+        it[EncodeHintType.MARGIN] = 1
     }
-    val bits= QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE,size,size,hints)
-    val bitmap= Bitmap.createBitmap(size,size, Bitmap.Config.RGB_565).also {
-        for (x in 0 until size){
-            for(y in 0 until size){
+    val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size, hints)
+    val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+        for (x in 0 until size) {
+            for (y in 0 until size) {
                 val color = if (bits[x, y]) Color.White else Color.Black
                 it.setPixel(x, y, color.toArgb())
             }
-        }}
-    return bitmap.asImageBitmap()}
+        }
+    }
+    return bitmap.asImageBitmap()
+}
