@@ -23,7 +23,7 @@ navigationCompose = "2.8.2"
 kotlinxSerialization = "1.7.2"
 mockkVersion = "1.12.2"
 coroutinesVersion = "1.8.1"
-
+turbine = "0.7.0"
 zxingAndroidEmbedded = "4.1.0"
 
 [libraries]
@@ -58,6 +58,8 @@ androidx-room-common = { group = "androidx.room", name = "room-common", version.
 constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout-compose" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutinesVersion" }
+kotlinx-coroutines-test= { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesVersion" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
 zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbedded" }
 
