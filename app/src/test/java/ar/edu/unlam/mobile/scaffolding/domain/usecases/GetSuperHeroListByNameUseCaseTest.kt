@@ -1,6 +1,10 @@
 package ar.edu.unlam.mobile.scaffolding.domain.usecases
 
+import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroAppearance
+import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroBiography
+import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroImage
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroPowerStats
 import ar.edu.unlam.mobile.scaffolding.domain.repository.SuperHeroRepositoryInterface
 import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameService
 import io.mockk.MockKAnnotations
@@ -35,4 +39,18 @@ class GetSuperHeroListByNameUseCaseTest {
 
         assertEquals(emptyList<SuperHeroItem>(), response)
     }
+
+    @Test
+    fun ` Si la respuesta de la api no esta vacia retorna la lista de super heroes`() =
+        runBlocking {
+            //Given
+            val heroList = HeroListMock.heroList
+            coEvery { superHeroRepository.getSuperHeroListByName("super") } returns heroList
+            //When
+            val response = getSuperHeroListByNameUseCase("super")
+            //Then
+            coVerify(exactly = 1) { superHeroRepository.getSuperHeroListByName("super") }
+
+            assertEquals(heroList, response)
+        }
 }
