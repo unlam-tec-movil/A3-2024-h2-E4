@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.domain.usecases
+package ar.edu.unlam.mobile.scaffolding.domain.usecases.service
 
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroAppearance
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroBiography
@@ -35,4 +35,16 @@ object HeroListMock {
             null
         )
     )
+
+    val heroGetMock =  SuperHeroItem(
+        "1",
+        "Name",
+        SuperHeroPowerStats("50", "50", "50", "50", "50", "50"),
+        SuperHeroBiography("pepito", "pepito", "pepito", "pepito"),
+        SuperHeroAppearance("gender", "race"),
+        SuperHeroImage("URL"),
+        null
+    )
+
+    var heroSetMock : SuperHeroItem? = null
 }

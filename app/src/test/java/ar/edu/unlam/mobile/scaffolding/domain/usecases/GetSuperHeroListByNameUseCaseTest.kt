@@ -1,12 +1,9 @@
 package ar.edu.unlam.mobile.scaffolding.domain.usecases
 
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroAppearance
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroBiography
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroImage
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroPowerStats
 import ar.edu.unlam.mobile.scaffolding.domain.repository.SuperHeroRepositoryInterface
 import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameService
+import ar.edu.unlam.mobile.scaffolding.domain.usecases.service.HeroListMock
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -52,5 +49,6 @@ class GetSuperHeroListByNameUseCaseTest {
             coVerify(exactly = 1) { superHeroRepository.getSuperHeroListByName("super") }
 
             assertEquals(heroList, response)
+
         }
 }
