@@ -183,7 +183,7 @@ fun TopBarHome(
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
     val isLog = remember {
-        mutableStateOf(false)
+        mutableStateOf(true) // manejarlo con firebase auth cuando este implementado
     }
 
     var changeColor by remember { mutableStateOf(false) }
