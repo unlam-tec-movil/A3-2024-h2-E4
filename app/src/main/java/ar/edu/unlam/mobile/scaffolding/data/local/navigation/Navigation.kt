@@ -25,3 +25,9 @@ object RankedRoute
 
 @Serializable
 object HomeScreenRoute
+
+@Serializable
+object QRGenerateScreenRoute
+
+@Serializable
+object CameraScreenRoute

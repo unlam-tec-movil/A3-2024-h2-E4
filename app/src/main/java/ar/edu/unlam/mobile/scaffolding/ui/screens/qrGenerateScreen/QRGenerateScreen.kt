@@ -29,7 +29,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun MyQrCodeComposable() {
+fun QRGenerateScreen() {
 
     Scaffold {
         Column(

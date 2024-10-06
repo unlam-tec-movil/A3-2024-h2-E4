@@ -64,8 +64,10 @@ import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
 import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CameraScreenRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.DetailRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.QRGenerateScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.IconPowerDetail
@@ -218,7 +220,7 @@ fun TopBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .clickable {
-
+                            navController.navigate(QRGenerateScreenRoute)
                         }
                         .fillMaxWidth()
                 ) {
@@ -230,7 +232,52 @@ fun TopBar(
                     )
 
                     Text(
-                        text = "Exit Game",
+                        text = "Test QR",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {
+                            navController.navigate(CameraScreenRoute)
+                        }
+                        .fillMaxWidth()
+                ) {
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.List,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+
+                    Text(
+                        text = "Test camara",
+                        fontSize = 19.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 16.dp)
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .clickable {
+                        }
+                        .fillMaxWidth()
+                ) {
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.List,
+                        contentDescription = null,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+
+                    Text(
+                        text = "View Ranked",
                         fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
                         modifier = Modifier.padding(end = 16.dp)

@@ -106,7 +106,10 @@ dependencies {
 //Serialization and Navigation 2.8.0
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
-
+// CAMARA
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
 // Coroutines y Mockk
     implementation(libs.kotlinx.coroutines.android)
     testImplementation(libs.mockk)
