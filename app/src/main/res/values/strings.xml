@@ -15,4 +15,10 @@
     <string name="ExitCombat"> Do you want to exit combat ? </string>
     <string name="AttackMessage"> Atacando </string>
     <string name="DefenseMessage"> Defendiendo </string>
+
+    <string name="SignUpTitle"> This is the Beginning </string>
+    <string name="SignUpSubTitle"> This will be your war </string>
+    <string name="SignUpFree"> Sign Up Free </string>
+    <string name="Google">Continue with Google</string>
+    <string name="Facebook">Continue with Facebook</string>
 </resources>

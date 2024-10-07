@@ -59,6 +59,7 @@ import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SignUpScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SetOrientationScreen
@@ -239,7 +240,7 @@ fun TopBarHome(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .clickable {}
+                            .clickable { navController.navigate(SignUpScreenRoute)} // Este navigate está hecho para probar la pantalla solamente
                             .fillMaxWidth()
                     ) {
 

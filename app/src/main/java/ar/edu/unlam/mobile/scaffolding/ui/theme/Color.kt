@@ -13,3 +13,9 @@ val Pink40 = Color(0xFF7D5260)
 val BlackCustom = Color(0xFF000000)
 
 val CyanWay = Color(0xFF009DDB)
+
+val PowderBlue = Color(0xFFB8C5D6)
+val VioletSky = Color(0xFF592E83)
+val DarkPurple = Color(0xFF230C33)
+val SilverA = Color(0xFFA5A5A5)
+val SilverB = Color (0xFFCCCCCC)

@@ -31,3 +31,9 @@ object QRGenerateScreenRoute
 
 @Serializable
 object CameraScreenRoute
+
+@Serializable
+object SignUpScreenRoute
+
+@Serializable
+object AuthenticationScreenRoute

@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.ktlint)
     alias(libs.plugins.kotlinxSerialization)
     alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.crashlytics)
 }
 
 android {
@@ -33,6 +35,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+        }
+        debug {
+            applicationIdSuffix = ".debug"
         }
     }
     compileOptions {
@@ -115,5 +120,11 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
+// Firebase Implementation
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.auth)
+    implementation (libs.firebase.firestore)
+    implementation(libs.firebase.database)
 
 }
