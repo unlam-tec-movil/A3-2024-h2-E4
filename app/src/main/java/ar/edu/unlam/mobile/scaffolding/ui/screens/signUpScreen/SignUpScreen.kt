@@ -126,10 +126,10 @@ fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
 
         Spacer(modifier = Modifier.weight(1f))
     }
-
-    BackHandler {
-        activity.finish()
-    }
+//
+//    BackHandler {
+//        activity.finish()
+//    }
 }
 
 

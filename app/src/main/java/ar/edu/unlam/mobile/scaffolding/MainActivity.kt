@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val selectCharacterViewModel: SelectCharacterViewModel = hiltViewModel()
                 NavHost(navController = navController, startDestination = HomeScreenRoute) {
-                    composable<HomeScreenRoute> { HomeScreen(navController = navController) }
+                    composable<HomeScreenRoute> { HomeScreen(navController = navController, auth) }
                     composable<SelectComRoute> { SelectCom(navController = navController) }
                     composable<SelectMapRoute> { SelectMap(navController = navController) }
                     composable<SelectPlayerRoute> {

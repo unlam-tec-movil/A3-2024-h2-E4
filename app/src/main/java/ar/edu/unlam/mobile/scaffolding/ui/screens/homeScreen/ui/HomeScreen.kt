@@ -65,16 +65,16 @@ import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.ui.viewmodel.HomeScreenViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.theme.CyanWay
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(
-    navController: NavHostController,
-    presentationScreenViewModel: HomeScreenViewModel = hiltViewModel()
-) {
+fun HomeScreen(navController: NavHostController, auth: FirebaseAuth, presentationScreenViewModel: HomeScreenViewModel = hiltViewModel()) {
+
     SetOrientationScreen(context = LocalContext.current, orientation = PORTRAIT.orientation)
+    val currentUser = auth.currentUser
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
     var showExitConfirmation by rememberSaveable {
