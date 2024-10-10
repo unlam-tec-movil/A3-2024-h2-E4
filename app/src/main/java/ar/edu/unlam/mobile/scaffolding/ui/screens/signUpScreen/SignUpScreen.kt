@@ -36,6 +36,7 @@ import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.AuthenticationScreenRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CreateAccountScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.theme.DarkPurple
 import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
 import com.google.firebase.auth.FirebaseAuth
@@ -97,7 +98,7 @@ fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
                 .fillMaxWidth()
                 .padding(horizontal = 24.dp)
                 .height(54.dp),
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(CreateAccountScreenRoute) },
             colors = ButtonDefaults.buttonColors(containerColor = DarkPurple)
         ) {
             Text(
@@ -126,10 +127,12 @@ fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
 
         Spacer(modifier = Modifier.weight(1f))
     }
-//
-//    BackHandler {
-//        activity.finish()
-//    }
+
+    BackHandler {
+        navController.navigate(HomeScreenRoute){
+            popUpTo<HomeScreenRoute> { inclusive = true}
+        }
+    }
 }
 
 

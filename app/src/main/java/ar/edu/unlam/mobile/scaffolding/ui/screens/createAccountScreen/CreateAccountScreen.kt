@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.authenticationScreen
+package ar.edu.unlam.mobile.scaffolding.ui.screens.createAccountScreen
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -32,15 +32,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SignUpScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.theme.SelectedField
 import ar.edu.unlam.mobile.scaffolding.ui.theme.UnselectedField
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth){
-    var email by remember { mutableStateOf("")}
-    var password by remember { mutableStateOf("")}
+fun CreateAccountScreen(navController: NavController, auth: FirebaseAuth){
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     val context = LocalContext.current
 
     Column(
@@ -53,7 +54,7 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth){
         Row {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "icono",
+                contentDescription = "icono_caScreen",
                 tint = White,
                 modifier = Modifier
                     .padding(vertical = 24.dp)
@@ -65,13 +66,13 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth){
 
         Text("Email", color = White, fontWeight = FontWeight.Bold, fontSize = 45.sp)
         TextField(
-                value = email,
-                onValueChange = { email = it},
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = UnselectedField,
-                    focusedContainerColor = SelectedField
-                )
+            value = email,
+            onValueChange = { email = it},
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = UnselectedField,
+                focusedContainerColor = SelectedField
+            )
         )
         Spacer(Modifier.height(48.dp))
 
@@ -90,18 +91,19 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth){
 
         Button(onClick = {
             if (email.isNotBlank() && password.isNotBlank()){
-                auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task ->
+                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
                     if (task.isSuccessful){
-                        navController.navigate(SignUpScreenRoute)
+                        Toast.makeText(context, "account created successfully", Toast.LENGTH_SHORT).show()
+                        navController.navigate(HomeScreenRoute)
                     } else {
-                        Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Wrong email or not found", Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please complete all fields", Toast.LENGTH_SHORT).show()
             }
         }) {
-            Text(text = "Login")
+            Text(text = "Create Account")
         }
     }
 

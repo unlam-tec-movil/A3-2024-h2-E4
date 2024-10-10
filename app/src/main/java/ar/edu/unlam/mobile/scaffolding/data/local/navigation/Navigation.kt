@@ -37,3 +37,6 @@ object SignUpScreenRoute
 
 @Serializable
 object AuthenticationScreenRoute
+
+@Serializable
+object CreateAccountScreenRoute
