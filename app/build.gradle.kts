@@ -90,37 +90,37 @@ dependencies {
     implementation(libs.google.dagger.hilt.android.testing)
     implementation(libs.androidx.hilt.navigation.compose)
 
-// Retrofit
+    // Retrofit
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
 
-// Coil
+    // Coil
     implementation (libs.coil.compose)
     implementation (libs.androidx.runtime)
 
     androidTestImplementation(libs.google.dagger.hilt.android.testing)
     testImplementation(libs.google.dagger.hilt.android.testing)
 
-//Room
+    // Room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.common)
-//constraintLayout
+    // constraintLayout
     implementation(libs.constraintlayout.compose)
-//Serialization and Navigation 2.8.0
+    // Serialization and Navigation 2.8.0
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
-// CAMARA
+    // CAMARA
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
-// Coroutines y Mockk
+    // Coroutines y Mockk
     implementation(libs.kotlinx.coroutines.android)
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
-// Firebase Implementation
+    // Firebase Implementation
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)

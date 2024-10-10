@@ -39,7 +39,7 @@ import ar.edu.unlam.mobile.scaffolding.ui.theme.UnselectedField
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun CreateAccountScreen(navController: NavController, auth: FirebaseAuth){
+fun CreateAccountScreen(navController: NavController, auth: FirebaseAuth) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -50,7 +50,7 @@ fun CreateAccountScreen(navController: NavController, auth: FirebaseAuth){
             .background(Color.Black)
             .padding(horizontal = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Row {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -67,7 +67,7 @@ fun CreateAccountScreen(navController: NavController, auth: FirebaseAuth){
         Text("Email", color = White, fontWeight = FontWeight.Bold, fontSize = 45.sp)
         TextField(
             value = email,
-            onValueChange = { email = it},
+            onValueChange = { email = it },
             modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = UnselectedField,
@@ -79,7 +79,7 @@ fun CreateAccountScreen(navController: NavController, auth: FirebaseAuth){
         Text("Password", color = White, fontWeight = FontWeight.Bold, fontSize = 45.sp)
         TextField(
             value = email,
-            onValueChange = { email = it},
+            onValueChange = { email = it },
             modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = UnselectedField,
@@ -90,13 +90,15 @@ fun CreateAccountScreen(navController: NavController, auth: FirebaseAuth){
         Spacer(Modifier.height(48.dp))
 
         Button(onClick = {
-            if (email.isNotBlank() && password.isNotBlank()){
-                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
-                    if (task.isSuccessful){
-                        Toast.makeText(context, "account created successfully", Toast.LENGTH_SHORT).show()
+            if (email.isNotBlank() && password.isNotBlank()) {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(context, "account created successfully", Toast.LENGTH_SHORT)
+                            .show()
                         navController.navigate(HomeScreenRoute)
                     } else {
-                        Toast.makeText(context, "Wrong email or not found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Wrong email or not found", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             } else {
