@@ -129,8 +129,8 @@ fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
     }
 
     BackHandler {
-        navController.navigate(HomeScreenRoute){
-            popUpTo<HomeScreenRoute> { inclusive = true}
+        navController.navigate(HomeScreenRoute) {
+            popUpTo<HomeScreenRoute> { inclusive = true }
         }
     }
 }
