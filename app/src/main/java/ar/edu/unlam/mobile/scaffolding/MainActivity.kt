@@ -11,6 +11,7 @@ import ar.edu.unlam.mobile.scaffolding.data.local.navigation.AuthenticationScree
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CameraScreenRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CombatResultRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CombatScreenRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CreateAccountScreenRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.DetailRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.QRGenerateScreenRoute
@@ -21,6 +22,7 @@ import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SignUpScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.screens.authenticationScreen.AuthenticationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.cameraScreen.CameraScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.createAccountScreen.CreateAccountScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.ui.HomeScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.qrGenerateScreen.QRGenerateScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectComScreen.SelectCom
@@ -75,6 +77,7 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<QRGenerateScreenRoute> { QRGenerateScreen() }
                     composable<SignUpScreenRoute> { SignUpScreen(navController = navController, auth) }
+                    composable<CreateAccountScreenRoute> { CreateAccountScreen(navController = navController, auth) }
                     composable<AuthenticationScreenRoute> { AuthenticationScreen(navController = navController, auth) }
                 }
             }
