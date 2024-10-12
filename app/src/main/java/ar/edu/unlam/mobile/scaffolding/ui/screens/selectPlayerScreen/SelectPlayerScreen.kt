@@ -20,8 +20,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -51,6 +52,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -75,6 +77,8 @@ import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.mediaPlayer
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.viewmodel.SelectCharacterViewModel
+import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
+import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
 import coil.compose.rememberAsyncImagePainter
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -94,42 +98,49 @@ fun SelectPlayer(
         orientation = PORTRAIT.orientation
     )
 
-    if (isLoading.value) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
-    } else {
-        Scaffold(
-            topBar = { TopBar(navController, selectCharacterViewModel, context) },
-            content = {
-                ContentView(
-                    navController = navController,
-                    selectCharacterViewModel = selectCharacterViewModel,
-                    context = context
-                )
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    listOf(SilverA, VioletSky),
+                    startY = 0f,
+                    endY = 600f)
+            )
+    ) {
+        if (isLoading.value) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
             }
-
-        )
-    }
-
-    ExitConfirmation(
-        show = showExitConfirmation,
-        onDismiss = { showExitConfirmation = false },
-        onConfirm = {
-            navController.navigate(HomeScreenRoute) {
-                popUpTo(HomeScreenRoute) {
-                    inclusive = true
+        } else {
+            Scaffold(
+                topBar = { TopBar(navController, selectCharacterViewModel, context) },
+                content = {
+                    ContentView(
+                        navController = navController,
+                        selectCharacterViewModel = selectCharacterViewModel,
+                        context = context
+                    )
                 }
-            }
-        },
-        title = stringResource(id = R.string.ExitConfirmation),
-        message = stringResource(id = R.string.ExitSelectCharacter)
-    )
+            )
+        }
 
-    BackHandler {
-        showExitConfirmation = true
+        ExitConfirmation(
+            show = showExitConfirmation,
+            onDismiss = { showExitConfirmation = false },
+            onConfirm = {
+                navController.navigate(HomeScreenRoute) {
+                    popUpTo(HomeScreenRoute) { inclusive = true }
+                }
+            },
+            title = stringResource(id = R.string.ExitConfirmation),
+            message = stringResource(id = R.string.ExitSelectCharacter)
+        )
+
+        BackHandler {
+            showExitConfirmation = true
+        }
     }
-
 }
 
 
@@ -323,7 +334,7 @@ fun ContentView(
                 )
 
                 Box(modifier = Modifier.weight(2f)) {
-                    LazyRowWithImagesHeroPlayer(
+                    LazyVerticalGridWithImagesHeroPlayer(
                         heroList = playerList,
                         selectCharacterViewModel,
                         player,
@@ -376,8 +387,9 @@ fun ContentView(
 
 }
 
+//@OptIn(ExperimentalFoundationApi::class, ExperimentalLayoutApi::class)
 @Composable
-fun LazyRowWithImagesHeroPlayer(
+fun LazyVerticalGridWithImagesHeroPlayer(
     heroList: List<SuperHeroItem>,
     selectCharacterViewModel: SelectCharacterViewModel,
     player: SuperHeroItem?,
@@ -386,15 +398,18 @@ fun LazyRowWithImagesHeroPlayer(
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
-    LazyRow(
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
         modifier = Modifier.fillMaxWidth(),
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         items(heroList) { hero ->
             Card(
                 modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .size(150.dp)
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth()
+                    .height(125.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .clickable {
                         selectCharacterViewModel.setPlayer(hero)
