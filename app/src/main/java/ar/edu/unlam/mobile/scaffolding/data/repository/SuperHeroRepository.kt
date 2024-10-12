@@ -8,8 +8,8 @@ import ar.edu.unlam.mobile.scaffolding.domain.repository.SuperHeroRepositoryInte
 import javax.inject.Inject
 
 class SuperHeroRepository @Inject constructor(
-    private val superHeroService: SuperHeroService, private val heroDetail: HeroDetail
-
+    private val superHeroService: SuperHeroService,
+    private val heroDetail: HeroDetail
 ) : SuperHeroRepositoryInterface {
     override suspend fun getSuperHeroListByName(query: String): List<SuperHeroItem> {
         return superHeroService.getSuperHeroList(query)
@@ -22,6 +22,4 @@ class SuperHeroRepository @Inject constructor(
     override fun setHeroDetail(hero: SuperHeroItem) {
         heroDetail.superHeroDetail = hero
     }
-
-
 }
