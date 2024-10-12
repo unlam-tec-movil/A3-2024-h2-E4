@@ -58,6 +58,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectComRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SignUpScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ButtonWithBackgroundImage
@@ -155,6 +156,7 @@ fun ContentViewHome(
             imageResId = R.drawable.iv_button,
             onClick = {
                 navController.navigate(SelectPlayerRoute)
+                //navController.navigate(SelectComRoute)
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)

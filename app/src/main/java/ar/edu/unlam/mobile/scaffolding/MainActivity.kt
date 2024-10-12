@@ -26,6 +26,7 @@ import ar.edu.unlam.mobile.scaffolding.ui.screens.createAccountScreen.CreateAcco
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.ui.HomeScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.qrGenerateScreen.QRGenerateScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectComScreen.SelectCom
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectComScreen.viewmodel.SelectComScreenViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectMapScreen.SelectMap
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.SelectPlayer
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.viewmodel.SelectCharacterViewModel
@@ -51,9 +52,9 @@ class MainActivity : ComponentActivity() {
             ScaffoldingV2Theme {
                 val navController = rememberNavController()
                 val selectCharacterViewModel: SelectCharacterViewModel = hiltViewModel()
+                val selectComScreenViewModel: SelectComScreenViewModel = hiltViewModel()
                 NavHost(navController = navController, startDestination = HomeScreenRoute) {
                     composable<HomeScreenRoute> { HomeScreen(navController = navController, auth) }
-                    composable<SelectComRoute> { SelectCom(navController = navController) }
                     composable<SelectMapRoute> { SelectMap(navController = navController) }
                     composable<SelectPlayerRoute> {
                         SelectPlayer(
@@ -61,6 +62,10 @@ class MainActivity : ComponentActivity() {
                             selectCharacterViewModel = selectCharacterViewModel
                         )
                     }
+                    composable<SelectComRoute> {
+                        SelectCom(
+                            navController = navController,
+                            selectComScreenViewModel = selectComScreenViewModel) }
                     composable<CombatResultRoute> { SuperHeroCombatResult(navController = navController) }
                     composable<CombatScreenRoute> { SuperHeroCombat(navController = navController) }
                     composable<DetailRoute> {

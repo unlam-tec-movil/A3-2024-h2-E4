@@ -70,6 +70,7 @@ import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CameraScreenRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.DetailRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.data.local.navigation.QRGenerateScreenRoute
+import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectComRoute
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.ui.screens.components.IconPowerDetail
@@ -352,7 +353,7 @@ fun ContentView(
                 )
 
                 Text(
-                    text = "Select player com or search your favorite...",
+                    text = "Select your player or search for your favorite...",
                     modifier = Modifier.padding(top = 8.dp)
                 )
 
@@ -367,12 +368,14 @@ fun ContentView(
                 Box(modifier = Modifier.weight(1f)) {
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_attack,
-                        onClick = {},
+                        onClick = {
+                            navController.navigate(SelectComRoute)
+                        },
                         modifier = Modifier
                             .align(alignment = Alignment.Center)
                             .fillMaxSize()
                     ) {
-                        Text(text = "Start Combat", fontSize = 26.sp)
+                        Text(text = "Select and Continue", fontSize = 24.sp)
                     }
 
                 }
