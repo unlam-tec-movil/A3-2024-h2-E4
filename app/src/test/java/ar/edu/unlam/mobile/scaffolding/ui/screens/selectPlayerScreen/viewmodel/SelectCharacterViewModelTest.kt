@@ -2,6 +2,8 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.viewmodel
 
 import app.cash.turbine.test
 import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameService
+import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetCombatBackgroundDataUseCase
+import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetCombatDataUseCase
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetSuperHeroDetailUseCase
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.service.HeroListMock
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
@@ -22,12 +24,19 @@ import org.junit.Before
 import org.junit.Test
 
 
-class SelectCharacterViewModelTest{
+class SelectCharacterViewModelTest {
 
     @RelaxedMockK
     private lateinit var getSuperHeroListByNameService: GetSuperHeroListByNameService
+
     @RelaxedMockK
     private lateinit var setSuperHeroDetailUseCase: SetSuperHeroDetailUseCase
+
+    @RelaxedMockK
+    private lateinit var setCombatDataUseCase: SetCombatDataUseCase
+
+    @RelaxedMockK
+    private lateinit var getCombatBackgroundDataUseCase: GetCombatBackgroundDataUseCase
 
     private lateinit var selectCharacterViewModel: SelectCharacterViewModel
 
@@ -37,10 +46,15 @@ class SelectCharacterViewModelTest{
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Before
-    fun onBefore(){
+    fun onBefore() {
         MockKAnnotations.init(this)
         Dispatchers.setMain(testDispatcher)
-        selectCharacterViewModel = SelectCharacterViewModel(getSuperHeroListByNameService,setSuperHeroDetailUseCase)
+        selectCharacterViewModel = SelectCharacterViewModel(
+            getSuperHeroListByNameService,
+            setSuperHeroDetailUseCase,
+            setCombatDataUseCase,
+            getCombatBackgroundDataUseCase
+        )
 
     }
 
@@ -67,7 +81,10 @@ class SelectCharacterViewModelTest{
         // Then
         selectCharacterViewModel.superHeroList.test {
             val result = awaitItem()
-            assertEquals(heroList, result) // Verifica que la lista de héroes se actualizó correctamente
+            assertEquals(
+                heroList,
+                result
+            ) // Verifica que la lista de héroes se actualizó correctamente
         }
     }
 
