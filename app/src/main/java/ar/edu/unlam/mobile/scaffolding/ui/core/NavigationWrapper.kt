@@ -22,21 +22,21 @@ import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SignUpScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.UserProfileScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.viewmodel.NavigationWrapperViewModel
-import ar.edu.unlam.mobile.scaffolding.ui.screens.authenticationScreen.AuthenticationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.cameraScreen.CameraScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.createAccountScreen.CreateAccountScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.ui.HomeScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.qrGenerateScreen.QRGenerateScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectComScreen.SelectCom
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectMapScreen.SelectMap
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.SelectPlayer
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.viewmodel.SelectCharacterViewModel
-import ar.edu.unlam.mobile.scaffolding.ui.screens.signUpScreen.SignUpScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.SuperHeroCombatResult
-import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.SuperHeroCombat
-import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroDetailScreen.SuperHeroDetail
-import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroRankedScreen.SuperHeroRanked
-import ar.edu.unlam.mobile.scaffolding.ui.screens.userProfileScreen.UserProfileScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.authenticationScreen.AuthenticationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.cameraScreen.CameraScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.createAccountScreen.CreateAccountScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.homeScreen.ui.HomeScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.qrGenerateScreen.QRGenerateScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectComScreen.SelectCom
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectMapScreen.SelectMap
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.SelectPlayer
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.signUpScreen.SignUpScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatResultScreen.SuperHeroCombatResult
+import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatScreen.SuperHeroCombat
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.superHeroDetailScreen.SuperHeroDetail
+import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroRankedScreen.SuperHeroRanked
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.userProfileScreen.UserProfileScreen
 
 @Composable
 fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
@@ -46,7 +46,12 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
 
     NavHost(navController = navController, startDestination = HomeScreenRoute) {
         composable<HomeScreenRoute> { HomeScreen(navController = navController) }
-        composable<SelectMapRoute> { SelectMap(navController = navController) }
+        composable<SelectMapRoute> {
+            SelectMap(
+                navController = navController,
+                selectCharacterViewModel = selectCharacterViewModel
+            )
+        }
         composable<SelectPlayerRoute> {
             SelectPlayer(
                 navController = navController,

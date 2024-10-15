@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.domain.usecases
 
-import ar.edu.unlam.mobile.scaffolding.core.repairImage
+import ar.edu.unlam.mobile.scaffolding.domain.core.repairImage
 import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.domain.repository.SuperHeroRepositoryInterface
 import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameService
