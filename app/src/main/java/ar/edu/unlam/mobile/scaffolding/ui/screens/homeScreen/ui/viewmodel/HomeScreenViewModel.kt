@@ -3,6 +3,7 @@ package ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.data.model.WallpaperLogos
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -12,10 +13,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeScreenViewModel @Inject constructor(private val wallpaperLogos: WallpaperLogos):ViewModel() {
+class HomeScreenViewModel @Inject constructor(private val wallpaperLogos: WallpaperLogos,firebaseAuth: FirebaseAuth):ViewModel() {
 
     private val _logos = MutableStateFlow(wallpaperLogos.logos[0])
     val logos = _logos.asStateFlow()
+    private val _auth = MutableStateFlow(firebaseAuth)
+    val auth = _auth.asStateFlow()
     private var initRandomLogo = true
 
     init {

@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SignUpScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.theme.SelectedField
 import ar.edu.unlam.mobile.scaffolding.ui.theme.UnselectedField
@@ -92,7 +93,11 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
             if (email.isNotBlank() && password.isNotBlank()) {
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        navController.navigate(SignUpScreenRoute)
+                        Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT)
+                            .show()
+                        navController.navigate(HomeScreenRoute) {
+                            popUpTo<HomeScreenRoute> { inclusive = true }
+                        }
                     } else {
                         Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT)
                             .show()

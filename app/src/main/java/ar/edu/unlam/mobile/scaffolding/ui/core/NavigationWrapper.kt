@@ -20,6 +20,7 @@ import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectComRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectMapRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SignUpScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.UserProfileScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.viewmodel.NavigationWrapperViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.screens.authenticationScreen.AuthenticationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.cameraScreen.CameraScreen
@@ -35,6 +36,7 @@ import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatResultScreen.Su
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroCombatScreen.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroDetailScreen.SuperHeroDetail
 import ar.edu.unlam.mobile.scaffolding.ui.screens.superHeroRankedScreen.SuperHeroRanked
+import ar.edu.unlam.mobile.scaffolding.ui.screens.userProfileScreen.UserProfileScreen
 
 @Composable
 fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
@@ -43,7 +45,7 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
     val selectCharacterViewModel: SelectCharacterViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = HomeScreenRoute) {
-        composable<HomeScreenRoute> { HomeScreen(navController = navController, auth) }
+        composable<HomeScreenRoute> { HomeScreen(navController = navController) }
         composable<SelectMapRoute> { SelectMap(navController = navController) }
         composable<SelectPlayerRoute> {
             SelectPlayer(
@@ -85,5 +87,7 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
                 auth
             )
         }
+
+        composable<UserProfileScreenRoute> { UserProfileScreen(auth = auth) }
     }
 }

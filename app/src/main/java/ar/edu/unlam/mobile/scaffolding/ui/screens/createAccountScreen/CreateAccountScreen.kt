@@ -95,7 +95,9 @@ fun CreateAccountScreen(navController: NavController, auth: FirebaseAuth) {
                     if (task.isSuccessful) {
                         Toast.makeText(context, "account created successfully", Toast.LENGTH_SHORT)
                             .show()
-                        navController.navigate(HomeScreenRoute)
+                        navController.navigate(HomeScreenRoute) {
+                            popUpTo<HomeScreenRoute> { inclusive = true }
+                        }
                     } else {
                         Toast.makeText(context, "Wrong email or not found", Toast.LENGTH_SHORT)
                             .show()
