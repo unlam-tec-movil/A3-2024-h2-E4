@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.components
+package ar.edu.unlam.mobile.scaffolding.ui.components
 
 import android.content.Context
 import androidx.compose.runtime.Composable

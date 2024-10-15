@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.components
+package ar.edu.unlam.mobile.scaffolding.ui.components
 
 import android.content.Context
 import android.media.MediaPlayer
@@ -22,7 +22,7 @@ fun mediaPlayer(
 
     DisposableEffect(Unit) {
         audio.let {
-            it.seekTo(audioPosition.value)
+            it.seekTo(audioPosition.value-1)
             it.start()
         }
         onDispose {

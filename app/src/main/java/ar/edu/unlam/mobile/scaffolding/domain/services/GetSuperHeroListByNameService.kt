@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.domain.services
 
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
 
 interface GetSuperHeroListByNameService {
 

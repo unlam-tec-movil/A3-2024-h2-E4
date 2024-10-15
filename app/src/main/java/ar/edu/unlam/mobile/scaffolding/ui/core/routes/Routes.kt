@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.data.local.navigation
+package ar.edu.unlam.mobile.scaffolding.ui.core.routes
 
 import kotlinx.serialization.Serializable
 

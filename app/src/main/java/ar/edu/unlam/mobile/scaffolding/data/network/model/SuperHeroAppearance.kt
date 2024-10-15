@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.data.local.model
+package ar.edu.unlam.mobile.scaffolding.data.network.model
 
 import com.google.gson.annotations.SerializedName
 

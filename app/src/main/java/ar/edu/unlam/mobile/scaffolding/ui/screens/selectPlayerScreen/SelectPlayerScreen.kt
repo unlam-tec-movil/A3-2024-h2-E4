@@ -64,19 +64,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CameraScreenRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.DetailRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.QRGenerateScreenRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectComRoute
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ButtonWithBackgroundImage
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ExitConfirmation
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.IconPowerDetail
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SearchHero
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SetOrientationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.mediaPlayer
+import ar.edu.unlam.mobile.scaffolding.ui.core.local.OrientationScreen.PORTRAIT
+import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.CameraScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.DetailRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.QRGenerateScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectComRoute
+import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
+import ar.edu.unlam.mobile.scaffolding.ui.components.IconPowerDetail
+import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
+import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.components.mediaPlayer
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
@@ -307,7 +307,7 @@ fun ContentView(
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context
 ) {
-    val playerList by selectCharacterViewModel.superHeroListPlayer.collectAsState()
+    val playerList by selectCharacterViewModel.superHeroList.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
     val player by selectCharacterViewModel.playerSelected.collectAsState()
     val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()

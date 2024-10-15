@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.components
+package ar.edu.unlam.mobile.scaffolding.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon

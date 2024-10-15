@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.core
 
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
 import kotlin.math.roundToInt
 import kotlin.random.Random
 

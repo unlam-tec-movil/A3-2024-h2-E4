@@ -5,7 +5,6 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -13,7 +12,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -66,20 +64,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
-import ar.edu.unlam.mobile.scaffolding.data.local.model.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CameraScreenRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.DetailRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.QRGenerateScreenRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectPlayerRoute
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ButtonWithBackgroundImage
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ExitConfirmation
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.IconPowerDetail
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SearchHero
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SetOrientationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.mediaPlayer
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectComScreen.viewmodel.SelectComScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
+import ar.edu.unlam.mobile.scaffolding.ui.components.IconPowerDetail
+import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
+import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.components.mediaPlayer
+import ar.edu.unlam.mobile.scaffolding.ui.core.local.OrientationScreen.PORTRAIT
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.CameraScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.DetailRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.QRGenerateScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.ui.screens.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
 import coil.compose.rememberAsyncImagePainter
@@ -87,10 +85,10 @@ import coil.compose.rememberAsyncImagePainter
 @SuppressLint ("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SelectCom(navController: NavHostController,
-              selectComScreenViewModel: SelectComScreenViewModel)
+              selectCharacterViewModel: SelectCharacterViewModel)
     {
         val context = LocalContext.current
-        val isLoading = selectComScreenViewModel.isLoading.collectAsState()
+        val isLoading = selectCharacterViewModel.isLoading.collectAsState()
         var showExitConfirmation by rememberSaveable {
             mutableStateOf(false)
         }
@@ -116,11 +114,11 @@ fun SelectCom(navController: NavHostController,
                 }
             } else {
                 Scaffold(
-                    topBar = { TopBar(navController, selectComScreenViewModel, context) },
+                    topBar = { TopBar(navController, selectCharacterViewModel, context) },
                     content = {
                         ContentView(
                             navController = navController,
-                            selectComScreenViewModel = selectComScreenViewModel,
+                            selectCharacterViewModel = selectCharacterViewModel,
                             context = context
                         )
                     }
@@ -132,7 +130,7 @@ fun SelectCom(navController: NavHostController,
                 onDismiss = { showExitConfirmation = false },
                 onConfirm = {
                     navController.navigate(HomeScreenRoute) {
-                        popUpTo(HomeScreenRoute) { inclusive = true }
+                        popUpTo(SelectPlayerRoute) { inclusive = true }
                     }
                 },
                 title = stringResource(id = R.string.ExitConfirmation),
@@ -150,7 +148,7 @@ fun SelectCom(navController: NavHostController,
     @Composable
     fun TopBar(
         navController: NavHostController,
-        selectComScreenViewModel: SelectComScreenViewModel,
+        selectCharacterViewModel: SelectCharacterViewModel,
         context: Context
     ) {
         val (expanded, setExpanded) = remember { mutableStateOf(false) }
@@ -179,7 +177,7 @@ fun SelectCom(navController: NavHostController,
             colors = TopAppBarDefaults.topAppBarColors(Color.Black),
             actions = {
                 IconButton(onClick = {
-                    selectComScreenViewModel.initListHero()
+                    selectCharacterViewModel.initListHero()
                     Toast.makeText(context, "Update COM characters", Toast.LENGTH_SHORT).show()
                 }) {
                     Icon(
@@ -300,13 +298,13 @@ fun SelectCom(navController: NavHostController,
     @Composable
     fun ContentView(
         navController: NavHostController,
-        selectComScreenViewModel: SelectComScreenViewModel,
+        selectCharacterViewModel: SelectCharacterViewModel,
         context: Context
     ) {
-        val comList by selectComScreenViewModel.superHeroListCom.collectAsState()
+        val comList by selectCharacterViewModel.superHeroList.collectAsState()
         var searchHeroCom by remember { mutableStateOf("") }
-        val com by selectComScreenViewModel.comSelected.collectAsState()
-        val audioPosition = selectComScreenViewModel.audioPosition.collectAsState()
+        val com by selectCharacterViewModel.comSelected.collectAsState()
+        val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
         val audio = mediaPlayer(context, audioPosition)
 
         if (comList.isNotEmpty()) {
@@ -326,14 +324,14 @@ fun SelectCom(navController: NavHostController,
                     SearchHero(
                         query = searchHeroCom,
                         onQueryChange = { searchHeroCom = it },
-                        onSearch = { selectComScreenViewModel.searchHeroByNameToCom(searchHeroCom) },
+                        onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroCom) },
                         searchEnabled = true
                     )
 
                     Box(modifier = Modifier.weight(2f)) {
                         LazyVerticalGridWithImagesHeroCOM(
                             heroList = comList,
-                            selectComScreenViewModel,
+                            selectCharacterViewModel,
                             com,
                             navController,
                             audio
@@ -384,7 +382,7 @@ fun SelectCom(navController: NavHostController,
     @Composable
     fun LazyVerticalGridWithImagesHeroCOM(
         heroList: List<SuperHeroItem>,
-        selectComScreenViewModel: SelectComScreenViewModel,
+        selectComScreenViewModel: SelectCharacterViewModel,
         com: SuperHeroItem?,
         navController: NavHostController,
         audio: MediaPlayer

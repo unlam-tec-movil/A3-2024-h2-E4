@@ -32,11 +32,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.AuthenticationScreenRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.CreateAccountScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.AuthenticationScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.CreateAccountScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.theme.DarkPurple
 import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
 import com.google.firebase.auth.FirebaseAuth

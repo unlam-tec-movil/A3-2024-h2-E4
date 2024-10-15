@@ -57,13 +57,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.data.local.OrientationScreen.PORTRAIT
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectComRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SelectPlayerRoute
-import ar.edu.unlam.mobile.scaffolding.data.local.navigation.SignUpScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ButtonWithBackgroundImage
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.ExitConfirmation
-import ar.edu.unlam.mobile.scaffolding.ui.screens.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.core.local.OrientationScreen.PORTRAIT
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SignUpScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
+import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.AuthenticationScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeScreen.ui.viewmodel.HomeScreenViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.theme.CyanWay
 import com.google.firebase.auth.FirebaseAuth
@@ -72,10 +72,13 @@ import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavHostController, auth: FirebaseAuth, presentationScreenViewModel: HomeScreenViewModel = hiltViewModel()) {
+fun HomeScreen(
+    navController: NavHostController,
+    auth: FirebaseAuth,
+    presentationScreenViewModel: HomeScreenViewModel = hiltViewModel()
+) {
 
     SetOrientationScreen(context = LocalContext.current, orientation = PORTRAIT.orientation)
-    val currentUser = auth.currentUser
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
     var showExitConfirmation by rememberSaveable {
@@ -105,7 +108,7 @@ fun HomeScreen(navController: NavHostController, auth: FirebaseAuth, presentatio
     }
 
     Scaffold(
-        topBar = { TopBarHome(navController, presentationScreenViewModel) },
+        topBar = { TopBarHome(navController,auth){showExitConfirmation = true} },
         content = {
             ContentViewHome(
                 navController = navController,
@@ -181,12 +184,13 @@ fun ContentViewHome(
 @Composable
 fun TopBarHome(
     navController: NavHostController,
-    presentationScreenViewModel: HomeScreenViewModel
+    auth: FirebaseAuth,
+    onChangeValue : (Boolean) -> Unit
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
     val isLog = remember {
-        mutableStateOf(true) // manejarlo con firebase auth cuando este implementado
+        mutableStateOf(auth.currentUser!=null)
     }
 
     var changeColor by remember { mutableStateOf(false) }
@@ -242,7 +246,7 @@ fun TopBarHome(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .clickable { navController.navigate(SignUpScreenRoute)} // Este navigate está hecho para probar la pantalla solamente
+                            .clickable {  } // navega al profile hay que hacer el profile
                             .fillMaxWidth()
                     ) {
 
@@ -270,7 +274,7 @@ fun TopBarHome(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .clickable {}
+                            .clickable {auth.signOut()}
                             .fillMaxWidth()
                     ) {
 
@@ -298,7 +302,7 @@ fun TopBarHome(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .clickable {}
+                            .clickable {onChangeValue(true)}
                             .fillMaxWidth()
                     ) {
 
@@ -328,7 +332,7 @@ fun TopBarHome(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .clickable {}
+                            .clickable {navController.navigate(AuthenticationScreenRoute)}
                             .fillMaxWidth()
                     ) {
 
@@ -356,7 +360,35 @@ fun TopBarHome(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .clickable {}
+                            .clickable {navController.navigate(SignUpScreenRoute)}
+                            .fillMaxWidth()
+                    ) {
+
+                        Icon(
+                            imageVector = Icons.Filled.AccountCircle,
+                            contentDescription = null,
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            tint = animatedColor
+                        )
+
+                        Text(
+                            text = "Register",
+                            fontSize = 19.sp,
+                            fontWeight = FontWeight.Normal,
+                            modifier = Modifier.padding(end = 16.dp),
+                            color = animatedColor
+                        )
+                    }
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(8.dp)
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .clickable {onChangeValue(true)}
                             .fillMaxWidth()
                     ) {
 

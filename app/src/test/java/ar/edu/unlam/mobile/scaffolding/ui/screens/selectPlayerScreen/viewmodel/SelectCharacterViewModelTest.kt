@@ -64,7 +64,7 @@ class SelectCharacterViewModelTest{
         }
 
         // Then
-        selectCharacterViewModel.superHeroListPlayer.test {
+        selectCharacterViewModel.superHeroList.test {
             val result = awaitItem()
             assertEquals(heroList, result) // Verifica que la lista de héroes se actualizó correctamente
         }
