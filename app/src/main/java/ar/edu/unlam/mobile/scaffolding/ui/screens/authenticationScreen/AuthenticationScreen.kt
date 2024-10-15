@@ -77,8 +77,8 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
 
         Text("Password", color = White, fontWeight = FontWeight.Bold, fontSize = 45.sp)
         TextField(
-            value = email,
-            onValueChange = { email = it },
+            value = password,
+            onValueChange = { password = it },
             modifier = Modifier.fillMaxWidth(),
             colors = TextFieldDefaults.colors(
                 unfocusedContainerColor = UnselectedField,
