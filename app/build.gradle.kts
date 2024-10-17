@@ -91,12 +91,12 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Retrofit
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // Coil
-    implementation (libs.coil.compose)
-    implementation (libs.androidx.runtime)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.runtime)
 
     androidTestImplementation(libs.google.dagger.hilt.android.testing)
     testImplementation(libs.google.dagger.hilt.android.testing)
@@ -124,7 +124,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)
-    implementation (libs.firebase.firestore)
+    implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
-
 }

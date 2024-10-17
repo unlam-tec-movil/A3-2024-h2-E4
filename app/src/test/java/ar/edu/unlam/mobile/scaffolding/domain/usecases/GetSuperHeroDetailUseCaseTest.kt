@@ -13,7 +13,6 @@ import org.junit.Before
 import org.junit.Test
 
 class GetSuperHeroDetailUseCaseTest {
-
     @RelaxedMockK
     private lateinit var superHeroRepository: SuperHeroRepositoryInterface
     private lateinit var getSuperHeroDetailUseCase: GetSuperHeroDetailUseCase
