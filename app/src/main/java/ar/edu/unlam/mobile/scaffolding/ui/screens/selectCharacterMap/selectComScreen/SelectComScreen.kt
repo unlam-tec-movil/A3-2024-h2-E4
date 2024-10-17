@@ -90,6 +90,8 @@ fun SelectCom(
     var showExitConfirmation by rememberSaveable {
         mutableStateOf(false)
     }
+    val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
+    val audio = mediaPlayer(context, audioPosition)
 
     SetOrientationScreen(
         context = context,
@@ -127,6 +129,7 @@ fun SelectCom(
                         navController = navController,
                         selectCharacterViewModel = selectCharacterViewModel,
                         context = context,
+                        audio = audio,
                     )
                 },
             )
@@ -136,6 +139,7 @@ fun SelectCom(
             show = showExitConfirmation,
             onDismiss = { showExitConfirmation = false },
             onConfirm = {
+                selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                 navController.navigate(SelectPlayerRoute) {
                     popUpTo(SelectPlayerRoute) { inclusive = true }
                 }
@@ -238,12 +242,11 @@ fun ContentView(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
+    audio: MediaPlayer,
 ) {
     val playerList by selectCharacterViewModel.superHeroList.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
     val comPlayer by selectCharacterViewModel.comSelected.collectAsState()
-    val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
-    val audio = mediaPlayer(context, audioPosition)
 
     if (playerList.isNotEmpty()) {
         Box(
@@ -282,6 +285,7 @@ fun ContentView(
                     imageResId = R.drawable.iv_attack,
                     onClick = {
                         if (comPlayer != null) {
+                            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                             navController.navigate(SelectMapRoute)
                             selectCharacterViewModel.initListHero()
                         } else {

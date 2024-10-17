@@ -18,13 +18,13 @@ fun mediaPlayer(
         remember {
             MediaPlayer
                 .create(context, R.raw.raw_selectcharacter)
-                .apply { setVolume(0.1f, 0.1f) }
+                .apply { setVolume(0.4f, 0.4f) }
         }
     Log.i("audioPosition1", "${audioPosition.value}")
 
     DisposableEffect(Unit) {
         audio.let {
-            it.seekTo(audioPosition.value - 1)
+            it.seekTo(audioPosition.value + 1)
             it.start()
         }
         onDispose {

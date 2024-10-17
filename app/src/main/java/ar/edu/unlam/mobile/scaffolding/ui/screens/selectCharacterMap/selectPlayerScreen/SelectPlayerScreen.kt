@@ -289,6 +289,7 @@ fun ContentView(
                     imageResId = R.drawable.iv_attack,
                     onClick = {
                         if (player != null) {
+                            selectCharacterViewModel.setAudioPosition(audio.currentPosition)
                             navController.navigate(SelectComRoute)
                             selectCharacterViewModel.initListHero()
                         } else {
