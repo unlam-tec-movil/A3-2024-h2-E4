@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.homeScreen.data.model
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.data.model
 
 import ar.edu.unlam.mobile.scaffolding.R
 import javax.inject.Inject

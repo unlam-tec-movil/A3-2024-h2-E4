@@ -1,11 +1,11 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatScreen.viewmodel
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.data.local.Background
-import ar.edu.unlam.mobile.scaffolding.domain.model.SuperHeroCombat
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetCombatDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCombatDataScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

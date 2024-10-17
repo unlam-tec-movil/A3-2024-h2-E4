@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.cameraScreen.viewmodel
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.cameraScreen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

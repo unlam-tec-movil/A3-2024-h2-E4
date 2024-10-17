@@ -1,10 +1,10 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.service
 
-import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.data.network.model.SuperHeroAppearance
-import ar.edu.unlam.mobile.scaffolding.data.network.model.SuperHeroBiography
-import ar.edu.unlam.mobile.scaffolding.data.network.model.SuperHeroImage
-import ar.edu.unlam.mobile.scaffolding.data.network.model.SuperHeroPowerStats
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.SuperHeroAppearance
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.SuperHeroBiography
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.SuperHeroImage
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.SuperHeroPowerStats
 
 object HeroListMock {
     val heroList =

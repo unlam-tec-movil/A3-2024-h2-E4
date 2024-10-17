@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.userProfileScreen
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

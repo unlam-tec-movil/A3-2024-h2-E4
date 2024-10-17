@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.network
 
-import ar.edu.unlam.mobile.scaffolding.data.network.model.SuperHeroDataResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.SuperHeroDataResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

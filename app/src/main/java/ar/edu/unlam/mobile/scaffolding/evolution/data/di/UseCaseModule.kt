@@ -1,11 +1,11 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.di
 
-import ar.edu.unlam.mobile.scaffolding.data.repository.SuperHeroRepository
-import ar.edu.unlam.mobile.scaffolding.domain.repository.SuperHeroRepositoryInterface
-import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameService
-import ar.edu.unlam.mobile.scaffolding.domain.services.SetCombatDataService
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetSuperHeroListByNameUseCase
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetCombatDataUseCase
+import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.SuperHeroRepository
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.SuperHeroRepositoryInterface
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.services.GetSuperHeroListByNameService
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.services.SetCombatDataService
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetSuperHeroListByNameUseCase
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.SetCombatDataUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

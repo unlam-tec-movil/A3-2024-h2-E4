@@ -1,6 +1,5 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.signUpScreen
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.signUpScreen
 
-import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,12 +31,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.AuthenticationScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.CreateAccountScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.theme.DarkPurple
-import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
-import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.AuthenticationScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.CreateAccountScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.DarkPurple
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -46,8 +44,6 @@ fun SignUpScreen(
     navController: NavController,
     auth: FirebaseAuth,
 ) {
-    val activity = LocalContext.current as Activity
-
     LaunchedEffect(auth) {
         val currentUser = auth.currentUser
         if (currentUser != null) {

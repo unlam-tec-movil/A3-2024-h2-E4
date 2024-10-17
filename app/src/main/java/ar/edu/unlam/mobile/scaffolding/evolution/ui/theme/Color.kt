@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.evolution
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

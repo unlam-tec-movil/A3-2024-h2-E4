@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.authenticationScreen
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.authenticationScreen
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -32,10 +32,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SignUpScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.theme.SelectedField
-import ar.edu.unlam.mobile.scaffolding.ui.theme.UnselectedField
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SignUpScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SelectedField
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.UnselectedField
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable

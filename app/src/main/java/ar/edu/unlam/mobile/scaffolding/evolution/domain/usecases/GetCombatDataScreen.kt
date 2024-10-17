@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases
 
-import ar.edu.unlam.mobile.scaffolding.domain.model.CombatDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.CombatDataScreen
 import javax.inject.Inject
 
 class GetCombatDataScreen

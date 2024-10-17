@@ -1,8 +1,8 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.homeScreen.ui.viewmodel
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.homeScreen.data.model.WallpaperLogos
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.data.model.WallpaperLogos
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.cancel

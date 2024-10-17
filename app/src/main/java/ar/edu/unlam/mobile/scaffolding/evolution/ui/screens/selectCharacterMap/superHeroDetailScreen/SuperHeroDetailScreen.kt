@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.superHeroDetailScreen
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.superHeroDetailScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,12 +37,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
-import ar.edu.unlam.mobile.scaffolding.ui.components.mediaPlayer
-import ar.edu.unlam.mobile.scaffolding.ui.components.screenSize
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.superHeroDetailScreen.viewmodel.SuperHeroDetailScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.superHeroDetailScreen.viewmodel.SuperHeroDetailScreenViewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable

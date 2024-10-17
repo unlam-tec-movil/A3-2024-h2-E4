@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectComScreen
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectComScreen
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -63,20 +63,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
-import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
-import ar.edu.unlam.mobile.scaffolding.ui.components.IconPowerDetail
-import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
-import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.components.mediaPlayer
-import ar.edu.unlam.mobile.scaffolding.ui.core.local.OrientationScreen.PORTRAIT
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.DetailRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectMapRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
-import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
-import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
-import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ExitConfirmation
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.IconPowerDetail
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SearchHero
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.DetailRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectMapRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
 import coil.compose.rememberAsyncImagePainter
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -95,7 +95,7 @@ fun SelectCom(
 
     SetOrientationScreen(
         context = context,
-        orientation = PORTRAIT.orientation,
+        orientation = OrientationScreen.PORTRAIT.orientation,
     )
 
     Box(

@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.cameraScreen
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.cameraScreen
 
 import android.Manifest
 import android.content.Context
@@ -47,7 +47,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.cameraScreen.viewmodel.CameraScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.cameraScreen.viewmodel.CameraScreenViewModel
 import java.io.File
 import java.util.concurrent.Executor
 

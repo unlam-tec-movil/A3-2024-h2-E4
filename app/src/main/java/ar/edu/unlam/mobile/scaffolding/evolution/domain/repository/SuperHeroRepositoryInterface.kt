@@ -1,7 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.repository
 
-import ar.edu.unlam.mobile.scaffolding.data.local.Background
-import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
 
 interface SuperHeroRepositoryInterface {
     suspend fun getSuperHeroListByName(query: String): List<SuperHeroItem>

@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.di
 
-import ar.edu.unlam.mobile.scaffolding.data.network.SuperHeroApiClient
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.SuperHeroApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

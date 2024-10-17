@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.components
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions

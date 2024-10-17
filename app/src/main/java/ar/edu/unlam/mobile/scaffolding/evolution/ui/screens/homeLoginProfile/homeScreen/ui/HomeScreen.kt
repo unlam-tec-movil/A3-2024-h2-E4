@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.homeScreen.ui
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -58,15 +58,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
-import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
-import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.core.local.OrientationScreen.PORTRAIT
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SignUpScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.UserProfileScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.homeScreen.ui.viewmodel.HomeScreenViewModel
-import ar.edu.unlam.mobile.scaffolding.ui.theme.CyanWay
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ExitConfirmation
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SignUpScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.UserProfileScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.ui.viewmodel.HomeScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.CyanWay
 import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -75,7 +75,7 @@ fun HomeScreen(
     navController: NavHostController,
     presentationScreenViewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
-    SetOrientationScreen(context = LocalContext.current, orientation = PORTRAIT.orientation)
+    SetOrientationScreen(context = LocalContext.current, orientation = OrientationScreen.PORTRAIT.orientation)
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
     var showExitConfirmation by rememberSaveable {

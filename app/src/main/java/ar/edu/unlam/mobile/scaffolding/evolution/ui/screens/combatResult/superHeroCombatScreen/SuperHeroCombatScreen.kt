@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatScreen
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen
 
 import android.media.MediaPlayer
 import androidx.activity.compose.BackHandler
@@ -54,15 +54,15 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.domain.model.SuperHeroCombat
-import ar.edu.unlam.mobile.scaffolding.ui.components.AttackEffect
-import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
-import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
-import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.components.StatsBattle
-import ar.edu.unlam.mobile.scaffolding.ui.core.local.OrientationScreen
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatScreen.viewmodel.CombatViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.AttackEffect
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ExitConfirmation
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.StatsBattle
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen.viewmodel.CombatViewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable

@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases
 
-import ar.edu.unlam.mobile.scaffolding.domain.repository.SuperHeroRepositoryInterface
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.SuperHeroRepositoryInterface
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.service.HeroListMock
 import io.mockk.MockKAnnotations
 import io.mockk.every

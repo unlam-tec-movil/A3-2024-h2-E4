@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.components
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.components
 
 import android.content.Context
 import androidx.compose.animation.animateColor
@@ -15,7 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatScreen.viewmodel.CombatViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen.viewmodel.CombatViewModel
 
 @Composable
 fun AttackEffect(

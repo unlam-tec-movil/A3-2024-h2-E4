@@ -1,8 +1,8 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.superHeroDetailScreen.viewmodel
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.superHeroDetailScreen.viewmodel
 
 import androidx.lifecycle.ViewModel
-import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetSuperHeroDetailUseCase
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetSuperHeroDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

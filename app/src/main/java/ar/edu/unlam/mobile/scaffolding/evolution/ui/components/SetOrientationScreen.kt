@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.components
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.components
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -7,7 +7,7 @@ import android.content.pm.ActivityInfo
 import androidx.compose.runtime.Composable
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import ar.edu.unlam.mobile.scaffolding.MainActivity
+import ar.edu.unlam.mobile.scaffolding.evolution.MainActivity
 
 @SuppressLint("SourceLockedOrientationActivity")
 @Composable

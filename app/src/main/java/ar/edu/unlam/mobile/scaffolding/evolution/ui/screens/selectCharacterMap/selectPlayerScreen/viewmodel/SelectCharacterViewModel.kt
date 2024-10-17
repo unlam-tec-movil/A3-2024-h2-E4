@@ -1,13 +1,13 @@
-package ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.unlam.mobile.scaffolding.data.local.Background
-import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameService
-import ar.edu.unlam.mobile.scaffolding.domain.services.SetCombatDataService
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetCombatBackgroundDataUseCase
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetSuperHeroDetailUseCase
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.services.GetSuperHeroListByNameService
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.services.SetCombatDataService
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCombatBackgroundDataUseCase
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.SetSuperHeroDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,6 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.model
 
-import ar.edu.unlam.mobile.scaffolding.data.network.model.SuperHeroImage
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.SuperHeroImage
 
 data class SuperHeroCombat(
     val id: String,

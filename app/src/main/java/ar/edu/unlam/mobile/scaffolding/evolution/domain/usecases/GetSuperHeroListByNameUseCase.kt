@@ -1,9 +1,9 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases
 
-import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
-import ar.edu.unlam.mobile.scaffolding.domain.core.repairImage
-import ar.edu.unlam.mobile.scaffolding.domain.repository.SuperHeroRepositoryInterface
-import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameService
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.core.repairImage
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.SuperHeroRepositoryInterface
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.services.GetSuperHeroListByNameService
 import javax.inject.Inject
 
 class GetSuperHeroListByNameUseCase

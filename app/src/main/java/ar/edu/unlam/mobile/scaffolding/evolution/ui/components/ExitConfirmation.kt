@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.components
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text

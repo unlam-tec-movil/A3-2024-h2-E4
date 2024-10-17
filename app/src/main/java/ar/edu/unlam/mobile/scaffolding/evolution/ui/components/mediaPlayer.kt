@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.ui.components
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.components
 
 import android.content.Context
 import android.media.MediaPlayer
