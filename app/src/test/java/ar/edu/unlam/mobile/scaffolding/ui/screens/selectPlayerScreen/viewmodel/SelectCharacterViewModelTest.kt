@@ -5,7 +5,7 @@ import ar.edu.unlam.mobile.scaffolding.domain.services.GetSuperHeroListByNameSer
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.GetCombatBackgroundDataUseCase
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetCombatDataUseCase
 import ar.edu.unlam.mobile.scaffolding.domain.usecases.SetSuperHeroDetailUseCase
-import ar.edu.unlam.mobile.scaffolding.domain.usecases.service.HeroListMock
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.service.HeroListMock
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
