@@ -69,14 +69,12 @@ import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.homeScreen.ui
 import ar.edu.unlam.mobile.scaffolding.ui.theme.CyanWay
 import kotlinx.coroutines.delay
 
-
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    presentationScreenViewModel: HomeScreenViewModel = hiltViewModel()
+    presentationScreenViewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
-
     SetOrientationScreen(context = LocalContext.current, orientation = PORTRAIT.orientation)
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
@@ -89,12 +87,13 @@ fun HomeScreen(
         onDismiss = { showExitConfirmation = false },
         onConfirm = { activity.finishAffinity() },
         title = stringResource(id = R.string.ExitConfirmation),
-        message = stringResource(id = R.string.ExitApp)
+        message = stringResource(id = R.string.ExitApp),
     )
 
     val audio =
         remember {
-            MediaPlayer.create(context, R.raw.media_marvel)
+            MediaPlayer
+                .create(context, R.raw.media_marvel)
                 .apply { setVolume(0.6f, 0.6f) }
         }
 
@@ -115,10 +114,9 @@ fun HomeScreen(
         content = {
             ContentViewHome(
                 navController = navController,
-                presentationScreenViewModel = presentationScreenViewModel
+                presentationScreenViewModel = presentationScreenViewModel,
             )
-        }
-
+        },
     )
 
     BackHandler {
@@ -129,46 +127,45 @@ fun HomeScreen(
 @Composable
 fun ContentViewHome(
     navController: NavHostController,
-    presentationScreenViewModel: HomeScreenViewModel
+    presentationScreenViewModel: HomeScreenViewModel,
 ) {
     val logos by presentationScreenViewModel.logos.collectAsState()
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 48.dp),
-        contentAlignment = Alignment.Center
-    )
-    {
-
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(top = 48.dp),
+        contentAlignment = Alignment.Center,
+    ) {
         Image(
             painter = painterResource(id = logos.logo),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
         )
-
 
         Image(
             painter = painterResource(id = R.drawable.iv_logo),
             contentDescription = null,
-            modifier = Modifier
-                .size(200.dp)
-                .align(Alignment.TopStart)
-
+            modifier =
+                Modifier
+                    .size(200.dp)
+                    .align(Alignment.TopStart),
         )
 
         ButtonWithBackgroundImage(
             imageResId = R.drawable.iv_button,
             onClick = {
                 navController.navigate(SelectPlayerRoute)
-                //navController.navigate(SelectComRoute)
+                // navController.navigate(SelectComRoute)
             },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .width(300.dp)
-                .height(80.dp)
-                .padding(bottom = 22.dp)
+            modifier =
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .width(300.dp)
+                    .height(80.dp)
+                    .padding(bottom = 22.dp),
         ) {
             Text(
                 text = stringResource(id = R.string.EnterGame),
@@ -176,10 +173,9 @@ fun ContentViewHome(
                 fontFamily = FontFamily(Font(R.font.font_firestar)),
                 fontStyle = FontStyle.Italic,
                 fontSize = 28.sp,
-                color = Color.Black
+                color = Color.Black,
             )
         }
-
     }
 }
 
@@ -188,7 +184,7 @@ fun ContentViewHome(
 fun TopBarHome(
     navController: NavHostController,
     presentationScreenViewModel: HomeScreenViewModel,
-    onChangeValue: (Boolean) -> Unit
+    onChangeValue: (Boolean) -> Unit,
 ) {
     val auth by presentationScreenViewModel.auth.collectAsState()
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
@@ -197,7 +193,10 @@ fun TopBarHome(
     var changeColor by remember { mutableStateOf(false) }
     val animatedColor by animateColorAsState(
         targetValue = if (changeColor) Color.White else CyanWay,
-        animationSpec = androidx.compose.animation.core.tween(durationMillis = 1000), label = ""
+        animationSpec =
+            androidx.compose.animation.core
+                .tween(durationMillis = 1000),
+        label = "",
     )
 
     LaunchedEffect(Unit) {
@@ -212,53 +211,59 @@ fun TopBarHome(
         title = {
             Text(
                 text = "Future Fight Evolution",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                 textAlign = TextAlign.Start,
-                color = animatedColor, fontFamily = FontFamily(Font(R.font.font_firestar)),
-                fontStyle = FontStyle.Italic
+                color = animatedColor,
+                fontFamily = FontFamily(Font(R.font.font_firestar)),
+                fontStyle = FontStyle.Italic,
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(Color.Black),
         actions = {
             IconButton(onClick = {
-                if (isLog) navController.navigate(UserProfileScreenRoute) else navController.navigate(
-                    SignUpScreenRoute
-                )
+                if (isLog) {
+                    navController.navigate(UserProfileScreenRoute)
+                } else {
+                    navController.navigate(
+                        SignUpScreenRoute,
+                    )
+                }
             }) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = null,
-                    tint = animatedColor
+                    tint = animatedColor,
                 )
             }
             IconButton(onClick = { setExpanded(true) }) {
                 Icon(
                     imageVector = Icons.Filled.MoreVert,
                     contentDescription = null,
-                    tint = animatedColor
+                    tint = animatedColor,
                 )
             }
 
             if (isLog) {
                 DropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { setExpanded(false) }
+                    onDismissRequest = { setExpanded(false) },
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clickable { navController.navigate(UserProfileScreenRoute) }
-                            .fillMaxWidth()
+                        modifier =
+                            Modifier
+                                .clickable { navController.navigate(UserProfileScreenRoute) }
+                                .fillMaxWidth(),
                     ) {
-
                         Icon(
                             imageVector = Icons.Filled.Person,
                             contentDescription = null,
                             modifier = Modifier.padding(horizontal = 8.dp),
-                            tint = animatedColor
+                            tint = animatedColor,
                         )
 
                         Text(
@@ -266,32 +271,32 @@ fun TopBarHome(
                             fontSize = 19.sp,
                             fontWeight = FontWeight.Normal,
                             modifier = Modifier.padding(end = 16.dp),
-                            color = animatedColor
+                            color = animatedColor,
                         )
                     }
                     Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(8.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(8.dp),
                     )
                     Row(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clickable {
-                                Toast
-                                    .makeText(context, "Log out successful", Toast.LENGTH_SHORT)
-                                    .show()
-                                auth.signOut()
-                            }
-                            .fillMaxWidth()
+                        modifier =
+                            Modifier
+                                .clickable {
+                                    Toast
+                                        .makeText(context, "Log out successful", Toast.LENGTH_SHORT)
+                                        .show()
+                                    auth.signOut()
+                                }.fillMaxWidth(),
                     ) {
-
                         Icon(
                             imageVector = Icons.Filled.Close,
                             contentDescription = null,
                             modifier = Modifier.padding(horizontal = 8.dp),
-                            tint = animatedColor
+                            tint = animatedColor,
                         )
 
                         Text(
@@ -299,27 +304,28 @@ fun TopBarHome(
                             fontSize = 19.sp,
                             fontWeight = FontWeight.Normal,
                             modifier = Modifier.padding(end = 16.dp),
-                            color = animatedColor
+                            color = animatedColor,
                         )
                     }
                     Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(8.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(8.dp),
                     )
                     Row(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clickable { onChangeValue(true) }
-                            .fillMaxWidth()
+                        modifier =
+                            Modifier
+                                .clickable { onChangeValue(true) }
+                                .fillMaxWidth(),
                     ) {
-
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ExitToApp,
                             contentDescription = null,
                             modifier = Modifier.padding(horizontal = 8.dp),
-                            tint = animatedColor
+                            tint = animatedColor,
                         )
 
                         Text(
@@ -327,29 +333,28 @@ fun TopBarHome(
                             fontSize = 19.sp,
                             fontWeight = FontWeight.Normal,
                             modifier = Modifier.padding(end = 16.dp),
-                            color = animatedColor
+                            color = animatedColor,
                         )
                     }
-
                 }
             } else {
                 DropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { setExpanded(false) }
+                    onDismissRequest = { setExpanded(false) },
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clickable { navController.navigate(SignUpScreenRoute) }
-                            .fillMaxWidth()
+                        modifier =
+                            Modifier
+                                .clickable { navController.navigate(SignUpScreenRoute) }
+                                .fillMaxWidth(),
                     ) {
-
                         Icon(
                             imageVector = Icons.Filled.AccountCircle,
                             contentDescription = null,
                             modifier = Modifier.padding(horizontal = 8.dp),
-                            tint = animatedColor
+                            tint = animatedColor,
                         )
 
                         Text(
@@ -357,27 +362,28 @@ fun TopBarHome(
                             fontSize = 19.sp,
                             fontWeight = FontWeight.Normal,
                             modifier = Modifier.padding(end = 16.dp),
-                            color = animatedColor
+                            color = animatedColor,
                         )
                     }
                     Spacer(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(8.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(8.dp),
                     )
                     Row(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .clickable { onChangeValue(true) }
-                            .fillMaxWidth()
+                        modifier =
+                            Modifier
+                                .clickable { onChangeValue(true) }
+                                .fillMaxWidth(),
                     ) {
-
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ExitToApp,
                             contentDescription = null,
                             modifier = Modifier.padding(horizontal = 8.dp),
-                            tint = animatedColor
+                            tint = animatedColor,
                         )
 
                         Text(
@@ -385,13 +391,11 @@ fun TopBarHome(
                             fontSize = 19.sp,
                             fontWeight = FontWeight.Normal,
                             modifier = Modifier.padding(end = 16.dp),
-                            color = animatedColor
+                            color = animatedColor,
                         )
                     }
-
                 }
             }
-
-        }
+        },
     )
 }

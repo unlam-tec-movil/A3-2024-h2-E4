@@ -39,27 +39,32 @@ import ar.edu.unlam.mobile.scaffolding.ui.theme.UnselectedField
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
+fun AuthenticationScreen(
+    navController: NavController,
+    auth: FirebaseAuth,
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val context = LocalContext.current
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Black)
-            .padding(horizontal = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+                .padding(horizontal = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "icono",
                 tint = White,
-                modifier = Modifier
-                    .padding(vertical = 24.dp)
-                    .size(24.dp)
-                    .clickable { navController.navigate(SignUpScreenRoute) }
+                modifier =
+                    Modifier
+                        .padding(vertical = 24.dp)
+                        .size(24.dp)
+                        .clickable { navController.navigate(SignUpScreenRoute) },
             )
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -69,10 +74,11 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
             value = email,
             onValueChange = { email = it },
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = UnselectedField,
-                focusedContainerColor = SelectedField
-            )
+            colors =
+                TextFieldDefaults.colors(
+                    unfocusedContainerColor = UnselectedField,
+                    focusedContainerColor = SelectedField,
+                ),
         )
         Spacer(Modifier.height(48.dp))
 
@@ -81,10 +87,11 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
             value = password,
             onValueChange = { password = it },
             modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = UnselectedField,
-                focusedContainerColor = SelectedField
-            )
+            colors =
+                TextFieldDefaults.colors(
+                    unfocusedContainerColor = UnselectedField,
+                    focusedContainerColor = SelectedField,
+                ),
         )
 
         Spacer(Modifier.height(48.dp))
@@ -93,13 +100,15 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
             if (email.isNotBlank() && password.isNotBlank()) {
                 auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT)
+                        Toast
+                            .makeText(context, "Login Successful", Toast.LENGTH_SHORT)
                             .show()
                         navController.navigate(HomeScreenRoute) {
                             popUpTo<HomeScreenRoute> { inclusive = true }
                         }
                     } else {
-                        Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT)
+                        Toast
+                            .makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
@@ -110,5 +119,4 @@ fun AuthenticationScreen(navController: NavController, auth: FirebaseAuth) {
             Text(text = "Login")
         }
     }
-
 }

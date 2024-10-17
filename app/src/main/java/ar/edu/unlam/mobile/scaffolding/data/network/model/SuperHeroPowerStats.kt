@@ -8,7 +8,5 @@ data class SuperHeroPowerStats(
     @SerializedName("speed") var speed: String,
     @SerializedName("durability") var durability: String,
     @SerializedName("power") var power: String,
-    @SerializedName("combat") var combat: String
+    @SerializedName("combat") var combat: String,
 )
-
-

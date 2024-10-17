@@ -8,8 +8,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class NavigationWrapperViewModel@Inject constructor(firebaseAuth: FirebaseAuth):ViewModel() {
-    private val _auth = MutableStateFlow(firebaseAuth)
-    val auth = _auth.asStateFlow()
-
-}
+class NavigationWrapperViewModel
+    @Inject
+    constructor(
+        firebaseAuth: FirebaseAuth,
+    ) : ViewModel() {
+        private val _auth = MutableStateFlow(firebaseAuth)
+        val auth = _auth.asStateFlow()
+    }

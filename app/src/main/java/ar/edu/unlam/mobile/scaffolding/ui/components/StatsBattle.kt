@@ -19,30 +19,36 @@ import ar.edu.unlam.mobile.scaffolding.domain.model.SuperHeroCombat
 @Composable
 fun StatsBattle(superHero: SuperHeroCombat?) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth().padding(horizontal = 9.dp), horizontalArrangement = Arrangement.Center
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 9.dp),
+        horizontalArrangement = Arrangement.Center,
     ) {
         Box(
-            modifier = Modifier
-                .background(colorResource(id = R.color.statColorAttack))
-                .weight(1f),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .background(colorResource(id = R.color.statColorAttack))
+                    .weight(1f),
+            contentAlignment = Alignment.Center,
         ) {
             Text(text = superHero!!.attack.toString(), color = Color.Black)
         }
         Box(
-            modifier = Modifier
-                .background(colorResource(id = R.color.statColorDefense))
-                .weight(1f),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .background(colorResource(id = R.color.statColorDefense))
+                    .weight(1f),
+            contentAlignment = Alignment.Center,
         ) {
             Text(text = superHero!!.defense.toString(), color = Color.Black)
         }
         Box(
-            modifier = Modifier
-                .background(colorResource(id = R.color.statColorPenance))
-                .weight(1f),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .background(colorResource(id = R.color.statColorPenance))
+                    .weight(1f),
+            contentAlignment = Alignment.Center,
         ) {
             Text(text = superHero!!.damageAbs.toString(), color = Color.Black)
         }

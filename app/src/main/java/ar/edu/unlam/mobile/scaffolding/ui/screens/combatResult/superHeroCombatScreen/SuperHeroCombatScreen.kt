@@ -68,7 +68,7 @@ import coil.compose.rememberAsyncImagePainter
 @Composable
 fun SuperHeroCombat(
     navController: NavHostController,
-    viewModel: CombatViewModel = hiltViewModel()
+    viewModel: CombatViewModel = hiltViewModel(),
 ) {
     val superHeroPlayer by viewModel.superHeroPlayer.collectAsState()
     val superHeroCom by viewModel.superHeroCom.collectAsState()
@@ -103,37 +103,38 @@ fun SuperHeroCombat(
     SetOrientationScreen(
         context = LocalContext.current,
         orientation = OrientationScreen.LANDSCAPE.orientation,
-        hideStatusBar = true
+        hideStatusBar = true,
     )
 
     if (isLoading) {
-
         Box(Modifier.fillMaxSize()) {
             Image(
                 painter = painterResource(id = R.drawable.iv_vs),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
             LinearProgressIndicator(
                 Modifier
                     .align(Alignment.BottomCenter)
                     .padding(bottom = 8.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             )
             Text(
                 text = "Loading ...",
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 16.dp)
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 16.dp),
             )
         }
     } else {
-
-        val audio = remember {
-            MediaPlayer.create(context, backgroundData!!.theme)
-                .apply { setVolume(0.5f, 0.5f) }
-        }
+        val audio =
+            remember {
+                MediaPlayer
+                    .create(context, backgroundData!!.theme)
+                    .apply { setVolume(0.5f, 0.5f) }
+            }
 
         DisposableEffect(Unit) {
             audio.start()
@@ -153,54 +154,55 @@ fun SuperHeroCombat(
 //        }
 
         Box(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier =
+                Modifier
+                    .fillMaxSize(),
         ) {
-            Image(//BACKGROUND
+            Image( // BACKGROUND
                 painter = painterResource(id = backgroundData!!.background),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
 
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-
                 Box( // BOX PLAYER
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(250.dp), contentAlignment = Alignment.Center
+                    modifier =
+                        Modifier
+                            .fillMaxHeight()
+                            .width(250.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
-
                     Column(
                         modifier = Modifier.padding(top = 60.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceAround
+                            horizontalArrangement = Arrangement.SpaceAround,
                         ) {
-
                             IconButton( // HEAL PLAYER
                                 onClick = {
                                     viewModel.healingPotion(lifePlayer.toInt())
                                 },
-                                enabled = (iconButtonPotion && enableButton)
+                                enabled = (iconButtonPotion && enableButton),
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.icon_pocion),
                                     contentDescription = "healing potion",
-                                    tint = if (iconButtonPotion) {
-                                        Color.Green
-                                    } else {
-                                        Color.DarkGray
-                                    },
-                                    modifier = Modifier.size(70.dp)
+                                    tint =
+                                        if (iconButtonPotion) {
+                                            Color.Green
+                                        } else {
+                                            Color.DarkGray
+                                        },
+                                    modifier = Modifier.size(70.dp),
                                 )
                             }
 
@@ -208,235 +210,238 @@ fun SuperHeroCombat(
                                 onClick = {
                                     viewModel.specialAttack()
                                 },
-                                enabled = iconButtonPowerUp && enableButton
+                                enabled = iconButtonPowerUp && enableButton,
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.icon_special_energy),
                                     contentDescription = null,
-                                    tint = if (iconButtonPowerUp) {
-                                        Color.Red
-                                    } else {
-                                        Color.DarkGray
-                                    },
-                                    modifier = Modifier.size(40.dp)
+                                    tint =
+                                        if (iconButtonPowerUp) {
+                                            Color.Red
+                                        } else {
+                                            Color.DarkGray
+                                        },
+                                    modifier = Modifier.size(40.dp),
                                 )
                             }
 
-                            IconButton( //DEFENSE PLAYER
+                            IconButton( // DEFENSE PLAYER
                                 onClick = {
                                     viewModel.specialDefense()
                                 },
-                                enabled = iconButtonDefensive && enableButton
+                                enabled = iconButtonDefensive && enableButton,
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.icon_shield_healing),
                                     contentDescription = null,
-                                    tint = if (iconButtonDefensive) {
-                                        Color.Yellow
-                                    } else {
-                                        Color.DarkGray
-                                    },
-                                    modifier = Modifier.size(37.dp)
+                                    tint =
+                                        if (iconButtonDefensive) {
+                                            Color.Yellow
+                                        } else {
+                                            Color.DarkGray
+                                        },
+                                    modifier = Modifier.size(37.dp),
                                 )
                             }
                         }
 
-                        Card(/* CARD PLAYER */
-                            modifier = Modifier
-                                .width(240.dp)
-                                .height(240.dp)
-                                .padding(top = 2.dp),
+                        Card( // CARD PLAYER
+                            modifier =
+                                Modifier
+                                    .width(240.dp)
+                                    .height(240.dp)
+                                    .padding(top = 2.dp),
                             shape = CardDefaults.elevatedShape,
                             elevation = CardDefaults.cardElevation(40.dp),
-                            border = if (playerAttackActivated) {
-                                val color = getColorEffect(R.color.attackSpecialEnabled)
-                                BorderStroke(2.5.dp, color = color.value)
-                            } else if (playerHealingActivated) {
-                                BorderStroke(3.dp, colorResource(id = R.color.healingEnabled))
-                            } else {
-                                BorderStroke(
-                                    0.5.dp,
-                                    colorResource(id = R.color.attackSpecialDisabled)
-                                )
-                            }
+                            border =
+                                if (playerAttackActivated) {
+                                    val color = getColorEffect(R.color.attackSpecialEnabled)
+                                    BorderStroke(2.5.dp, color = color.value)
+                                } else if (playerHealingActivated) {
+                                    BorderStroke(3.dp, colorResource(id = R.color.healingEnabled))
+                                } else {
+                                    BorderStroke(
+                                        0.5.dp,
+                                        colorResource(id = R.color.attackSpecialDisabled),
+                                    )
+                                },
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
+                                contentAlignment = Alignment.Center,
                             ) {
                                 Image(
                                     painter = rememberAsyncImagePainter(superHeroPlayer!!.image.url),
                                     contentDescription = null,
                                     contentScale = ContentScale.Crop,
-                                    modifier = Modifier.fillMaxSize()
+                                    modifier = Modifier.fillMaxSize(),
                                 )
                                 Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(30.dp)
-                                        .align(Alignment.BottomCenter)
-                                        .background(
-                                            colorResource(id = R.color.superhero_item_name)
-                                        )
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .height(30.dp)
+                                            .align(Alignment.BottomCenter)
+                                            .background(
+                                                colorResource(id = R.color.superhero_item_name),
+                                            ),
                                 ) {
                                     Text(
                                         text = superHeroPlayer!!.name,
                                         fontSize = 24.sp,
                                         modifier = Modifier.align(Alignment.BottomCenter),
                                         fontWeight = FontWeight.Bold,
-                                        color = Color.White
+                                        color = Color.White,
                                     )
-
                                 }
                             }
                         }
 
                         StatsBattle(superHero = superHeroPlayer)
                     }
-
                 }
 
                 Box( // BOX COM
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(250.dp), contentAlignment = Alignment.Center
+                    modifier =
+                        Modifier
+                            .fillMaxHeight()
+                            .width(250.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
-
                     Column(
                         modifier = Modifier.padding(top = 60.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceAround
+                            horizontalArrangement = Arrangement.SpaceAround,
                         ) {
-
-                            IconButton(/* HEAL COM */
+                            IconButton( // HEAL COM
                                 onClick = {
-
                                 },
-                                enabled = (iconButtonPotionCom && enableButton)
+                                enabled = (iconButtonPotionCom && enableButton),
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.icon_pocion),
                                     contentDescription = "healing potion",
-                                    tint = if (iconButtonPotionCom) {
-                                        Color.Green
-                                    } else {
-                                        Color.DarkGray
-                                    },
-                                    modifier = Modifier.size(70.dp)
+                                    tint =
+                                        if (iconButtonPotionCom) {
+                                            Color.Green
+                                        } else {
+                                            Color.DarkGray
+                                        },
+                                    modifier = Modifier.size(70.dp),
                                 )
-
                             }
 
-                            IconButton(/* ATTACK COM */
+                            IconButton( // ATTACK COM
                                 onClick = {
-
                                 },
-                                enabled = iconButtonPowerUpCom && enableButton
+                                enabled = iconButtonPowerUpCom && enableButton,
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.icon_special_energy),
                                     contentDescription = null,
-                                    tint = if (iconButtonPowerUpCom) {
-                                        Color.Red
-                                    } else {
-                                        Color.DarkGray
-                                    },
-                                    modifier = Modifier.size(40.dp)
+                                    tint =
+                                        if (iconButtonPowerUpCom) {
+                                            Color.Red
+                                        } else {
+                                            Color.DarkGray
+                                        },
+                                    modifier = Modifier.size(40.dp),
                                 )
-
                             }
 
-                            IconButton(/* DEFENSE COM */
+                            IconButton( // DEFENSE COM
                                 onClick = {
-
                                 },
-                                enabled = iconButtonDefensiveCom && enableButton
+                                enabled = iconButtonDefensiveCom && enableButton,
                             ) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.icon_shield_healing),
                                     contentDescription = null,
-                                    tint = if (iconButtonDefensiveCom) {
-                                        Color.Yellow
-                                    } else {
-                                        Color.DarkGray
-                                    },
-                                    modifier = Modifier.size(37.dp)
+                                    tint =
+                                        if (iconButtonDefensiveCom) {
+                                            Color.Yellow
+                                        } else {
+                                            Color.DarkGray
+                                        },
+                                    modifier = Modifier.size(37.dp),
                                 )
-
                             }
                         }
 
-                        Card(/* CARD COM */
-                            modifier = Modifier
-                                .width(240.dp)
-                                .height(240.dp)
-                                .padding(top = 2.dp),
+                        Card( // CARD COM
+                            modifier =
+                                Modifier
+                                    .width(240.dp)
+                                    .height(240.dp)
+                                    .padding(top = 2.dp),
                             shape = CardDefaults.elevatedShape,
                             elevation = CardDefaults.cardElevation(40.dp),
-                            border = if (comAttackActivated) {
-                                val color = getColorEffect(R.color.attackSpecialEnabled)
-                                BorderStroke(2.5.dp, color = color.value)
-                            } else if (comHealingActivated) {
-                                BorderStroke(3.dp, colorResource(id = R.color.healingEnabled))
-                            } else {
-                                BorderStroke(
-                                    0.5.dp,
-                                    colorResource(id = R.color.attackSpecialDisabled)
-                                )
-                            }
+                            border =
+                                if (comAttackActivated) {
+                                    val color = getColorEffect(R.color.attackSpecialEnabled)
+                                    BorderStroke(2.5.dp, color = color.value)
+                                } else if (comHealingActivated) {
+                                    BorderStroke(3.dp, colorResource(id = R.color.healingEnabled))
+                                } else {
+                                    BorderStroke(
+                                        0.5.dp,
+                                        colorResource(id = R.color.attackSpecialDisabled),
+                                    )
+                                },
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
+                                contentAlignment = Alignment.Center,
                             ) {
                                 Image(
                                     painter = rememberAsyncImagePainter(superHeroCom!!.image.url),
                                     contentDescription = null,
                                     contentScale = ContentScale.Crop,
-                                    modifier = Modifier.fillMaxSize()
+                                    modifier = Modifier.fillMaxSize(),
                                 )
                                 Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(30.dp)
-                                        .align(Alignment.BottomCenter)
-                                        .background(
-                                            colorResource(id = R.color.superhero_item_name)
-                                        )
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .height(30.dp)
+                                            .align(Alignment.BottomCenter)
+                                            .background(
+                                                colorResource(id = R.color.superhero_item_name),
+                                            ),
                                 ) {
                                     Text(
                                         text = superHeroCom!!.name,
                                         fontSize = 24.sp,
                                         modifier = Modifier.align(Alignment.BottomCenter),
                                         fontWeight = FontWeight.Bold,
-                                        color = Color.White
+                                        color = Color.White,
                                     )
-
                                 }
                             }
                         }
 
                         StatsBattle(superHero = superHeroCom)
                     }
-
                 }
             }
 
             Text(
-                text = "VS", fontSize = 54.sp, modifier = Modifier.align(Alignment.Center),
-                fontFamily = FontFamily(Font(R.font.font_bodoni_italic)), color = Color.White
+                text = "VS",
+                fontSize = 54.sp,
+                modifier = Modifier.align(Alignment.Center),
+                fontFamily = FontFamily(Font(R.font.font_bodoni_italic)),
+                color = Color.White,
             )
 
-            Box( /* BUTTON ATTACK */
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 12.dp)
-            )
-            {
+            Box( // BUTTON ATTACK
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 12.dp),
+            ) {
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_attack,
                     onClick = {
@@ -444,94 +449,95 @@ fun SuperHeroCombat(
                         viewModel.initAttack()
                     },
                     enabledButton = enableButton,
-                    modifier = Modifier
-                        .height(150.dp)
-                        .width(350.dp)
+                    modifier =
+                        Modifier
+                            .height(150.dp)
+                            .width(350.dp),
                 ) {
                     Text(
                         text = "Attack",
                         fontSize = 36.sp,
                         modifier = Modifier.padding(horizontal = 36.dp),
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
                     )
                 }
             }
-
-
         }
 
         Row( // LifePlayer
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.Top,
         ) {
             Box(
-                modifier = Modifier
-                    .width(300.dp)
-                    .height(30.dp)
-                    .border(1.dp, Color.Black)
-                    .background(Color.White)
-            ) {
-
-                Box(
-                    modifier = Modifier
+                modifier =
+                    Modifier
+                        .width(300.dp)
                         .height(30.dp)
-                        .width(superHeroPlayer!!.life.dp)
-                        .background(
-                            if (playerDefenseActivated) {
-                                colorResource(id = R.color.defenseSpecialActivated)
-                            } else {
-                                setColorLifePlayer(superHeroPlayer!!)
-                            }
-                        )
+                        .border(1.dp, Color.Black)
+                        .background(Color.White),
+            ) {
+                Box(
+                    modifier =
+                        Modifier
+                            .height(30.dp)
+                            .width(superHeroPlayer!!.life.dp)
+                            .background(
+                                if (playerDefenseActivated) {
+                                    colorResource(id = R.color.defenseSpecialActivated)
+                                } else {
+                                    setColorLifePlayer(superHeroPlayer!!)
+                                },
+                            ),
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         text = "Player",
                         textAlign = TextAlign.Start,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(start = 8.dp),
-                        color = Color.Gray
+                        color = Color.Gray,
                     )
                     Text(
                         text = "${superHeroPlayer!!.life}/$lifePlayer",
                         textAlign = TextAlign.End,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(end = 8.dp, start = 120.dp),
-                        color = Color.Gray
+                        color = Color.Gray,
                     )
                 }
-
             }
 
-            Box( //round
-                modifier = Modifier
-                    .height(70.dp)
-                    .width(200.dp)
-                    .background(
-                        if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
-                            Color.DarkGray
-                        } else {
-                            Color.Unspecified
-                        }
-                    ),
-                contentAlignment = Alignment.TopCenter
+            Box( // round
+                modifier =
+                    Modifier
+                        .height(70.dp)
+                        .width(200.dp)
+                        .background(
+                            if (backgroundData!!.background == R.drawable.iv_dragonballfight) {
+                                Color.DarkGray
+                            } else {
+                                Color.Unspecified
+                            },
+                        ),
+                contentAlignment = Alignment.TopCenter,
             ) {
                 Card(
                     shape = CardDefaults.elevatedShape,
                     elevation = CardDefaults.cardElevation(40.dp),
-                    modifier = Modifier.align(Alignment.TopCenter)
+                    modifier = Modifier.align(Alignment.TopCenter),
                 ) {
                     Text(
                         text = " Round $roundCount ",
                         modifier = Modifier.padding(4.dp),
                         fontSize = 24.sp,
                         fontFamily = FontFamily(Font(R.font.font_bodoni_italic)),
-                        color = Color.White
+                        color = Color.White,
                     )
                 }
 
@@ -539,74 +545,75 @@ fun SuperHeroCombat(
                     painter = painterResource(id = setIconPlayer(attackPlayer)),
                     contentDescription = null,
                     tint = Color.White,
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .size(35.dp)
+                    modifier =
+                        Modifier
+                            .align(Alignment.TopStart)
+                            .size(35.dp),
                 )
 
                 Icon(
                     painter = painterResource(id = setIconCom(attackPlayer)),
                     contentDescription = null,
                     tint = Color.White,
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .size(35.dp)
+                    modifier =
+                        Modifier
+                            .align(Alignment.TopEnd)
+                            .size(35.dp),
                 )
                 Text(
                     text = stringResource(id = setMessageAttack(attackPlayer)),
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 10.dp),
+                    modifier =
+                        Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 10.dp),
                     color = Color.White,
-                    fontWeight = FontWeight.ExtraBold
+                    fontWeight = FontWeight.ExtraBold,
                 )
             }
 
-            Box( //lifeCom
-                modifier = Modifier
-                    .width(300.dp)
-                    .height(30.dp)
-                    .border(1.dp, Color.Black)
-                    .background(Color.White)
+            Box( // lifeCom
+                modifier =
+                    Modifier
+                        .width(300.dp)
+                        .height(30.dp)
+                        .border(1.dp, Color.Black)
+                        .background(Color.White),
             ) {
                 Box(
-                    modifier = Modifier
-                        .height(30.dp)
-                        .width(superHeroCom!!.life.dp)
-                        .background(
-                            if (comDefenseActivated) {
-                                colorResource(id = R.color.defenseSpecialActivated)
-                            } else {
-                                setColorLifePlayer(superHeroCom!!)
-                            }
-                        )
+                    modifier =
+                        Modifier
+                            .height(30.dp)
+                            .width(superHeroCom!!.life.dp)
+                            .background(
+                                if (comDefenseActivated) {
+                                    colorResource(id = R.color.defenseSpecialActivated)
+                                } else {
+                                    setColorLifePlayer(superHeroCom!!)
+                                },
+                            ),
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         text = "Com",
                         textAlign = TextAlign.Start,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(start = 8.dp),
-                        color = Color.Gray
+                        color = Color.Gray,
                     )
                     Text(
                         text = "${superHeroCom!!.life}/$lifeCom",
                         textAlign = TextAlign.End,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(end = 8.dp, start = 130.dp),
-                        color = Color.Gray
+                        color = Color.Gray,
                     )
                 }
-
-
             }
         }
 
-
         AttackEffect(attackEffect, enableButton, context, viewModel)
-
     }
 
     BackHandler {
@@ -622,7 +629,7 @@ fun SuperHeroCombat(
             }
         },
         title = stringResource(id = R.string.ExitConfirmation),
-        message = stringResource(id = R.string.ExitCombat)
+        message = stringResource(id = R.string.ExitCombat),
     )
 }
 
@@ -631,44 +638,43 @@ private fun getColorEffect(idColor: Int): State<Color> {
     val transition = rememberInfiniteTransition(label = "Infinity")
     return transition.animateColor(
         initialValue = colorResource(id = idColor),
-        targetValue = colorResource(
-            id = R.color.combatColorEffect2
-        ),
+        targetValue =
+            colorResource(
+                id = R.color.combatColorEffect2,
+            ),
         animationSpec = infiniteRepeatable(animation = tween(500), repeatMode = RepeatMode.Restart),
-        label = ""
+        label = "",
     )
 }
 
-fun setMessageAttack(attackPlayer: Boolean): Int {
-    return if (attackPlayer) {
+fun setMessageAttack(attackPlayer: Boolean): Int =
+    if (attackPlayer) {
         R.string.AttackMessage
     } else {
         R.string.DefenseMessage
     }
-}
 
-fun setIconCom(attackPlayer: Boolean): Int {
-    return if (!attackPlayer) {
+fun setIconCom(attackPlayer: Boolean): Int =
+    if (!attackPlayer) {
         R.drawable.icon_attacksword
     } else {
         R.drawable.icon_defense
     }
-}
 
-fun setIconPlayer(attackPlayer: Boolean): Int {
-    return if (attackPlayer) {
+fun setIconPlayer(attackPlayer: Boolean): Int =
+    if (attackPlayer) {
         R.drawable.icon_attacksword
     } else {
         R.drawable.icon_defense
     }
-}
 
 fun setColorLifePlayer(heroItem: SuperHeroCombat): Color {
     val durability = heroItem.life
-    val lifeColor = when (durability) {
-        in 0..100 -> Color.Red
-        in 101..200 -> Color.Yellow
-        else -> Color.Green
-    }
+    val lifeColor =
+        when (durability) {
+            in 0..100 -> Color.Red
+            in 101..200 -> Color.Yellow
+            else -> Color.Green
+        }
     return lifeColor
 }

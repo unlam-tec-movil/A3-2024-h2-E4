@@ -6,5 +6,5 @@ data class SuperHeroBiography(
     @SerializedName("full-name") var fullName: String,
     @SerializedName("first-appearance") val firstAppearance: String,
     @SerializedName("publisher") var publisher: String,
-    @SerializedName("alignment") val alignment: String
+    @SerializedName("alignment") val alignment: String,
 )

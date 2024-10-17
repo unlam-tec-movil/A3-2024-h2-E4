@@ -18,9 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,13 +26,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -68,29 +64,22 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.data.local.Background
-import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.ui.components.ExitConfirmation
-import ar.edu.unlam.mobile.scaffolding.ui.components.IconPowerDetail
-import ar.edu.unlam.mobile.scaffolding.ui.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.components.mediaPlayer
 import ar.edu.unlam.mobile.scaffolding.ui.core.local.OrientationScreen.PORTRAIT
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.CombatScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.DetailRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectComRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectMapRoute
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
-import coil.compose.rememberAsyncImagePainter
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun SelectMap(
     navController: NavHostController,
-    selectCharacterViewModel: SelectCharacterViewModel
+    selectCharacterViewModel: SelectCharacterViewModel,
 ) {
     val context = LocalContext.current
     val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
@@ -102,19 +91,21 @@ fun SelectMap(
 
     SetOrientationScreen(
         context = context,
-        orientation = PORTRAIT.orientation
+        orientation = PORTRAIT.orientation,
     )
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    listOf(SilverA, VioletSky),
-                    startY = 0f,
-                    endY = 600f
-                )
-            )
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(
+                    brush =
+                        Brush.verticalGradient(
+                            listOf(SilverA, VioletSky),
+                            startY = 0f,
+                            endY = 600f,
+                        ),
+                ),
     ) {
         if (isLoading.value) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -126,16 +117,16 @@ fun SelectMap(
                     TopBar(
                         navController,
                         selectCharacterViewModel,
-                        context
+                        context,
                     ) { showExitConfirmation = true }
                 },
                 content = {
                     ContentView(
                         navController = navController,
                         selectCharacterViewModel = selectCharacterViewModel,
-                        context = context
+                        context = context,
                     )
-                }
+                },
             )
         }
 
@@ -149,7 +140,7 @@ fun SelectMap(
                 }
             },
             title = stringResource(id = R.string.ExitConfirmation),
-            message = stringResource(id = R.string.ExitSelectCharacter)
+            message = stringResource(id = R.string.ExitSelectCharacter),
         )
 
         BackHandler {
@@ -158,7 +149,6 @@ fun SelectMap(
     }
 }
 
-
 @SuppressLint("RestrictedApi")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -166,7 +156,7 @@ fun TopBar(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
-    showExitConfirmation: (Boolean) -> Unit
+    showExitConfirmation: (Boolean) -> Unit,
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
@@ -175,12 +165,13 @@ fun TopBar(
         title = {
             Text(
                 text = "Background Selection",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                 textAlign = TextAlign.Start,
                 color = Color.White,
-                fontSize = 20.sp
+                fontSize = 20.sp,
             )
         },
         navigationIcon = {
@@ -188,7 +179,7 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
         },
@@ -198,36 +189,36 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.Filled.MoreVert,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { setExpanded(false) }
+                onDismissRequest = { setExpanded(false) },
             ) {
                 Row(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clickable {/*Ranked*/ }
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .clickable { /*Ranked*/ }
+                            .fillMaxWidth(),
                 ) {
-
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.List,
                         contentDescription = null,
-                        modifier = Modifier.padding(horizontal = 8.dp)
+                        modifier = Modifier.padding(horizontal = 8.dp),
                     )
 
                     Text(
                         text = "View Ranked",
                         fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
-                        modifier = Modifier.padding(end = 16.dp)
+                        modifier = Modifier.padding(end = 16.dp),
                     )
                 }
             }
-        }
+        },
     )
 }
 
@@ -235,38 +226,35 @@ fun TopBar(
 fun ContentView(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
-    context: Context
+    context: Context,
 ) {
     val backgroundList by selectCharacterViewModel.backgroundData.collectAsState()
     val backgroundSelected by selectCharacterViewModel.background.collectAsState()
 
     if (backgroundList.isNotEmpty()) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 48.dp),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = 48.dp),
+            contentAlignment = Alignment.Center,
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-
                 Text(text = "Select your combat background...")
 
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(500.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(500.dp),
                 ) {
                     LazyRowWithImagesHeroPlayer(
                         backgroundList = backgroundList,
                         selectCharacterViewModel,
                         backgroundSelected,
-                        navController
+                        navController,
                     )
                 }
-
-
-
-
 
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_attack,
@@ -275,18 +263,19 @@ fun ContentView(
                             selectCharacterViewModel.setCombatDataScreen()
                             navController.navigate(CombatScreenRoute)
                         } else {
-                            Toast.makeText(
-                                context,
-                                "Please Select background for continue",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Please Select background for continue",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         }
-
                     },
-                    modifier = Modifier
-                        .width(700.dp)
-                        .height(250.dp)
-                        .padding(bottom = 22.dp)
+                    modifier =
+                        Modifier
+                            .width(700.dp)
+                            .height(250.dp)
+                            .padding(bottom = 22.dp),
                 ) {
                     Text(
                         text = "Start Combat",
@@ -294,11 +283,9 @@ fun ContentView(
                         fontFamily = FontFamily(Font(R.font.font_firestar)),
                         fontStyle = FontStyle.Italic,
                         fontSize = 28.sp,
-                        color = Color.Black
+                        color = Color.Black,
                     )
                 }
-
-
             }
         }
     } else {
@@ -306,8 +293,6 @@ fun ContentView(
             CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
     }
-
-
 }
 
 @Composable
@@ -315,61 +300,59 @@ fun LazyRowWithImagesHeroPlayer(
     backgroundList: List<Background>,
     selectCharacterViewModel: SelectCharacterViewModel,
     backgroundSelected: Background?,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
     LazyRow(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(4.dp),
-        userScrollEnabled = true
+        userScrollEnabled = true,
     ) {
         items(backgroundList) { stage ->
             Card(
-                modifier = Modifier
-                    .padding(vertical = 8.dp, horizontal = 4.dp)
-                    .width(400.dp)
-                    .height(500.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable {
-                        selectCharacterViewModel.setBackground(stage)
-                        if (backgroundSelected == stage) cancelSelect.start() else selectAudio.start()
-                    }
-                    .border(
-                        width = 2.dp,
-                        color = if (backgroundSelected != null && backgroundSelected == stage) Color.Green else Color.Transparent,
-                        shape = RoundedCornerShape(8.dp)
-                    ),
-
-                elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
+                modifier =
+                    Modifier
+                        .padding(vertical = 8.dp, horizontal = 4.dp)
+                        .width(400.dp)
+                        .height(500.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable {
+                            selectCharacterViewModel.setBackground(stage)
+                            if (backgroundSelected == stage) cancelSelect.start() else selectAudio.start()
+                        }.border(
+                            width = 2.dp,
+                            color = if (backgroundSelected != null && backgroundSelected == stage) Color.Green else Color.Transparent,
+                            shape = RoundedCornerShape(8.dp),
+                        ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Image(
                         painter = painterResource(id = stage.background),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
 
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp)
-                            .align(Alignment.BottomCenter)
-                            .background(
-                                colorResource(id = R.color.superhero_item_name)
-                            )
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(30.dp)
+                                .align(Alignment.BottomCenter)
+                                .background(
+                                    colorResource(id = R.color.superhero_item_name),
+                                ),
                     ) {
                         Text(
                             text = stage.name,
                             modifier = Modifier.align(Alignment.BottomCenter),
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = Color.White,
                         )
-
                     }
                 }
-
             }
         }
     }

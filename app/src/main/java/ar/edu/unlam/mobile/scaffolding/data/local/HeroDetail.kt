@@ -4,7 +4,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class HeroDetail @Inject constructor() {
-
-    var superHeroDetail : SuperHeroItem? = null
-}
+class HeroDetail
+    @Inject
+    constructor() {
+        var superHeroDetail: SuperHeroItem? = null
+    }

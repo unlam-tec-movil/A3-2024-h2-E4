@@ -9,17 +9,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class SuperHeroDetailScreenViewModel @Inject constructor(
-    getSuperHeroDetail: GetSuperHeroDetailUseCase)
-    : ViewModel() {
+class SuperHeroDetailScreenViewModel
+    @Inject
+    constructor(
+        getSuperHeroDetail: GetSuperHeroDetailUseCase,
+    ) : ViewModel() {
+        private val _playerDetailScreen = MutableStateFlow<SuperHeroItem?>(null)
+        val playerDetailScreen = _playerDetailScreen.asStateFlow()
 
-    private val _playerDetailScreen = MutableStateFlow<SuperHeroItem?>(null)
-    val playerDetailScreen = _playerDetailScreen.asStateFlow()
-
-    init {
-        val superHero = getSuperHeroDetail()
-        if (superHero != null) {
-            _playerDetailScreen.value = superHero
+        init {
+            val superHero = getSuperHeroDetail()
+            if (superHero != null) {
+                _playerDetailScreen.value = superHero
+            }
         }
     }
-}

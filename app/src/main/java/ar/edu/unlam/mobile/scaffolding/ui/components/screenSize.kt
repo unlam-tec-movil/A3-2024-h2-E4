@@ -6,7 +6,6 @@ import kotlin.math.sqrt
 
 @Composable
 fun screenSize(context: Context): Boolean {
-
     val displayMetrics = context.resources.displayMetrics
 
     val screenWidthInPixels = displayMetrics.widthPixels

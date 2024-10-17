@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import ar.edu.unlam.mobile.scaffolding.R
 
 @Composable
-fun IconPowerDetail(){
+fun IconPowerDetail() {
     Icon(
         painter = painterResource(id = R.drawable.ic_power_detail),
         contentDescription = null,
         tint = colorResource(id = R.color.iconColor),
-        modifier = Modifier.size(30.dp)
+        modifier = Modifier.size(30.dp),
     )
 }

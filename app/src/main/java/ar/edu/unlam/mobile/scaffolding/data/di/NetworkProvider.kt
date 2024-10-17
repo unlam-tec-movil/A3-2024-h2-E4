@@ -11,23 +11,17 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-
 object NetworkProvider {
-
     @Singleton
     @Provides
-    fun getRetrofitProvider(): Retrofit {
-        return Retrofit.Builder()
+    fun getRetrofitProvider(): Retrofit =
+        Retrofit
+            .Builder()
             .baseUrl("https://superheroapi.com/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-    }
 
     @Singleton
     @Provides
-    fun getSuperHeroApiClient(retrofit: Retrofit):SuperHeroApiClient{
-        return retrofit.create(SuperHeroApiClient::class.java)
-    }
-
-
+    fun getSuperHeroApiClient(retrofit: Retrofit): SuperHeroApiClient = retrofit.create(SuperHeroApiClient::class.java)
 }

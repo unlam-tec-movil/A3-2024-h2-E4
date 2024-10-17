@@ -15,13 +15,11 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class UseCaseModule {
     @Binds
-    abstract fun bindSuperHeroRepository(superHeroRepository: SuperHeroRepository)
-            : SuperHeroRepositoryInterface
+    abstract fun bindSuperHeroRepository(superHeroRepository: SuperHeroRepository): SuperHeroRepositoryInterface
 
     @Binds
     abstract fun bindGetSuperHeroByName(getSuperHeroListByNameUseCases: GetSuperHeroListByNameUseCase): GetSuperHeroListByNameService
 
-
     @Binds
-    abstract fun bindSetCombatDataScreen(setCombatDataUseCase: SetCombatDataUseCase):SetCombatDataService
+    abstract fun bindSetCombatDataScreen(setCombatDataUseCase: SetCombatDataUseCase): SetCombatDataService
 }

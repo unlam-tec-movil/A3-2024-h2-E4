@@ -11,7 +11,7 @@ fun ExitConfirmation(
     onDismiss: () -> Unit,
     onConfirm: () -> Unit,
     title: String,
-    message: String
+    message: String,
 ) {
     if (show) {
         AlertDialog(
@@ -28,9 +28,10 @@ fun ExitConfirmation(
             },
             title = {
                 Text(
-                    text = title
+                    text = title,
                 )
-            }, text = { Text(text = message) })
+            },
+            text = { Text(text = message) },
+        )
     }
-
 }

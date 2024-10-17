@@ -9,9 +9,8 @@ data class SuperHeroItem(
     val id: String,
     val name: String,
     var powerstats: SuperHeroPowerStats,
-    val biography : SuperHeroBiography,
-    val appearance : SuperHeroAppearance,
-    val image : SuperHeroImage,
-    var imagePath: String? = null
+    val biography: SuperHeroBiography,
+    val appearance: SuperHeroAppearance,
+    val image: SuperHeroImage,
+    var imagePath: String? = null,
 )
-

@@ -9,12 +9,13 @@ import androidx.compose.runtime.DisposableEffect
 fun PlayAudioEffect(
     randomTheme: Int,
     context: Context,
-    attackEffect: Boolean
+    attackEffect: Boolean,
 ) {
     DisposableEffect(randomTheme) {
-        val audio = MediaPlayer.create(context, randomTheme).apply {
-            setVolume(1.0f, 1.0f)
-        }
+        val audio =
+            MediaPlayer.create(context, randomTheme).apply {
+                setVolume(1.0f, 1.0f)
+            }
 
         if (attackEffect) {
             audio.start()

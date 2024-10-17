@@ -30,14 +30,14 @@ import com.google.zxing.qrcode.QRCodeWriter
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun QRGenerateScreen() {
-
     Scaffold {
         Column(
-            modifier = Modifier
-                .background(Color.Black)
-                .padding(it)
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier =
+                Modifier
+                    .background(Color.Black)
+                    .padding(it)
+                    .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.size(width = 0.dp, height = 50.dp))
 
@@ -45,11 +45,12 @@ fun QRGenerateScreen() {
                 text = "READ THE CODE",
                 color = Color.White,
                 fontSize = 40.sp,
-                fontFamily = FontFamily(
-                    Font(
-                        R.font.creepster_regular
-                    )
-                )
+                fontFamily =
+                    FontFamily(
+                        Font(
+                            R.font.creepster_regular,
+                        ),
+                    ),
             )
             Spacer(modifier = Modifier.size(width = 0.dp, height = 180.dp))
             Image(bitmap = getQrCodeBitMap("no se que poner"), "My qr code")
@@ -59,17 +60,19 @@ fun QRGenerateScreen() {
 
 fun getQrCodeBitMap(qrCodeContent: String): ImageBitmap {
     val size = 1024
-    val hints = hashMapOf<EncodeHintType, Int>().also {
-        it[EncodeHintType.MARGIN] = 1
-    }
+    val hints =
+        hashMapOf<EncodeHintType, Int>().also {
+            it[EncodeHintType.MARGIN] = 1
+        }
     val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size, hints)
-    val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
-        for (x in 0 until size) {
-            for (y in 0 until size) {
-                val color = if (bits[x, y]) Color.White else Color.Black
-                it.setPixel(x, y, color.toArgb())
+    val bitmap =
+        Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
+            for (x in 0 until size) {
+                for (y in 0 until size) {
+                    val color = if (bits[x, y]) Color.White else Color.Black
+                    it.setPixel(x, y, color.toArgb())
+                }
             }
         }
-    }
     return bitmap.asImageBitmap()
 }

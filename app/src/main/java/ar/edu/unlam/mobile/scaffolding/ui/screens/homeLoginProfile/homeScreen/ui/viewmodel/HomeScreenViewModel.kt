@@ -13,15 +13,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeScreenViewModel @Inject constructor(private val wallpaperLogos: WallpaperLogos, firebaseAuth: FirebaseAuth):ViewModel() {
+class HomeScreenViewModel
+    @Inject
+    constructor(
+        private val wallpaperLogos: WallpaperLogos,
+        firebaseAuth: FirebaseAuth,
+    ) : ViewModel() {
+        private val _logos = MutableStateFlow(wallpaperLogos.logos[0])
+        val logos = _logos.asStateFlow()
+        private val _auth = MutableStateFlow(firebaseAuth)
+        val auth = _auth.asStateFlow()
+        private var initRandomLogo = true
 
-    private val _logos = MutableStateFlow(wallpaperLogos.logos[0])
-    val logos = _logos.asStateFlow()
-    private val _auth = MutableStateFlow(firebaseAuth)
-    val auth = _auth.asStateFlow()
-    private var initRandomLogo = true
-
-    init {
+        init {
             viewModelScope.launch {
                 while (initRandomLogo) {
                     delay(5000)
@@ -30,11 +34,10 @@ class HomeScreenViewModel @Inject constructor(private val wallpaperLogos: Wallpa
                     _logos.value = list[randomNumber]
                 }
             }
-    }
+        }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelScope.cancel()
+        override fun onCleared() {
+            super.onCleared()
+            viewModelScope.cancel()
+        }
     }
-}
-

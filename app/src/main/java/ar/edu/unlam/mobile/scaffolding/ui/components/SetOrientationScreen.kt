@@ -11,7 +11,11 @@ import ar.edu.unlam.mobile.scaffolding.MainActivity
 
 @SuppressLint("SourceLockedOrientationActivity")
 @Composable
-fun SetOrientationScreen(context: Context, orientation: Boolean, hideStatusBar: Boolean = false) {
+fun SetOrientationScreen(
+    context: Context,
+    orientation: Boolean,
+    hideStatusBar: Boolean = false,
+) {
     val activity = context as? Activity
     val window = (context as? MainActivity)?.window
 
@@ -21,7 +25,6 @@ fun SetOrientationScreen(context: Context, orientation: Boolean, hideStatusBar: 
         } else {
             activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
-
     }
 
     if (hideStatusBar) {
@@ -30,5 +33,4 @@ fun SetOrientationScreen(context: Context, orientation: Boolean, hideStatusBar: 
             systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
-
 }

@@ -7,11 +7,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class CameraScreenViewModel @Inject constructor() : ViewModel() {
-    private val _permissionCamera = MutableStateFlow(false)
-    val permissionCamera = _permissionCamera.asStateFlow()
+class CameraScreenViewModel
+    @Inject
+    constructor() : ViewModel() {
+        private val _permissionCamera = MutableStateFlow(false)
+        val permissionCamera = _permissionCamera.asStateFlow()
 
-    fun setPermissionCamera(granted: Boolean) {
-        _permissionCamera.value = granted
+        fun setPermissionCamera(granted: Boolean) {
+            _permissionCamera.value = granted
+        }
     }
-}

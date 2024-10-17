@@ -22,27 +22,29 @@ fun AttackEffect(
     attackEffect: Boolean,
     enableButton: Boolean,
     context: Context,
-    viewModel: CombatViewModel
+    viewModel: CombatViewModel,
 ) {
     val randomTheme by viewModel.audioAttack.collectAsState()
 
     PlayAudioEffect(randomTheme, context, attackEffect)
 
     val transition = rememberInfiniteTransition(label = "Infinity")
-    val color = transition.animateColor(
-        initialValue = colorResource(id = R.color.combatColorEffect1),
-        targetValue = colorResource(
-            id = R.color.combatColorEffect2
-        ),
-        animationSpec = infiniteRepeatable(animation = tween(300), repeatMode = RepeatMode.Restart),
-        label = ""
-    )
+    val color =
+        transition.animateColor(
+            initialValue = colorResource(id = R.color.combatColorEffect1),
+            targetValue =
+                colorResource(
+                    id = R.color.combatColorEffect2,
+                ),
+            animationSpec = infiniteRepeatable(animation = tween(300), repeatMode = RepeatMode.Restart),
+            label = "",
+        )
     if (attackEffect && !enableButton) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = color.value)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(color = color.value),
         )
     }
 }
-

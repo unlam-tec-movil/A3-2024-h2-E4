@@ -12,17 +12,19 @@ import ar.edu.unlam.mobile.scaffolding.R
 @Composable
 fun mediaPlayer(
     context: Context,
-    audioPosition: State<Int>
+    audioPosition: State<Int>,
 ): MediaPlayer {
-    val audio = remember {
-        MediaPlayer.create(context, R.raw.raw_selectcharacter)
-            .apply { setVolume(0.1f, 0.1f) }
-    }
+    val audio =
+        remember {
+            MediaPlayer
+                .create(context, R.raw.raw_selectcharacter)
+                .apply { setVolume(0.1f, 0.1f) }
+        }
     Log.i("audioPosition1", "${audioPosition.value}")
 
     DisposableEffect(Unit) {
         audio.let {
-            it.seekTo(audioPosition.value-1)
+            it.seekTo(audioPosition.value - 1)
             it.start()
         }
         onDispose {

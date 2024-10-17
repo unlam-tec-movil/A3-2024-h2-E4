@@ -6,7 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface SuperHeroApiClient {
-
     @GET("3080941948705073/search/{name}")
-    suspend fun getHeroByName(@Path("name") superHeroName: String): Response<SuperHeroDataResponse>
+    suspend fun getHeroByName(
+        @Path("name") superHeroName: String,
+    ): Response<SuperHeroDataResponse>
 }

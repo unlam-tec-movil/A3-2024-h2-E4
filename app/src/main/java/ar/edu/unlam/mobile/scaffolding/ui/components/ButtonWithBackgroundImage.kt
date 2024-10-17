@@ -21,24 +21,27 @@ fun ButtonWithBackgroundImage(
     enabledButton: Boolean = true,
     onClick: () -> Unit,
     modifier: Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         Image(
             painter = painterResource(id = imageResId),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.FillBounds
+            contentScale = ContentScale.FillBounds,
         )
         Button(
             onClick = onClick,
             enabled = enabledButton,
             colors = ButtonDefaults.buttonColors(Color.Transparent),
             content = { content() },
-            modifier = Modifier.width(270.dp).height(98.dp)
+            modifier =
+                Modifier
+                    .width(270.dp)
+                    .height(98.dp),
         )
     }
 }

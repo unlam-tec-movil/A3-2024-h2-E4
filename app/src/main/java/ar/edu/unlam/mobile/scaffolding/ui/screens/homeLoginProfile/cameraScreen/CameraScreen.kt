@@ -52,11 +52,13 @@ import java.io.File
 import java.util.concurrent.Executor
 
 @Composable
-fun CameraScreen(navController: NavController, viewModel: CameraScreenViewModel = hiltViewModel()) {
+fun CameraScreen(
+    navController: NavController,
+    viewModel: CameraScreenViewModel = hiltViewModel(),
+) {
     val permissionCamera by viewModel.permissionCamera.collectAsState()
     val permissionLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
-        { permissionsGranted ->
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsGranted ->
             viewModel.setPermissionCamera(permissionsGranted.all { it.value })
         }
 
@@ -66,9 +68,10 @@ fun CameraScreen(navController: NavController, viewModel: CameraScreenViewModel 
     val directory =
         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absoluteFile
 
-    val audio = MediaPlayer.create(context, R.raw.raw_camera).apply {
-        setVolume(1.0f, 1.0f)
-    }
+    val audio =
+        MediaPlayer.create(context, R.raw.raw_camera).apply {
+            setVolume(1.0f, 1.0f)
+        }
 
     LaunchedEffect(Unit) {
         if (!permissionCamera) {
@@ -76,8 +79,8 @@ fun CameraScreen(navController: NavController, viewModel: CameraScreenViewModel 
                 arrayOf(
                     Manifest.permission.CAMERA,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                ),
             )
         }
     }
@@ -88,15 +91,17 @@ fun CameraScreen(navController: NavController, viewModel: CameraScreenViewModel 
             floatingActionButton = {
                 FloatingActionButton(
                     modifier = Modifier.padding(bottom = 8.dp),
-                    contentColor = Color.White, containerColor = Color(0xFF279DFC),
+                    contentColor = Color.White,
+                    containerColor = Color(0xFF279DFC),
                     onClick = {
                         audio.start()
                         val executor = ContextCompat.getMainExecutor(context)
                         takePicture(cameraController, executor, directory)
-                    }) {
+                    },
+                ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_camera),
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
             },
@@ -104,28 +109,30 @@ fun CameraScreen(navController: NavController, viewModel: CameraScreenViewModel 
             bottomBar = {
                 ButtonBar(
                     onSwitchCamera = { enabled ->
-                        cameraController.cameraSelector = if (enabled) {
-                            CameraSelector.DEFAULT_FRONT_CAMERA
-                        } else {
-                            CameraSelector.DEFAULT_BACK_CAMERA
-                        }
-                    }, onOpenDirectory = {
+                        cameraController.cameraSelector =
+                            if (enabled) {
+                                CameraSelector.DEFAULT_FRONT_CAMERA
+                            } else {
+                                CameraSelector.DEFAULT_BACK_CAMERA
+                            }
+                    },
+                    onOpenDirectory = {
                         openPhotoDirectory(context, directory)
-                    }, onFlashActivated = { enabled ->
+                    },
+                    onFlashActivated = { enabled ->
                         cameraController.imageCaptureFlashMode =
                             if (enabled) ImageCapture.FLASH_MODE_ON else ImageCapture.FLASH_MODE_OFF
-                    }
+                    },
                 )
-            }
+            },
         ) {
             CameraComposable(
                 camaraController = cameraController,
                 lifecycle = lifecycle,
-                modifier = Modifier.padding(it)
+                modifier = Modifier.padding(it),
             )
         }
     } else {
-
         Text("La aplicación necesita acceso a la cámara para funcionar correctamente.")
     }
 
@@ -141,8 +148,7 @@ fun CameraScreen(navController: NavController, viewModel: CameraScreenViewModel 
 fun ButtonBar(
     onSwitchCamera: (Boolean) -> Unit,
     onOpenDirectory: () -> Unit,
-    onFlashActivated: (Boolean) -> Unit
-
+    onFlashActivated: (Boolean) -> Unit,
 ) {
     var flashState by rememberSaveable {
         mutableStateOf(false)
@@ -157,90 +163,99 @@ fun ButtonBar(
                 modifier = Modifier.size(20.dp),
                 painter = painterResource(id = R.drawable.ic_galery),
                 contentDescription = "l",
-                tint = Color.White
+                tint = Color.White,
             )
         }, label = { Text(text = "Galery", color = Color.White, fontWeight = FontWeight.Light) })
 
-        NavigationBarItem(selected = false, onClick = {
-            flashState = !flashState
-            onFlashActivated(flashState)
-        }, icon = {
-            Icon(
-                modifier = Modifier.size(20.dp),
-                painter = painterResource(id = if (flashState) R.drawable.ic_flashon else R.drawable.ic_flashoff),
-                contentDescription = "l",
-                tint = Color.White
-            )
-        },
+        NavigationBarItem(
+            selected = false,
+            onClick = {
+                flashState = !flashState
+                onFlashActivated(flashState)
+            },
+            icon = {
+                Icon(
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(id = if (flashState) R.drawable.ic_flashon else R.drawable.ic_flashoff),
+                    contentDescription = "l",
+                    tint = Color.White,
+                )
+            },
             label = {
                 Text(
                     text = if (flashState) "Flash on" else "Flash off",
                     color = Color.White,
-                    fontWeight = FontWeight.Light
+                    fontWeight = FontWeight.Light,
                 )
-            })
-        NavigationBarItem(selected = false, onClick = {
-            frontCameraState = !frontCameraState
-            onSwitchCamera(frontCameraState)
-        }, icon = {
-            Icon(
-                modifier = Modifier.size(20.dp),
-                painter = painterResource(id = R.drawable.ic_change),
-                contentDescription = "l",
-                tint = Color.White
-            )
-        },
+            },
+        )
+        NavigationBarItem(
+            selected = false,
+            onClick = {
+                frontCameraState = !frontCameraState
+                onSwitchCamera(frontCameraState)
+            },
+            icon = {
+                Icon(
+                    modifier = Modifier.size(20.dp),
+                    painter = painterResource(id = R.drawable.ic_change),
+                    contentDescription = "l",
+                    tint = Color.White,
+                )
+            },
             label = {
                 Text(
                     text = if (frontCameraState) "Frontal on" else "Frontal off",
                     color = Color.White,
-                    fontWeight = FontWeight.Light
+                    fontWeight = FontWeight.Light,
                 )
-            })
+            },
+        )
     }
-
-
 }
-
 
 @Composable
 fun CameraComposable(
     camaraController: LifecycleCameraController,
     lifecycle: LifecycleOwner,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     camaraController.bindToLifecycle(lifecycle)
     AndroidView(
         modifier = modifier,
         factory = {
-
-            val previaView = PreviewView(it).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
-            }
+            val previaView =
+                PreviewView(it).apply {
+                    layoutParams =
+                        ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                        )
+                }
 
             previaView.controller = camaraController
             previaView
-        }
+        },
     )
 }
 
-
-private fun openPhotoDirectory(context: Context, directory: File) {
-    val intent = Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.parse(directory.absolutePath)
-        setDataAndType(Uri.parse(directory.absolutePath), "*/*")
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    }
+private fun openPhotoDirectory(
+    context: Context,
+    directory: File,
+) {
+    val intent =
+        Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(directory.absolutePath)
+            setDataAndType(Uri.parse(directory.absolutePath), "*/*")
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
     context.startActivity(intent)
 }
 
 private fun takePicture(
     camaraController: LifecycleCameraController,
     executor: Executor,
-    directory: File
+    directory: File,
 ) {
     val image = File.createTempFile("img_", ".jpg", directory)
     val outputDirectory = ImageCapture.OutputFileOptions.Builder(image).build()
@@ -256,7 +271,6 @@ private fun takePicture(
             override fun onError(exception: ImageCaptureException) {
                 println()
             }
-
-        }
+        },
     )
 }

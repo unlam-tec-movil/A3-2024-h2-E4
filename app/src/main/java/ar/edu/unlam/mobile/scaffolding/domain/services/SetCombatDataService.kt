@@ -5,7 +5,8 @@ import ar.edu.unlam.mobile.scaffolding.data.local.SuperHeroItem
 
 interface SetCombatDataService {
     fun setSuperHeroPlayer(superHeroItem: SuperHeroItem)
-    fun setSuperHeroCom(superHeroItem: SuperHeroItem)
-    fun setCombatScreen(background: Background)
 
+    fun setSuperHeroCom(superHeroItem: SuperHeroItem)
+
+    fun setCombatScreen(background: Background)
 }

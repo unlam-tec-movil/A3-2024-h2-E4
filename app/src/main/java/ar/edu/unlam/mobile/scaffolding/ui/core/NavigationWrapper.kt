@@ -22,21 +22,21 @@ import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.SignUpScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.UserProfileScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.viewmodel.NavigationWrapperViewModel
+import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.qrGenerateScreen.QRGenerateScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatResultScreen.SuperHeroCombatResult
+import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatScreen.SuperHeroCombat
+import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroRankedScreen.SuperHeroRanked
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.authenticationScreen.AuthenticationScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.cameraScreen.CameraScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.createAccountScreen.CreateAccountScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.homeScreen.ui.HomeScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.qrGenerateScreen.QRGenerateScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.signUpScreen.SignUpScreen
+import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.userProfileScreen.UserProfileScreen
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectComScreen.SelectCom
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectMapScreen.SelectMap
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.SelectPlayer
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
-import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.signUpScreen.SignUpScreen
-import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatResultScreen.SuperHeroCombatResult
-import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroCombatScreen.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.ui.screens.selectCharacterMap.superHeroDetailScreen.SuperHeroDetail
-import ar.edu.unlam.mobile.scaffolding.ui.screens.combatResult.superHeroRankedScreen.SuperHeroRanked
-import ar.edu.unlam.mobile.scaffolding.ui.screens.homeLoginProfile.userProfileScreen.UserProfileScreen
 
 @Composable
 fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
@@ -49,19 +49,19 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
         composable<SelectMapRoute> {
             SelectMap(
                 navController = navController,
-                selectCharacterViewModel = selectCharacterViewModel
+                selectCharacterViewModel = selectCharacterViewModel,
             )
         }
         composable<SelectPlayerRoute> {
             SelectPlayer(
                 navController = navController,
-                selectCharacterViewModel = selectCharacterViewModel
+                selectCharacterViewModel = selectCharacterViewModel,
             )
         }
         composable<SelectComRoute> {
             SelectCom(
                 navController = navController,
-                selectCharacterViewModel = selectCharacterViewModel
+                selectCharacterViewModel = selectCharacterViewModel,
             )
         }
         composable<CombatResultRoute> { SuperHeroCombatResult(navController = navController) }
@@ -69,13 +69,13 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
         composable<DetailRoute> {
             SuperHeroDetail(
                 navController = navController,
-                selectCharacterViewModel = selectCharacterViewModel
+                selectCharacterViewModel = selectCharacterViewModel,
             )
         }
         composable<RankedRoute> { SuperHeroRanked(navController = navController) }
         composable<CameraScreenRoute> {
             CameraScreen(
-                navController = navController
+                navController = navController,
             )
         }
         composable<QRGenerateScreenRoute> { QRGenerateScreen() }
@@ -83,13 +83,13 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
         composable<CreateAccountScreenRoute> {
             CreateAccountScreen(
                 navController = navController,
-                auth
+                auth,
             )
         }
         composable<AuthenticationScreenRoute> {
             AuthenticationScreen(
                 navController = navController,
-                auth
+                auth,
             )
         }
 

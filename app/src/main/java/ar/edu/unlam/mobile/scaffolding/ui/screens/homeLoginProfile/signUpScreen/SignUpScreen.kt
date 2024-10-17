@@ -32,18 +32,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
-import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.AuthenticationScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.core.routes.CreateAccountScreenRoute
+import ar.edu.unlam.mobile.scaffolding.ui.core.routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.ui.theme.DarkPurple
+import ar.edu.unlam.mobile.scaffolding.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.ui.theme.VioletSky
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-
-fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
+fun SignUpScreen(
+    navController: NavController,
+    auth: FirebaseAuth,
+) {
     val activity = LocalContext.current as Activity
 
     LaunchedEffect(auth) {
@@ -56,24 +58,25 @@ fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    listOf(SilverA, VioletSky),
-                    startY = 0f,
-                    endY = 600f
-                )
-            ),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        listOf(SilverA, VioletSky),
+                        startY = 0f,
+                        endY = 600f,
+                    ),
+                ),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
         Image(
             modifier = Modifier,
             painter = painterResource(id = R.drawable.iv_logo),
-            contentDescription = "MarvelFF Logo"
+            contentDescription = "MarvelFF Logo",
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -82,38 +85,39 @@ fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
             text = stringResource(id = R.string.SignUpTitle),
             color = Color.White,
             fontSize = 35.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
         Text(
             text = stringResource(id = R.string.SignUpSubTitle),
             color = Color.White,
             fontSize = 35.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
         Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-                .height(54.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .height(54.dp),
             onClick = { navController.navigate(CreateAccountScreenRoute) },
-            colors = ButtonDefaults.buttonColors(containerColor = DarkPurple)
+            colors = ButtonDefaults.buttonColors(containerColor = DarkPurple),
         ) {
             Text(
                 text = stringResource(id = R.string.SignUpFree),
                 color = Color.White,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
         }
         Spacer(modifier = Modifier.size(8.dp))
 
-        ButtonLogin(R.drawable.ic_google, R.string.Google) {/*TODO*/ }
+        ButtonLogin(R.drawable.ic_google, R.string.Google) { /*TODO*/ }
 
         Spacer(modifier = Modifier.size(8.dp))
 
-        ButtonLogin(R.drawable.ic_facebook, R.string.Facebook) {/*TODO*/ }
+        ButtonLogin(R.drawable.ic_facebook, R.string.Facebook) { /*TODO*/ }
 
         Spacer(modifier = Modifier.size(24.dp))
 
@@ -122,7 +126,7 @@ fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
             text = "Log In",
             color = Color.White,
             fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -135,35 +139,40 @@ fun SignUpScreen(navController: NavController, auth: FirebaseAuth) {
     }
 }
 
-
 @Composable
-fun ButtonLogin(image: Int, message: Int, onClick: () -> Unit) {
+fun ButtonLogin(
+    image: Int,
+    message: Int,
+    onClick: () -> Unit,
+) {
     OutlinedButton(
         onClick = { onClick() },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 24.dp)
-            .height(60.dp)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+                .height(60.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Image(
                 modifier = Modifier.size(25.dp),
                 alignment = Alignment.CenterStart,
                 painter = painterResource(id = image),
-                contentDescription = "SocialNetworkLogo"
+                contentDescription = "SocialNetworkLogo",
             )
             Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 25.dp),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(end = 25.dp),
                 text = stringResource(id = message),
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                fontSize = 16.sp
+                fontSize = 16.sp,
             )
         }
     }

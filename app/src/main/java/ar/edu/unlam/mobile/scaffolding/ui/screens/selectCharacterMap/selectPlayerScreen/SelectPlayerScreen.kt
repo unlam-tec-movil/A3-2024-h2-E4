@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -85,7 +84,7 @@ import coil.compose.rememberAsyncImagePainter
 @Composable
 fun SelectPlayer(
     navController: NavHostController,
-    selectCharacterViewModel: SelectCharacterViewModel
+    selectCharacterViewModel: SelectCharacterViewModel,
 ) {
     val context = LocalContext.current
     val isLoading = selectCharacterViewModel.isLoading.collectAsState()
@@ -95,19 +94,21 @@ fun SelectPlayer(
 
     SetOrientationScreen(
         context = context,
-        orientation = PORTRAIT.orientation
+        orientation = PORTRAIT.orientation,
     )
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(
-                    listOf(SilverA, VioletSky),
-                    startY = 0f,
-                    endY = 600f
-                )
-            )
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(
+                    brush =
+                        Brush.verticalGradient(
+                            listOf(SilverA, VioletSky),
+                            startY = 0f,
+                            endY = 600f,
+                        ),
+                ),
     ) {
         if (isLoading.value) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -119,16 +120,16 @@ fun SelectPlayer(
                     TopBar(
                         navController,
                         selectCharacterViewModel,
-                        context
+                        context,
                     ) { showExitConfirmation = true }
                 },
                 content = {
                     ContentView(
                         navController = navController,
                         selectCharacterViewModel = selectCharacterViewModel,
-                        context = context
+                        context = context,
                     )
-                }
+                },
             )
         }
 
@@ -141,7 +142,7 @@ fun SelectPlayer(
                 }
             },
             title = stringResource(id = R.string.ExitConfirmation),
-            message = stringResource(id = R.string.ExitSelectCharacter)
+            message = stringResource(id = R.string.ExitSelectCharacter),
         )
 
         BackHandler {
@@ -150,7 +151,6 @@ fun SelectPlayer(
     }
 }
 
-
 @SuppressLint("RestrictedApi")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -158,7 +158,7 @@ fun TopBar(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
-    showExitConfirmation: (Boolean) -> Unit
+    showExitConfirmation: (Boolean) -> Unit,
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
@@ -167,12 +167,13 @@ fun TopBar(
         title = {
             Text(
                 text = "Character Player Selection",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                 textAlign = TextAlign.Start,
                 color = Color.White,
-                fontSize = 20.sp
+                fontSize = 20.sp,
             )
         },
         navigationIcon = {
@@ -180,7 +181,7 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
         },
@@ -193,48 +194,49 @@ fun TopBar(
                 Icon(
                     imageVector = Icons.Filled.Refresh,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
             IconButton(onClick = { setExpanded(true) }) {
                 Icon(
                     imageVector = Icons.Filled.MoreVert,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = Color.White,
                 )
             }
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { setExpanded(false) }
+                onDismissRequest = { setExpanded(false) },
             ) {
                 Row(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .clickable {/*Ranked*/ }
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .clickable { /*Ranked*/ }
+                            .fillMaxWidth(),
                 ) {
-
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.List,
                         contentDescription = null,
-                        modifier = Modifier.padding(horizontal = 8.dp)
+                        modifier = Modifier.padding(horizontal = 8.dp),
                     )
 
                     Text(
                         text = "View Ranked",
                         fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
-                        modifier = Modifier.padding(end = 16.dp)
+                        modifier = Modifier.padding(end = 16.dp),
                     )
                 }
                 Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(8.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(8.dp),
                 )
             }
-        }
+        },
     )
 }
 
@@ -242,7 +244,7 @@ fun TopBar(
 fun ContentView(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
-    context: Context
+    context: Context,
 ) {
     val playerList by selectCharacterViewModel.superHeroList.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
@@ -252,39 +254,36 @@ fun ContentView(
 
     if (playerList.isNotEmpty()) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 48.dp),
-            contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = 48.dp),
+            contentAlignment = Alignment.Center,
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-
                 Text(text = "Select your player or search for your favorite...")
 
                 SearchHero(
                     query = searchHeroPlayer,
                     onQueryChange = { searchHeroPlayer = it },
                     onSearch = { selectCharacterViewModel.searchHeroByNameToPlayer(searchHeroPlayer) },
-                    searchEnabled = true
+                    searchEnabled = true,
                 )
 
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(500.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(500.dp),
                 ) {
                     LazyRowWithImagesHeroPlayer(
                         heroList = playerList,
                         selectCharacterViewModel,
                         player,
                         navController,
-                        audio
+                        audio,
                     )
                 }
-
-
-
-
 
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_attack,
@@ -293,18 +292,19 @@ fun ContentView(
                             navController.navigate(SelectComRoute)
                             selectCharacterViewModel.initListHero()
                         } else {
-                            Toast.makeText(
-                                context,
-                                "Please Select character for continue",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast
+                                .makeText(
+                                    context,
+                                    "Please Select character for continue",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         }
-
                     },
-                    modifier = Modifier
-                        .width(500.dp)
-                        .height(200.dp)
-                        .padding(bottom = 22.dp)
+                    modifier =
+                        Modifier
+                            .width(500.dp)
+                            .height(200.dp)
+                            .padding(bottom = 22.dp),
                 ) {
                     Text(
                         text = "Continue",
@@ -312,11 +312,9 @@ fun ContentView(
                         fontFamily = FontFamily(Font(R.font.font_firestar)),
                         fontStyle = FontStyle.Italic,
                         fontSize = 32.sp,
-                        color = Color.Black
+                        color = Color.Black,
                     )
                 }
-
-
             }
         }
     } else {
@@ -324,8 +322,6 @@ fun ContentView(
             CircularProgressIndicator(Modifier.align(Alignment.Center))
         }
     }
-
-
 }
 
 @Composable
@@ -334,75 +330,73 @@ fun LazyRowWithImagesHeroPlayer(
     selectCharacterViewModel: SelectCharacterViewModel,
     player: SuperHeroItem?,
     navController: NavHostController,
-    audio: MediaPlayer
+    audio: MediaPlayer,
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
     LazyRow(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(4.dp),
-        userScrollEnabled = true
+        userScrollEnabled = true,
     ) {
         items(heroList) { hero ->
             Card(
-                modifier = Modifier
-                    .padding(vertical = 8.dp, horizontal = 4.dp)
-                    .width(400.dp)
-                    .height(500.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable {
-                        selectCharacterViewModel.setPlayer(hero)
-                        if (player == hero) cancelSelect.start() else selectAudio.start()
-                    }
-                    .border(
-                        width = 2.dp,
-                        color = if (player != null && player == hero) Color.Green else Color.Transparent,
-                        shape = RoundedCornerShape(8.dp)
-                    ),
-
-                elevation = CardDefaults.cardElevation(defaultElevation = 16.dp)
+                modifier =
+                    Modifier
+                        .padding(vertical = 8.dp, horizontal = 4.dp)
+                        .width(400.dp)
+                        .height(500.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable {
+                            selectCharacterViewModel.setPlayer(hero)
+                            if (player == hero) cancelSelect.start() else selectAudio.start()
+                        }.border(
+                            width = 2.dp,
+                            color = if (player != null && player == hero) Color.Green else Color.Transparent,
+                            shape = RoundedCornerShape(8.dp),
+                        ),
+                elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Image(
                         painter = rememberAsyncImagePainter(hero.image.url),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
                     IconButton(
                         onClick = {
                             selectCharacterViewModel.setSuperHeroDetail(hero)
                             navController.navigate(DetailRoute)
                             selectCharacterViewModel.setAudioPosition(audio.currentPosition)
-                        }, modifier = Modifier.align(
-                            Alignment.TopStart
-                        )
+                        },
+                        modifier =
+                            Modifier.align(
+                                Alignment.TopStart,
+                            ),
                     ) {
                         IconPowerDetail()
                     }
 
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(30.dp)
-                            .align(Alignment.BottomCenter)
-                            .background(
-                                colorResource(id = R.color.superhero_item_name)
-                            )
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .height(30.dp)
+                                .align(Alignment.BottomCenter)
+                                .background(
+                                    colorResource(id = R.color.superhero_item_name),
+                                ),
                     ) {
                         Text(
                             text = hero.name,
                             modifier = Modifier.align(Alignment.BottomCenter),
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = Color.White,
                         )
-
                     }
                 }
-
             }
         }
     }
 }
-
-

@@ -14,14 +14,16 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-//Dark Color Scheme
+// Dark Color Scheme
+
 private val DarkColorScheme =
     darkColorScheme(
         primary = Purple80,
         secondary = PurpleGrey80,
         tertiary = Pink80,
     )
-//Light Color Scheme
+// Light Color Scheme
+
 private val LightColorScheme =
     lightColorScheme(
         primary = Purple40,
@@ -63,7 +65,7 @@ fun ScaffoldingV2Theme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
         }
     }
-    //MaterialTheme
+    // MaterialTheme
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,

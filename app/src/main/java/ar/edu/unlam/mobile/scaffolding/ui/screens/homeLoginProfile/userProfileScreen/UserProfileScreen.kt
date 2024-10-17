@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun UserProfileScreen(auth: FirebaseAuth){
+fun UserProfileScreen(auth: FirebaseAuth) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column {
             Text(text = "User Profile")
@@ -24,7 +24,5 @@ fun UserProfileScreen(auth: FirebaseAuth){
             Spacer(modifier = Modifier.size(16.dp))
             Text(text = auth.currentUser!!.providerId)
         }
-
-
     }
 }
