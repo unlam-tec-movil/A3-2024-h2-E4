@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">ScaffoldingV2</string>
+    <string name="app_name">Future Fight</string>
+    <string name="EnterGame">Enter Game</string>
+    <string name="Home">Home</string>
+    <string name="Intelligence">Intelligence</string>
+    <string name="Strength">Strength</string>
+    <string name="Speed">Speed</string>
+    <string name="Durability">Durability</string>
+    <string name="Power">Power</string>
+    <string name="Combat">Combat</string>
+    <string name="BACK">Back</string>
+    <string name="ExitApp"> Do you want to exit app ? </string>
+    <string name="ExitConfirmation"> Exit confirmation </string>
+    <string name="ExitSelectCharacter"> Do you want to exit ?</string>
+    <string name="ExitSelectCOM"> Do you want to exit ?</string>
+    <string name="ExitSelectBattleground"> Do you want to exit ?</string>
+    <string name="ExitCombat"> Do you want to exit combat ? </string>
+    <string name="AttackMessage"> Atacando </string>
+    <string name="DefenseMessage"> Defendiendo </string>
+
+    <string name="SignUpTitle"> This is the Beginning </string>
+    <string name="SignUpSubTitle"> This will be your war </string>
+    <string name="SignUpFree"> Sign Up Free </string>
+    <string name="Google">Continue with Google</string>
+    <string name="Facebook">Continue with Facebook</string>
 </resources>

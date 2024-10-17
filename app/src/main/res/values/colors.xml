@@ -7,4 +7,23 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="superhero_item_name">#8B673AB7</color>
+    <color name="superhero_stat_intelligence">#00ff00</color>
+    <color name="superhero_stat_strength">#FF0000</color>
+    <color name="superhero_stat_speed">#E88B00</color>
+    <color name="superhero_stat_durability">#03A9F4</color>
+    <color name="superhero_stat_power">#FFEB3B</color>
+    <color name="superhero_stat_combat">#673AB7</color>
+    <color name="iconColor">#FF0000</color>
+    <color name="combatColorEffect1">#8BFF0000</color>
+    <color name="combatColorEffect2">#8BFFFFFF</color>
+    <color name="statColorAttack">#BEF97068</color>
+    <color name="statColorDefense">#BFE5B25D</color>
+    <color name="statColorLife">#BF52AA5E</color>
+    <color name="statColorPenance">#BF8B5FBF</color>
+    <color name="defenseSpecialActivated">#4DFFF3</color>
+    <color name="attackSpecialDisabled">#B8BDB5</color>
+    <color name="attackSpecialEnabled">#E4112A</color>
+    <color name="healingEnabled">#63d471</color>
+    <color name="healingEnabledB">#9dd025</color>
 </resources>
