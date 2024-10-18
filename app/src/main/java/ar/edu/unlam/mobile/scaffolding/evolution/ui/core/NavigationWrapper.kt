@@ -93,6 +93,11 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
             )
         }
 
-        composable<UserProfileScreenRoute> { UserProfileScreen(auth = auth) }
+        composable<UserProfileScreenRoute> {
+            UserProfileScreen(
+                auth = auth,
+                navController = navController,
+            )
+        }
     }
 }
