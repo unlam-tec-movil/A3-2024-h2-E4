@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -60,6 +61,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgro
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.StatsBattle
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen.viewmodel.CombatViewModel
@@ -84,6 +86,7 @@ fun SuperHeroCombat(
     var showExitConfirmation by rememberSaveable { mutableStateOf(false) }
     val attackPlayer by viewModel.attackPlayer.collectAsState()
     val context = LocalContext.current
+    val screenSizeSmall = screenSize(context)
 
     val iconButtonPotion by viewModel.iconButtonPotion.collectAsState()
     val iconButtonPowerUp by viewModel.iconButtonPowerUp.collectAsState()
@@ -107,26 +110,35 @@ fun SuperHeroCombat(
     )
 
     if (isLoading) {
-        Box(Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.iv_vs),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-            )
-            LinearProgressIndicator(
-                Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp)
-                    .fillMaxWidth(),
-            )
-            Text(
-                text = "Loading ...",
-                modifier =
+        if (screenSizeSmall) {
+            Box(
+                modifier = Modifier.fillMaxSize().background(Color.Black),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(color = Color.Cyan)
+            }
+        } else {
+            Box(Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.drawable.iv_vs),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+                LinearProgressIndicator(
                     Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 16.dp),
-            )
+                        .padding(bottom = 8.dp)
+                        .fillMaxWidth(),
+                )
+                Text(
+                    text = "Loading ...",
+                    modifier =
+                        Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 16.dp),
+                )
+            }
         }
     } else {
         val audio =
@@ -158,7 +170,8 @@ fun SuperHeroCombat(
                 Modifier
                     .fillMaxSize(),
         ) {
-            Image( // BACKGROUND
+            Image(
+                // BACKGROUND
                 painter = painterResource(id = backgroundData!!.background),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
@@ -172,7 +185,8 @@ fun SuperHeroCombat(
                         .padding(start = 8.dp, end = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Box( // BOX PLAYER
+                Box(
+                    // BOX PLAYER
                     modifier =
                         Modifier
                             .fillMaxHeight()
@@ -187,7 +201,8 @@ fun SuperHeroCombat(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceAround,
                         ) {
-                            IconButton( // HEAL PLAYER
+                            IconButton(
+                                // HEAL PLAYER
                                 onClick = {
                                     viewModel.healingPotion(lifePlayer.toInt())
                                 },
@@ -206,7 +221,8 @@ fun SuperHeroCombat(
                                 )
                             }
 
-                            IconButton( // ATTACK PLAYER
+                            IconButton(
+                                // ATTACK PLAYER
                                 onClick = {
                                     viewModel.specialAttack()
                                 },
@@ -225,7 +241,8 @@ fun SuperHeroCombat(
                                 )
                             }
 
-                            IconButton( // DEFENSE PLAYER
+                            IconButton(
+                                // DEFENSE PLAYER
                                 onClick = {
                                     viewModel.specialDefense()
                                 },
@@ -245,7 +262,8 @@ fun SuperHeroCombat(
                             }
                         }
 
-                        Card( // CARD PLAYER
+                        Card(
+                            // CARD PLAYER
                             modifier =
                                 Modifier
                                     .width(240.dp)
@@ -301,7 +319,8 @@ fun SuperHeroCombat(
                     }
                 }
 
-                Box( // BOX COM
+                Box(
+                    // BOX COM
                     modifier =
                         Modifier
                             .fillMaxHeight()
@@ -316,7 +335,8 @@ fun SuperHeroCombat(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceAround,
                         ) {
-                            IconButton( // HEAL COM
+                            IconButton(
+                                // HEAL COM
                                 onClick = {
                                 },
                                 enabled = (iconButtonPotionCom && enableButton),
@@ -334,7 +354,8 @@ fun SuperHeroCombat(
                                 )
                             }
 
-                            IconButton( // ATTACK COM
+                            IconButton(
+                                // ATTACK COM
                                 onClick = {
                                 },
                                 enabled = iconButtonPowerUpCom && enableButton,
@@ -352,7 +373,8 @@ fun SuperHeroCombat(
                                 )
                             }
 
-                            IconButton( // DEFENSE COM
+                            IconButton(
+                                // DEFENSE COM
                                 onClick = {
                                 },
                                 enabled = iconButtonDefensiveCom && enableButton,
@@ -371,7 +393,8 @@ fun SuperHeroCombat(
                             }
                         }
 
-                        Card( // CARD COM
+                        Card(
+                            // CARD COM
                             modifier =
                                 Modifier
                                     .width(240.dp)
@@ -436,7 +459,8 @@ fun SuperHeroCombat(
                 color = Color.White,
             )
 
-            Box( // BUTTON ATTACK
+            Box(
+                // BUTTON ATTACK
                 modifier =
                     Modifier
                         .align(Alignment.BottomCenter)
@@ -464,7 +488,8 @@ fun SuperHeroCombat(
             }
         }
 
-        Row( // LifePlayer
+        Row(
+            // LifePlayer
             modifier =
                 Modifier
                     .fillMaxWidth()
@@ -513,7 +538,8 @@ fun SuperHeroCombat(
                 }
             }
 
-            Box( // round
+            Box(
+                // round
                 modifier =
                     Modifier
                         .height(70.dp)
@@ -571,7 +597,8 @@ fun SuperHeroCombat(
                 )
             }
 
-            Box( // lifeCom
+            Box(
+                // lifeCom
                 modifier =
                     Modifier
                         .width(300.dp)

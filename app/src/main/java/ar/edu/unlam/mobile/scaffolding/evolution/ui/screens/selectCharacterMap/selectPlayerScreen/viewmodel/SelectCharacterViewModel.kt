@@ -63,7 +63,7 @@ class SelectCharacterViewModel
         }
 
         fun setAudioPosition(currentPosition: Int) {
-            _audioPosition.value = currentPosition + 1
+            _audioPosition.value = currentPosition
         }
 
         private fun getRandomList(): String {

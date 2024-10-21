@@ -71,6 +71,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.IconPowerDetail
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.DetailRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
@@ -91,6 +92,7 @@ fun SelectPlayer(
     var showExitConfirmation by rememberSaveable {
         mutableStateOf(false)
     }
+    val screenSizeSmall = screenSize(context)
 
     SetOrientationScreen(
         context = context,
@@ -111,8 +113,8 @@ fun SelectPlayer(
                 ),
     ) {
         if (isLoading.value) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+            Box(modifier = Modifier.fillMaxSize().background(Color.Black), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(color = Color.Cyan)
             }
         } else {
             Scaffold(
@@ -121,6 +123,7 @@ fun SelectPlayer(
                         navController,
                         selectCharacterViewModel,
                         context,
+                        screenSizeSmall,
                     ) { showExitConfirmation = true }
                 },
                 content = {
@@ -128,6 +131,7 @@ fun SelectPlayer(
                         navController = navController,
                         selectCharacterViewModel = selectCharacterViewModel,
                         context = context,
+                        screenSizeSmall = screenSizeSmall,
                     )
                 },
             )
@@ -137,6 +141,7 @@ fun SelectPlayer(
             show = showExitConfirmation,
             onDismiss = { showExitConfirmation = false },
             onConfirm = {
+                selectCharacterViewModel.setAudioPosition(0)
                 navController.navigate(HomeScreenRoute) {
                     popUpTo(HomeScreenRoute) { inclusive = true }
                 }
@@ -158,6 +163,7 @@ fun TopBar(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
+    screenSizeSmall: Boolean,
     showExitConfirmation: (Boolean) -> Unit,
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
@@ -173,7 +179,7 @@ fun TopBar(
                         .padding(top = 8.dp),
                 textAlign = TextAlign.Start,
                 color = Color.White,
-                fontSize = 20.sp,
+                fontSize = if (screenSizeSmall) 16.sp else 20.sp,
             )
         },
         navigationIcon = {
@@ -245,6 +251,7 @@ fun ContentView(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
+    screenSizeSmall: Boolean,
 ) {
     val playerList by selectCharacterViewModel.superHeroList.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
@@ -274,7 +281,7 @@ fun ContentView(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .height(500.dp),
+                            .height(if (screenSizeSmall) 400.dp else 500.dp),
                 ) {
                     LazyRowWithImagesHeroPlayer(
                         heroList = playerList,
@@ -305,7 +312,7 @@ fun ContentView(
                         Modifier
                             .width(500.dp)
                             .height(200.dp)
-                            .padding(bottom = 22.dp),
+                            .padding(bottom = if (screenSizeSmall) 4.dp else 22.dp),
                 ) {
                     Text(
                         text = "Continue",
@@ -368,8 +375,8 @@ fun LazyRowWithImagesHeroPlayer(
                     IconButton(
                         onClick = {
                             selectCharacterViewModel.setSuperHeroDetail(hero)
-                            navController.navigate(DetailRoute)
                             selectCharacterViewModel.setAudioPosition(audio.currentPosition)
+                            navController.navigate(DetailRoute)
                         },
                         modifier =
                             Modifier.align(

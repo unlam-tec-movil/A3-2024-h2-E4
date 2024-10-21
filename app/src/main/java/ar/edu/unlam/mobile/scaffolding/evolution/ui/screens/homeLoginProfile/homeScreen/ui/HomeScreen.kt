@@ -211,6 +211,7 @@ fun TopBarHome(
         title = {
             Text(
                 text = "Future Fight Evolution",
+                fontSize = 20.sp,
                 modifier =
                     Modifier
                         .fillMaxWidth()

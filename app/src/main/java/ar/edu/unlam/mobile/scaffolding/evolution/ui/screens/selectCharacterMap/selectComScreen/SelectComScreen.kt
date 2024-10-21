@@ -70,10 +70,10 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.IconPowerDetail
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.DetailRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectMapRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
@@ -92,6 +92,7 @@ fun SelectCom(
     }
     val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
     val audio = mediaPlayer(context, audioPosition)
+    val screenSizeSmall = screenSize(context)
 
     SetOrientationScreen(
         context = context,
@@ -122,6 +123,7 @@ fun SelectCom(
                         navController,
                         selectCharacterViewModel,
                         context,
+                        screenSizeSmall,
                     ) { showExitConfirmation = true }
                 },
                 content = {
@@ -130,6 +132,7 @@ fun SelectCom(
                         selectCharacterViewModel = selectCharacterViewModel,
                         context = context,
                         audio = audio,
+                        screenSizeSmall = screenSizeSmall,
                     )
                 },
             )
@@ -140,9 +143,7 @@ fun SelectCom(
             onDismiss = { showExitConfirmation = false },
             onConfirm = {
                 selectCharacterViewModel.setAudioPosition(audio.currentPosition)
-                navController.navigate(SelectPlayerRoute) {
-                    popUpTo(SelectPlayerRoute) { inclusive = true }
-                }
+                navController.popBackStack()
             },
             title = stringResource(id = R.string.ExitConfirmation),
             message = stringResource(id = R.string.ExitSelectCharacter),
@@ -161,6 +162,7 @@ fun TopBar(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
+    screenSizeSmall: Boolean,
     showExitConfirmation: (Boolean) -> Unit,
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
@@ -176,7 +178,7 @@ fun TopBar(
                         .padding(top = 8.dp),
                 textAlign = TextAlign.Start,
                 color = Color.White,
-                fontSize = 20.sp,
+                fontSize = if (screenSizeSmall) 16.sp else 20.sp,
             )
         },
         navigationIcon = {
@@ -243,6 +245,7 @@ fun ContentView(
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
     audio: MediaPlayer,
+    screenSizeSmall: Boolean,
 ) {
     val playerList by selectCharacterViewModel.superHeroList.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
@@ -270,7 +273,7 @@ fun ContentView(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .height(500.dp),
+                            .height(if (screenSizeSmall) 400.dp else 500.dp),
                 ) {
                     LazyRowWithImagesHeroPlayer(
                         heroList = playerList,
@@ -301,7 +304,7 @@ fun ContentView(
                         Modifier
                             .width(500.dp)
                             .height(200.dp)
-                            .padding(bottom = 22.dp),
+                            .padding(bottom = if (screenSizeSmall) 4.dp else 22.dp),
                 ) {
                     Text(
                         text = "Continue",

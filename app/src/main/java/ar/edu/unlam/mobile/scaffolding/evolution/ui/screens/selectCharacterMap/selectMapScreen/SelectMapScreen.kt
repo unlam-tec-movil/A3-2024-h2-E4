@@ -68,9 +68,9 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgro
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.CombatScreenRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectComRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
@@ -88,6 +88,7 @@ fun SelectMap(
     var showExitConfirmation by rememberSaveable {
         mutableStateOf(false)
     }
+    val screenSizeSmall = screenSize(context)
 
     SetOrientationScreen(
         context = context,
@@ -116,8 +117,7 @@ fun SelectMap(
                 topBar = {
                     TopBar(
                         navController,
-                        selectCharacterViewModel,
-                        context,
+                        screenSizeSmall,
                     ) { showExitConfirmation = true }
                 },
                 content = {
@@ -125,6 +125,7 @@ fun SelectMap(
                         navController = navController,
                         selectCharacterViewModel = selectCharacterViewModel,
                         context = context,
+                        screenSizeSmall = screenSizeSmall,
                     )
                 },
             )
@@ -135,9 +136,7 @@ fun SelectMap(
             onDismiss = { showExitConfirmation = false },
             onConfirm = {
                 selectCharacterViewModel.setAudioPosition(audio.currentPosition)
-                navController.navigate(SelectComRoute) {
-                    popUpTo(SelectComRoute) { inclusive = true }
-                }
+                navController.popBackStack()
             },
             title = stringResource(id = R.string.ExitConfirmation),
             message = stringResource(id = R.string.ExitSelectCharacter),
@@ -154,8 +153,7 @@ fun SelectMap(
 @Composable
 fun TopBar(
     navController: NavHostController,
-    selectCharacterViewModel: SelectCharacterViewModel,
-    context: Context,
+    screenSizeSmall: Boolean,
     showExitConfirmation: (Boolean) -> Unit,
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
@@ -171,7 +169,7 @@ fun TopBar(
                         .padding(top = 8.dp),
                 textAlign = TextAlign.Start,
                 color = Color.White,
-                fontSize = 20.sp,
+                fontSize = if (screenSizeSmall) 16.sp else 20.sp,
             )
         },
         navigationIcon = {
@@ -227,6 +225,7 @@ fun ContentView(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
+    screenSizeSmall: Boolean,
 ) {
     val backgroundList by selectCharacterViewModel.backgroundData.collectAsState()
     val backgroundSelected by selectCharacterViewModel.background.collectAsState()
@@ -246,13 +245,12 @@ fun ContentView(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .height(500.dp),
+                            .height(if (screenSizeSmall) 400.dp else 500.dp),
                 ) {
                     LazyRowWithImagesHeroPlayer(
                         backgroundList = backgroundList,
                         selectCharacterViewModel,
                         backgroundSelected,
-                        navController,
                     )
                 }
 
@@ -261,6 +259,7 @@ fun ContentView(
                     onClick = {
                         if (backgroundSelected != null) {
                             selectCharacterViewModel.setCombatDataScreen()
+                            selectCharacterViewModel.setAudioPosition(0)
                             navController.navigate(CombatScreenRoute)
                         } else {
                             Toast
@@ -275,7 +274,7 @@ fun ContentView(
                         Modifier
                             .width(700.dp)
                             .height(250.dp)
-                            .padding(bottom = 22.dp),
+                            .padding(bottom = if (screenSizeSmall) 4.dp else 22.dp),
                 ) {
                     Text(
                         text = "Start Combat",
@@ -300,7 +299,6 @@ fun LazyRowWithImagesHeroPlayer(
     backgroundList: List<Background>,
     selectCharacterViewModel: SelectCharacterViewModel,
     backgroundSelected: Background?,
-    navController: NavHostController,
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)

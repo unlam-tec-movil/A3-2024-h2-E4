@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.superHeroDetailScreen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -40,7 +41,6 @@ import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.superHeroDetailScreen.viewmodel.SuperHeroDetailScreenViewModel
 import coil.compose.rememberAsyncImagePainter
@@ -78,7 +78,8 @@ fun SuperHeroDetail(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(),
+                .fillMaxHeight()
+                .background(Color.Black),
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = hero!!.image.url),
@@ -164,7 +165,17 @@ fun SuperHeroDetail(
                                                     .plus(100)
                                                     .dp,
                                             ).background(colorResource(id = R.color.superhero_stat_intelligence)),
-                                )
+                                ) {
+                                    Text(
+                                        text = "${
+                                            hero!!
+                                                .powerstats.intelligence
+                                                .toInt()
+                                                .plus(100)
+                                        }",
+                                        modifier = Modifier.align(Alignment.BottomCenter),
+                                    )
+                                }
                                 Text(
                                     text = stringResource(id = R.string.Intelligence),
                                     fontSize = fontSizeText.sp,
@@ -192,7 +203,17 @@ fun SuperHeroDetail(
                                                     .plus(100)
                                                     .dp,
                                             ).background(colorResource(id = R.color.superhero_stat_strength)),
-                                )
+                                ) {
+                                    Text(
+                                        text = "${
+                                            hero!!
+                                                .powerstats.strength
+                                                .toInt()
+                                                .plus(100)
+                                        }",
+                                        modifier = Modifier.align(Alignment.BottomCenter),
+                                    )
+                                }
                                 Text(
                                     text = stringResource(id = R.string.Strength),
                                     fontSize = fontSizeText.sp,
@@ -220,7 +241,17 @@ fun SuperHeroDetail(
                                                     .plus(100)
                                                     .dp,
                                             ).background(colorResource(id = R.color.superhero_stat_speed)),
-                                )
+                                ) {
+                                    Text(
+                                        text = "${
+                                            hero!!
+                                                .powerstats.speed
+                                                .toInt()
+                                                .plus(100)
+                                        }",
+                                        modifier = Modifier.align(Alignment.BottomCenter),
+                                    )
+                                }
                                 Text(
                                     text = stringResource(id = R.string.Speed),
                                     fontSize = fontSizeText.sp,
@@ -248,7 +279,17 @@ fun SuperHeroDetail(
                                                     .plus(100)
                                                     .dp,
                                             ).background(colorResource(id = R.color.superhero_stat_durability)),
-                                )
+                                ) {
+                                    Text(
+                                        text = "${
+                                            hero!!
+                                                .powerstats.durability
+                                                .toInt()
+                                                .plus(100)
+                                        }",
+                                        modifier = Modifier.align(Alignment.BottomCenter),
+                                    )
+                                }
                                 Text(
                                     text = stringResource(id = R.string.Durability),
                                     fontSize = fontSizeText.sp,
@@ -275,7 +316,17 @@ fun SuperHeroDetail(
                                                     .plus(100)
                                                     .dp,
                                             ).background(colorResource(id = R.color.superhero_stat_power)),
-                                )
+                                ) {
+                                    Text(
+                                        text = "${
+                                            hero!!
+                                                .powerstats.power
+                                                .toInt()
+                                                .plus(100)
+                                        }",
+                                        modifier = Modifier.align(Alignment.BottomCenter),
+                                    )
+                                }
                                 Text(
                                     text = stringResource(id = R.string.Power),
                                     fontSize = fontSizeText.sp,
@@ -302,7 +353,17 @@ fun SuperHeroDetail(
                                                     .plus(100)
                                                     .dp,
                                             ).background(colorResource(id = R.color.superhero_stat_combat)),
-                                )
+                                ) {
+                                    Text(
+                                        text = "${
+                                            hero!!
+                                                .powerstats.combat
+                                                .toInt()
+                                                .plus(100)
+                                        }",
+                                        modifier = Modifier.align(Alignment.BottomCenter),
+                                    )
+                                }
                                 Text(
                                     text = stringResource(id = R.string.Combat),
                                     fontSize = fontSizeText.sp,
@@ -315,11 +376,8 @@ fun SuperHeroDetail(
                         ButtonWithBackgroundImage(
                             imageResId = R.drawable.iv_button,
                             onClick = {
-                                navController.navigate(SelectPlayerRoute) {
-                                    popUpTo(SelectPlayerRoute) { inclusive = true }
-
-                                    selectCharacterViewModel.setAudioPosition(audio.currentPosition)
-                                }
+                                selectCharacterViewModel.setAudioPosition(audio.currentPosition)
+                                navController.popBackStack()
                             },
                             modifier =
                                 Modifier
@@ -340,12 +398,10 @@ fun SuperHeroDetail(
                     }
                 }
 
-//                BackHandler {
-//                    navController.navigate(Routes.SelectCharacterScreen.route) {
-//                        popUpTo(Routes.SelectCharacterScreen.route) { inclusive = true }
-//                    }
-//                    selectCharacterViewModel.setAudioPosition(audio.currentPosition)
-//                }
+                BackHandler {
+                    navController.popBackStack()
+                    selectCharacterViewModel.setAudioPosition(audio.currentPosition)
+                }
             }
         }
     }
