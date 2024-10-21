@@ -1,9 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen
 
-import android.Manifest
-import android.view.ViewGroup
-import androidx.camera.view.LifecycleCameraController
-import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -28,36 +24,25 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
 import coil.compose.rememberAsyncImagePainter
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 import com.google.firebase.auth.FirebaseAuth
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun UserProfileScreen(
     navController: NavController,
     auth: FirebaseAuth,
 ) {
-    val permissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
     val onImageCapture: () -> Unit = { } // TODO Lógica de captura de imágen
     val onEditField: (String) -> Unit = { } // TODO Lógica de edición de campo
 
@@ -110,7 +95,7 @@ fun UserProfileScreen(
                         Modifier
                             .align(Alignment.BottomEnd)
                             .offset(10.dp),
-                    onClick = onImageCapture,
+                    onClick = { onImageCapture },
                 ) {
                     Icon(
                         Icons.Default.CameraEnhance,
@@ -173,40 +158,6 @@ fun UserInfoField(
                 Icon(Icons.Default.Create, contentDescription = "Editar $label")
             }
         }
-    }
-}
-
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-private fun CaptureImage(permissionState: PermissionState) {
-    LaunchedEffect(Unit) {
-        permissionState.launchPermissionRequest()
-    }
-
-    if (permissionState.status.isGranted) {
-        val context = LocalContext.current
-        val cameraController =
-            remember {
-                LifecycleCameraController(context)
-            }
-
-        val cameraLifeCycle = LocalLifecycleOwner.current
-        cameraController.bindToLifecycle(cameraLifeCycle)
-
-        AndroidView(factory = { context ->
-            val previewView =
-                PreviewView(context).apply {
-                    layoutParams =
-                        ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT,
-                        )
-                }
-            previewView.controller = cameraController
-            previewView
-        })
-    } else {
-        Text(text = "PERMISO A LA CÁMARA DENEGADO")
     }
 }
 
