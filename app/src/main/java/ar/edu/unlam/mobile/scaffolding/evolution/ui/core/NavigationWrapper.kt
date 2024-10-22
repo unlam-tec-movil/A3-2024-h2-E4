@@ -52,7 +52,11 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
                 selectCharacterViewModel = selectCharacterViewModel,
             )
         }
-        composable<Routes.CombatResultRoute> { SuperHeroCombatResult(navController = navController) }
+        composable<Routes.CombatResultRoute> {
+            SuperHeroCombatResult(
+                navController = navController,
+            )
+        }
         composable<Routes.CombatScreenRoute> { SuperHeroCombat(navController = navController) }
         composable<Routes.DetailRoute> {
             SuperHeroDetail(

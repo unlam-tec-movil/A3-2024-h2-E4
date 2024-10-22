@@ -9,6 +9,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.ResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetResultDataScreenUseCase
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.UpdateUserRankingFireStore
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +22,7 @@ class CombatResultViewModel
     constructor(
         private val getResultDataScreen: GetResultDataScreenUseCase,
         private val updateUserRankingFireStore: UpdateUserRankingFireStore,
+        private val firebaseAuth: FirebaseAuth,
     ) : ViewModel() {
         private val _result = MutableStateFlow<ResultDataScreen?>(null)
         val result = _result.asStateFlow()
@@ -75,16 +77,12 @@ class CombatResultViewModel
         }
 
         fun updateUserRanking() {
+            val id = firebaseAuth.currentUser?.uid
+            Log.i("FireBaseAuth", "$id")
             viewModelScope.launch {
-//                val userRanked =
-//                    UserRanked(
-//                        userID = System.currentTimeMillis().toInt(),
-//                        userName = "pepe",
-//                        LatLng(28.270833, -16.63916),
-//                    )
                 val userRanked2 =
                     UserRanked(
-                        userID = 1,
+                        userID = id,
                         userName = "pepe2",
                         userLocation = LocationUser(latitude = 28.270833, longitude = -16.63916),
                         userVictories = 1,
