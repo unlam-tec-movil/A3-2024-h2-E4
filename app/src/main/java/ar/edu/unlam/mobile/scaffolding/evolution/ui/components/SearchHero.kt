@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
@@ -20,6 +21,8 @@ fun SearchHero(
     onSearch: () -> Unit,
     searchEnabled: Boolean,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     TextField(
         value = query,
         enabled = searchEnabled,
@@ -44,7 +47,10 @@ fun SearchHero(
             ),
         keyboardActions =
             KeyboardActions(
-                onSearch = { onSearch() },
+                onSearch = {
+                    onSearch()
+                    keyboardController?.hide()
+                },
             ),
         singleLine = true,
         modifier =
