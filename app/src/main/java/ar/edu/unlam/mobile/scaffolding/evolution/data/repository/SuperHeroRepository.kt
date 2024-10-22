@@ -86,16 +86,13 @@ class SuperHeroRepository
                         .await()
 
                 if (querySnapshot.documents.isNotEmpty()) {
-                    // Usuario encontrado, actualizar victorias
                     for (document in querySnapshot.documents) {
                         val existingUser = document.toObject(UserRanked::class.java)
-                        val updatedVictories = (existingUser?.userVictories ?: 0) + 1
-                        // Actualizar el documento con las nuevas victorias
+                        val newVictories = existingUser!!.userVictories!!.plus(1)
                         firestore
                             .collection(firestore_collection_userRanking)
                             .document(document.id)
-                            .update("userVictories", updatedVictories)
-                            .await()
+                            .update("userVictories", newVictories) // update
                     }
                 } else {
                     // Usuario no encontrado, agregarlo con 1 victoria

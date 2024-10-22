@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.R
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.LocationUser
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.ResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetResultDataScreenUseCase
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.UpdateUserRankingFireStore
-import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -76,13 +76,20 @@ class CombatResultViewModel
 
         fun updateUserRanking() {
             viewModelScope.launch {
-                val userRanked =
+//                val userRanked =
+//                    UserRanked(
+//                        userID = System.currentTimeMillis().toInt(),
+//                        userName = "pepe",
+//                        LatLng(28.270833, -16.63916),
+//                    )
+                val userRanked2 =
                     UserRanked(
-                        userID = System.currentTimeMillis().toInt(),
-                        userName = "pepe",
-                        LatLng(28.270833, -16.63916),
+                        userID = 1,
+                        userName = "pepe2",
+                        userLocation = LocationUser(latitude = 28.270833, longitude = -16.63916),
+                        userVictories = 1,
                     )
-                updateUserRankingFireStore(userRanked)
+                updateUserRankingFireStore(userRanked2)
             }
         }
     }
