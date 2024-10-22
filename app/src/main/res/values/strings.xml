@@ -12,6 +12,8 @@
     <string name="ExitApp"> Do you want to exit app ? </string>
     <string name="ExitConfirmation"> Exit confirmation </string>
     <string name="ExitSelectCharacter"> Do you want to exit ?</string>
+    <string name="ExitSelectCOM"> Do you want to exit ?</string>
+    <string name="ExitSelectBattleground"> Do you want to exit ?</string>
     <string name="ExitCombat"> Do you want to exit combat ? </string>
     <string name="AttackMessage"> Atacando </string>
     <string name="DefenseMessage"> Defendiendo </string>

@@ -68,6 +68,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.material.extended)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -91,12 +93,12 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     // Retrofit
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // Coil
-    implementation (libs.coil.compose)
-    implementation (libs.androidx.runtime)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.runtime)
 
     androidTestImplementation(libs.google.dagger.hilt.android.testing)
     testImplementation(libs.google.dagger.hilt.android.testing)
@@ -112,9 +114,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
     // CAMARA
+    implementation(libs.accompanist)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.view)
+
     // Coroutines y Mockk
     implementation(libs.kotlinx.coroutines.android)
     testImplementation(libs.mockk)
@@ -124,7 +128,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.auth)
-    implementation (libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+    implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
-
 }
