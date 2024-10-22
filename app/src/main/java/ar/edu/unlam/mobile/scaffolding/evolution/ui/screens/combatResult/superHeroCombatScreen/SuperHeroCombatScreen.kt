@@ -63,6 +63,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScr
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.StatsBattle
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.CombatResultRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen.viewmodel.CombatViewModel
 import coil.compose.rememberAsyncImagePainter
@@ -155,15 +156,15 @@ fun SuperHeroCombat(
                 audio.release()
             }
         }
-//
-//        if ((superHeroPlayer!!.life <= 0 || superHeroCom!!.life <= 0) && !navigationOK) {
-//            viewModel.setDataScreenResult(
-//                superHeroPlayer = superHeroPlayer!!,
-//                superHeroCombat = superHeroCom!!
-//            )
-//            viewModel.markNavigationDone()
-//            navController.navigate(Routes.SuperHeroCombatResultScreen.route)
-//        }
+
+        if ((superHeroPlayer!!.life <= 0 || superHeroCom!!.life <= 0) && !navigationOK) {
+            viewModel.setDataScreenResult(
+                superHeroPlayer = superHeroPlayer!!,
+                superHeroCombat = superHeroCom!!,
+            )
+            viewModel.markNavigationDone()
+            navController.navigate(CombatResultRoute)
+        }
 
         Box(
             modifier =
@@ -522,7 +523,7 @@ fun SuperHeroCombat(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
-                        text = "Player",
+                        text = "UserName",
                         textAlign = TextAlign.Start,
                         fontSize = 24.sp,
                         modifier = Modifier.padding(start = 8.dp),

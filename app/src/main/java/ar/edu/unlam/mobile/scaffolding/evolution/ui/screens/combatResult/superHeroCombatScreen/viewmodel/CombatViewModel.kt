@@ -6,6 +6,7 @@ import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCombatDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.SetResultDataScreenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,7 @@ class CombatViewModel
     @Inject
     constructor(
         getCombatDataScreen: GetCombatDataScreen,
+        private val setResultDataScreen: SetResultDataScreenUseCase,
     ) : ViewModel() {
         private var _superHeroPlayer = MutableStateFlow<SuperHeroCombat?>(null)
         val superHeroPlayer = _superHeroPlayer.asStateFlow()
@@ -255,5 +257,12 @@ class CombatViewModel
                 randomAudio = audio.random()
             } while (randomAudio == _audioAttack.value)
             _audioAttack.value = randomAudio
+        }
+
+        fun setDataScreenResult(
+            superHeroPlayer: SuperHeroCombat,
+            superHeroCombat: SuperHeroCombat,
+        ) {
+            setResultDataScreen(superHeroPlayer, superHeroCombat, lifePlayer.toInt(), lifeCom.toInt())
         }
     }
