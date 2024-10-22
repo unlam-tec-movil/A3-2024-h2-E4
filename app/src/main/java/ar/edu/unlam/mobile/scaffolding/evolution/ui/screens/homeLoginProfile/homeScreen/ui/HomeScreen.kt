@@ -62,9 +62,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgro
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectPlayerRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SignUpScreenRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.UserProfileScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.ui.viewmodel.HomeScreenViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.CyanWay
 import kotlinx.coroutines.delay

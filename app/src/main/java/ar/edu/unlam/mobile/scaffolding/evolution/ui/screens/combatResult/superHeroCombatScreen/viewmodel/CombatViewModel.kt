@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
-import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCombatDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCombatDataScreenUseCase
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.SetResultDataScreenUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -24,7 +24,7 @@ lateinit var backgroundData: Background
 class CombatViewModel
     @Inject
     constructor(
-        getCombatDataScreen: GetCombatDataScreen,
+        getCombatDataScreenUseCase: GetCombatDataScreenUseCase,
         private val setResultDataScreen: SetResultDataScreenUseCase,
     ) : ViewModel() {
         private var _superHeroPlayer = MutableStateFlow<SuperHeroCombat?>(null)
@@ -77,7 +77,7 @@ class CombatViewModel
         val comHealingActivated = _comHealingActivated.asStateFlow()
 
         init {
-            val combatDataScreen = getCombatDataScreen()
+            val combatDataScreen = getCombatDataScreenUseCase()
             _isLoading.value = true
             viewModelScope.launch {
                 delay(8000)

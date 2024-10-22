@@ -3,46 +3,49 @@ package ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes
 import kotlinx.serialization.Serializable
 
 @Serializable
-object SelectComRoute
+sealed class Routes {
+    @Serializable
+    data object SelectComRoute : Routes()
 
-@Serializable
-object SelectMapRoute
+    @Serializable
+    data object SelectMapRoute : Routes()
 
-@Serializable
-object SelectPlayerRoute
+    @Serializable
+    data object SelectPlayerRoute : Routes()
 
-@Serializable
-object CombatResultRoute
+    @Serializable
+    data object CombatResultRoute : Routes()
 
-@Serializable
-object CombatScreenRoute
+    @Serializable
+    data object CombatScreenRoute : Routes()
 
-@Serializable
-object DetailRoute
+    @Serializable
+    data object DetailRoute : Routes()
 
-@Serializable
-object RankedRoute
+    @Serializable
+    data object RankedRoute : Routes()
 
-@Serializable
-object HomeScreenRoute
+    @Serializable
+    data object HomeScreenRoute : Routes()
 
-@Serializable
-object QRGenerateScreenRoute
+    @Serializable
+    data object QRGenerateScreenRoute : Routes()
 
-@Serializable
-object CameraScreenRoute
+    @Serializable
+    data object CameraScreenRoute : Routes()
 
-@Serializable
-object SignUpScreenRoute
+    @Serializable
+    data object SignUpScreenRoute : Routes()
 
-@Serializable
-object AuthenticationScreenRoute
+    @Serializable
+    data object AuthenticationScreenRoute : Routes()
 
-@Serializable
-object CreateAccountScreenRoute
+    @Serializable
+    data object CreateAccountScreenRoute : Routes()
 
-@Serializable
-object UserProfileScreenRoute
+    @Serializable
+    data object UserProfileScreenRoute : Routes()
 
-@Serializable
-object RankedMaps
+    @Serializable
+    data object RankedMapsUsersRoute : Routes()
+}

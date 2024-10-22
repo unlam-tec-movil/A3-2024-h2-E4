@@ -31,9 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.AuthenticationScreenRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.CreateAccountScreenRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.DarkPurple
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky

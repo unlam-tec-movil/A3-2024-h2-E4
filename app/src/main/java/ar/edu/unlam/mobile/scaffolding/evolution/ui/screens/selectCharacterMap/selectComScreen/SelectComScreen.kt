@@ -72,8 +72,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScr
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.DetailRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectMapRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky

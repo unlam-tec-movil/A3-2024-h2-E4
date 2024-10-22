@@ -32,8 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SignUpScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SelectedField
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.UnselectedField
 import com.google.firebase.auth.FirebaseAuth

@@ -1,9 +1,11 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.repository
 
-import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ResultDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
+import ar.edu.unlam.mobile.scaffolding.evolution.data.local.ResultDataScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
+import kotlinx.coroutines.flow.Flow
 
 interface SuperHeroRepositoryInterface {
     suspend fun getSuperHeroListByName(query: String): List<SuperHeroItem>
@@ -22,4 +24,10 @@ interface SuperHeroRepositoryInterface {
         lifePlayer: Int,
         lifeCom: Int,
     )
+
+    suspend fun getAllUsersFromFireStore(): Flow<List<UserRanked>>
+
+    suspend fun addUserFireStore(user: UserRanked)
+
+    suspend fun updateUserRankingFireStore(user: UserRanked)
 }

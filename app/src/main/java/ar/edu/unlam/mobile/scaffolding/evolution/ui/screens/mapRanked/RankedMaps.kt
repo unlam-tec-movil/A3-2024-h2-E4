@@ -1,4 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.mapRanked
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,6 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.MarkerInfo
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.mapRanked.viewmodel.MapRankedViewModel
 import com.google.android.gms.maps.model.LatLng
@@ -22,7 +25,10 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.Polyline
 
 @Composable
-fun RankedMaps(mapRankedViewModel: MapRankedViewModel) {
+fun RankedMaps(
+    navController: NavController,
+    mapRankedViewModel: MapRankedViewModel = hiltViewModel(),
+) {
     val context = LocalContext.current
     val markers by mapRankedViewModel.markerList.collectAsState()
 
@@ -40,7 +46,11 @@ fun RankedMaps(mapRankedViewModel: MapRankedViewModel) {
                     onClick = {
                         selectedMarker = markerInfo
                         routePoints = listOf(markerInfo.position, LatLng(28.270833, -16.63916))
-                        distance = mapRankedViewModel.calculateDistance(markerInfo.position, LatLng(28.270833, -16.63916))
+                        distance =
+                            mapRankedViewModel.calculateDistance(
+                                markerInfo.position,
+                                LatLng(28.270833, -16.63916),
+                            )
                         true
                     },
                 )

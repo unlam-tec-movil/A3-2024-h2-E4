@@ -37,9 +37,8 @@ import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.CombatScreenRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.RankedMaps
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.CombatScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatResultScreen.viewmodel.CombatResultViewModel
 import coil.compose.rememberAsyncImagePainter
 
@@ -195,7 +194,7 @@ fun SuperHeroCombatResult(
                     Spacer(modifier = Modifier.width(16.dp))
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
-                        onClick = { navController.navigate(RankedMaps) },
+                        onClick = { viewModel.updateUserRanking() },
                         modifier =
                             Modifier
                                 .width(300.dp)

@@ -1,13 +1,15 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases
 
-import ar.edu.unlam.mobile.scaffolding.evolution.data.local.ResultDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.SuperHeroRepository
 import javax.inject.Inject
 
-class GetResultDataScreenUseCase
+class UpdateUserRankingFireStore
     @Inject
     constructor(
         private val repository: SuperHeroRepository,
     ) {
-        operator fun invoke(): ResultDataScreen = repository.getResultDataScreen()
+        suspend operator fun invoke(user: UserRanked) {
+            repository.updateUserRankingFireStore(user)
+        }
     }
