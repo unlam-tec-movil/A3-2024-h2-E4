@@ -56,6 +56,7 @@ fun CameraScreen(
     navController: NavController,
     viewModel: CameraScreenViewModel = hiltViewModel(),
 ) {
+    var uri: Uri? by remember { mutableStateOf(null) }
     val permissionCamera by viewModel.permissionCamera.collectAsState()
     val permissionLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsGranted ->
@@ -274,3 +275,14 @@ private fun takePicture(
         },
     )
 }
+
+// fun generateUri(): Uri =
+//    FileProvider.getUriForFile(
+//        Objects.requireNonNull(this),
+//        "ar.edu.unlam.mobile.scaffolding.provider",
+//        createFile(),
+//    )
+//
+// private fun createFile(): File {
+//    File.createTempFile("hola","mundo")
+// }
