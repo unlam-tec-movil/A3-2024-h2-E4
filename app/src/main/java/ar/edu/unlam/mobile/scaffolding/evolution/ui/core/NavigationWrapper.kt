@@ -15,6 +15,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.CreateAccountScr
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.DetailRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.QRGenerateScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.RankedMaps
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.RankedRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectComRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectMapRoute
@@ -32,6 +33,8 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.cre
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.ui.HomeScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.signUpScreen.SignUpScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.UserProfileScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.mapRanked.RankedMaps
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.mapRanked.viewmodel.MapRankedViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectComScreen.SelectCom
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectMapScreen.SelectMap
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.SelectPlayer
@@ -43,6 +46,7 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
     val auth by viewModel.auth.collectAsState()
     val navController = rememberNavController()
     val selectCharacterViewModel: SelectCharacterViewModel = hiltViewModel()
+    val mapRankedViewModel: MapRankedViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = HomeScreenRoute) {
         composable<HomeScreenRoute> { HomeScreen(navController = navController) }
@@ -99,5 +103,6 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
                 navController = navController,
             )
         }
+        composable<RankedMaps> { RankedMaps(mapRankedViewModel = mapRankedViewModel) }
     }
 }

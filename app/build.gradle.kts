@@ -102,6 +102,9 @@ dependencies {
 
     androidTestImplementation(libs.google.dagger.hilt.android.testing)
     testImplementation(libs.google.dagger.hilt.android.testing)
+    // map
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
 
     // Room
     implementation(libs.androidx.room.runtime)

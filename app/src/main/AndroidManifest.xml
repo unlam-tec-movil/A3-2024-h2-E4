@@ -25,7 +25,11 @@
         android:roundIcon="@drawable/ic_futurefightevolution"
         android:supportsRtl="true"
         android:theme="@style/Theme.ScaffoldingV2"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        >
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAew_Mx_L-naZoyfZAsmftcW6bxiJeDTWA" />
         <activity
             android:name=".evolution.MainActivity"
             android:exported="true"

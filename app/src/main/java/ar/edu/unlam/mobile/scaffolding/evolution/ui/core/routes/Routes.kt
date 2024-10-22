@@ -43,3 +43,6 @@ object CreateAccountScreenRoute
 
 @Serializable
 object UserProfileScreenRoute
+
+@Serializable
+object RankedMaps

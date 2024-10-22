@@ -34,6 +34,9 @@ firebaseBom = "33.5.0"
 services = "4.4.2"
 crashlytics = "3.0.2"
 
+mapsCompose = "1.0.0"
+playServicesMaps = "19.0.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -83,7 +86,8 @@ firebase-auth = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-storage = {module = "com.google.firebase:firebase-storage-ktx"}
 firebase-firestore = {module = "com.google.firebase:firebase-firestore-ktx"}
 firebase-database = { module = "com.google.firebase:firebase-database" }
-
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
