@@ -86,6 +86,7 @@ class SuperHeroRepository
                         .await()
 
                 if (querySnapshot.documents.isNotEmpty()) {
+                    // Si el usuario existe
                     for (document in querySnapshot.documents) {
                         val existingUser = document.toObject(UserRanked::class.java)
                         val newVictories = existingUser!!.userVictories!!.plus(1)

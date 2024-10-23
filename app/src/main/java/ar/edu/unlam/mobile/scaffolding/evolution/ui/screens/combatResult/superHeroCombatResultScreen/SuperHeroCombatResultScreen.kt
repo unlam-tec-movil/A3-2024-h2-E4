@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
@@ -37,6 +38,7 @@ import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.CombatScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.SelectPlayerRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatResultScreen.viewmodel.CombatResultViewModel
@@ -49,7 +51,7 @@ fun SuperHeroCombatResult(
 ) {
     val result by viewModel.result.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val resultImageRes by viewModel.resultImageRes.collectAsState()
+    val playerWin by viewModel.playerWin.collectAsState()
     val context = LocalContext.current
 
     SetOrientationScreen(
@@ -87,7 +89,7 @@ fun SuperHeroCombatResult(
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Image(
-                        painter = rememberAsyncImagePainter(viewModel.getPlayerResultImageRes()),
+                        painter = painterResource(id = if (playerWin) R.drawable.iv_gold_trophy else R.drawable.iv_defeated),
                         contentDescription = null,
                         modifier =
                             Modifier
@@ -125,7 +127,7 @@ fun SuperHeroCombatResult(
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Image(
-                        painter = rememberAsyncImagePainter(viewModel.getComResultImageRes()),
+                        painter = painterResource(id = if (!playerWin) R.drawable.iv_gold_trophy else R.drawable.iv_defeated),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier =
@@ -151,7 +153,7 @@ fun SuperHeroCombatResult(
                     contentAlignment = Alignment.Center,
                 ) {
                     Image(
-                        painter = rememberAsyncImagePainter(resultImageRes),
+                        painter = painterResource(id = if (playerWin) R.drawable.im_ganador else R.drawable.iv_defeated),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier =
@@ -170,6 +172,7 @@ fun SuperHeroCombatResult(
                     color = Color.White,
                 )
                 Row(modifier = Modifier.weight(1f).padding(top = 32.dp)) {
+                    // BUTTON AGAIN
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
                         onClick = {
@@ -192,9 +195,10 @@ fun SuperHeroCombatResult(
                         )
                     }
                     Spacer(modifier = Modifier.width(16.dp))
+                    // BUTTON RANKED
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
-                        onClick = { viewModel.updateUserRanking() },
+                        onClick = { navController.navigate(Routes.RankedRoute) },
                         modifier =
                             Modifier
                                 .width(300.dp)
@@ -212,11 +216,12 @@ fun SuperHeroCombatResult(
                     }
                 }
                 Row(modifier = Modifier.weight(1f).align(Alignment.CenterHorizontally)) {
+                    // BUTTON EXIT
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
                         onClick = {
                             navController.navigate(SelectPlayerRoute) {
-                                popUpTo(SelectPlayerRoute) {
+                                popUpTo(Routes.HomeScreenRoute) {
                                     inclusive = true
                                 }
                             }
