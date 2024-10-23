@@ -22,12 +22,12 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 @Composable
-fun PantallaPrueba(
+fun UploadImageScreen(
     viewModel: UserProfileScreenViewModel = hiltViewModel(),
     navController: NavController,
     auth: FirebaseAuth,
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     val galleryLauncher =
         rememberLauncherForActivityResult(contract = GetContent()) { imageUri ->
@@ -35,7 +35,7 @@ fun PantallaPrueba(
         }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
+        snackbarHost = { SnackbarHost(snackBarHostState) },
         content = { padding ->
             Box(
                 modifier =
@@ -58,7 +58,7 @@ fun PantallaPrueba(
 
     fun showSnackBar() =
         coroutineScope.launch {
-            val result = snackbarHostState.showSnackbar("Avatar upload successfully", "Show Me")
+            val result = snackBarHostState.showSnackbar("Avatar upload successfully", "Show Me")
             if (result == SnackbarResult.ActionPerformed) {
                 viewModel.getImageFromDatabase()
             }

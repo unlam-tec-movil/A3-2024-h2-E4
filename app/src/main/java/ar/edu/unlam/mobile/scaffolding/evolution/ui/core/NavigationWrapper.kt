@@ -18,7 +18,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.cam
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.createAccountScreen.CreateAccountScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.ui.HomeScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.signUpScreen.SignUpScreen
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.PantallaPrueba
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.UploadImageScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.UserProfileScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.mapRanked.RankedMaps
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectComScreen.SelectCom
@@ -90,8 +90,8 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
         }
         composable<Routes.RankedMapsUsersRoute> { RankedMaps(navController = navController) }
 
-        composable<Routes.PantallaPruebaRoute> {
-            PantallaPrueba(
+        composable<Routes.UploadImageScreenRoute> {
+            UploadImageScreen(
                 auth = auth,
                 navController = navController,
             )

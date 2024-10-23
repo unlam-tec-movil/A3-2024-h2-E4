@@ -50,5 +50,5 @@ sealed class Routes {
     data object RankedMapsUsersRoute : Routes()
 
     @Serializable
-    data object PantallaPruebaRoute : Routes()
+    data object UploadImageScreenRoute : Routes()
 }

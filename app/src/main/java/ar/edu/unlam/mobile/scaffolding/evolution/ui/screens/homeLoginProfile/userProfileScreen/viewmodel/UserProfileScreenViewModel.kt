@@ -42,5 +42,5 @@ class UserProfileScreenViewModel
             viewModelScope.launch {
                 getImageFromDatabaseResponse = UserDataResponse.Loading
                 getImageFromDatabaseResponse = repository.getImageUrlFromFirestore()
-            }
-    }
+        }
+}

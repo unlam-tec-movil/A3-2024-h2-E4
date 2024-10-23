@@ -21,6 +21,7 @@ fun AddImageToDatabase(
                     showSnackBar(isImageAddedToDatabase)
                 }
             }
+
         is Failure -> print(addImageToStorageResponse.e)
     }
 }

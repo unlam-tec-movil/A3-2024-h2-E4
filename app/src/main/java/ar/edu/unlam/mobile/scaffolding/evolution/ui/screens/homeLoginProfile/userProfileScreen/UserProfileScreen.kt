@@ -96,7 +96,7 @@ fun UserProfileScreen(
                         Modifier
                             .align(Alignment.BottomEnd)
                             .offset(10.dp),
-                    onClick = { navController.navigate(Routes.PantallaPruebaRoute) },
+                    onClick = { navController.navigate(Routes.UploadImageScreenRoute) },
                 ) {
                     Icon(
                         Icons.Default.CameraEnhance,

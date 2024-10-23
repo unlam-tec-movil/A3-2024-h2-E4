@@ -22,6 +22,7 @@ fun AddImageToStorage(
                     addImageToDatabase(downloadUrl)
                 }
             }
+
         is Failure -> print(addImageToStorageResponse.e)
     }
 }
