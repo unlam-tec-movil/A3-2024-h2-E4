@@ -25,6 +25,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.s
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.SelectPlayer
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.superHeroDetailScreen.SuperHeroDetail
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.uploadImageScreen.UploadImageScreen
 
 @Composable
 fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
@@ -92,5 +93,12 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
             )
         }
         composable<Routes.RankedMapsUsersRoute> { RankedMaps(navController = navController) }
+
+        composable<Routes.UploadImageScreenRoute> {
+            UploadImageScreen(
+                auth = auth,
+                navController = navController,
+            )
+        }
     }
 }
