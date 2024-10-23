@@ -1,6 +1,13 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatResultScreen
 
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,10 +21,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -49,15 +58,60 @@ fun SuperHeroCombatResult(
     navController: NavHostController,
     viewModel: CombatResultViewModel = hiltViewModel(),
 ) {
-    val result by viewModel.result.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val playerWin by viewModel.playerWin.collectAsState()
+    val permissionLocationGranted by viewModel.permissionLocation.collectAsState()
     val context = LocalContext.current
 
     SetOrientationScreen(
         context = context,
         orientation = OrientationScreen.PORTRAIT.orientation,
     )
+
+    val permissionLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { permissionsGranted ->
+            if (permissionsGranted) {
+                viewModel.setPermissionCamera(true)
+            } else {
+                viewModel.setPermissionCamera(false)
+            }
+        }
+
+    LaunchedEffect(Unit) {
+        permissionLauncher.launch(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        )
+    }
+
+    if (permissionLocationGranted) {
+        ContentView(navController = navController, viewModel = viewModel)
+    } else {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Column {
+                Text(text = "Please push in setting and granted permissions ")
+                Spacer(modifier = Modifier.size(16.dp))
+                Button(onClick = { openAppSettings(context) }) {
+                    Text(text = "Go settings")
+                }
+            }
+        }
+    }
+
+    BackHandler {
+        navController.navigate(SelectPlayerRoute) {
+            popUpTo(SelectPlayerRoute) {
+                inclusive = true
+            }
+        }
+    }
+}
+
+@Composable
+fun ContentView(
+    navController: NavHostController,
+    viewModel: CombatResultViewModel,
+) {
+    val result by viewModel.result.collectAsState()
+    val isLoading by viewModel.isLoading.collectAsState()
+    val playerWin by viewModel.playerWin.collectAsState()
 
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -108,7 +162,10 @@ fun SuperHeroCombatResult(
                 )
 
                 Row(
-                    modifier = Modifier.weight(1f).padding(top = 8.dp),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .padding(top = 8.dp),
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Image(
@@ -171,7 +228,12 @@ fun SuperHeroCombatResult(
                             .padding(top = 6.dp, bottom = 6.dp),
                     color = Color.White,
                 )
-                Row(modifier = Modifier.weight(1f).padding(top = 32.dp)) {
+                Row(
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .padding(top = 32.dp),
+                ) {
                     // BUTTON AGAIN
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
@@ -215,7 +277,12 @@ fun SuperHeroCombatResult(
                         )
                     }
                 }
-                Row(modifier = Modifier.weight(1f).align(Alignment.CenterHorizontally)) {
+                Row(
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .align(Alignment.CenterHorizontally),
+                ) {
                     // BUTTON EXIT
                     ButtonWithBackgroundImage(
                         imageResId = R.drawable.iv_button,
@@ -245,12 +312,15 @@ fun SuperHeroCombatResult(
             }
         }
     }
+}
 
-    BackHandler {
-        navController.navigate(SelectPlayerRoute) {
-            popUpTo(SelectPlayerRoute) {
-                inclusive = true
-            }
+fun openAppSettings(context: Context) {
+    val intent =
+        Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.fromParts("package", context.packageName, null),
+        ).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-    }
+    context.startActivity(intent)
 }

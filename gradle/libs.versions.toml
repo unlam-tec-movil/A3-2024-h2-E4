@@ -36,6 +36,7 @@ crashlytics = "3.0.2"
 
 mapsCompose = "1.0.0"
 playServicesMaps = "19.0.0"
+location = "21.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -88,6 +89,8 @@ firebase-firestore = {module = "com.google.firebase:firebase-firestore-ktx"}
 firebase-database = { module = "com.google.firebase:firebase-database" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+play-services-location = {module = "com.google.android.gms:play-services-location" , version.ref = "location" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

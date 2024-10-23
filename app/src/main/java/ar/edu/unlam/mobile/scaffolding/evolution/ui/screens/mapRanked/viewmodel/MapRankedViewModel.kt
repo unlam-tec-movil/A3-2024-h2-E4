@@ -22,7 +22,7 @@ class MapRankedViewModel
             // ACA SE DEBERIA CARGAR LOS RANKED  EN EL TITULO IRIA EL NOMBRE DEL JUGADOR Y CANTIDAD DE VICTORIAS
             val markers =
                 mutableListOf<MarkerInfo>().apply {
-                    add(MarkerInfo(position = LatLng(28.270833, -16.63916), "PLAYER 1", "5 victories"))
+                    add(MarkerInfo(position = LatLng(-34.666666666666664, -58.44805799945578), "PLAYER 1", "5 victories"))
                     add(MarkerInfo(position = LatLng(40.270880, -16.64000), "PLAYER 2", "8 victories"))
                     add(MarkerInfo(position = LatLng(35.000000, -15.00000), "PLAYER 3", "10 victories"))
                 }
