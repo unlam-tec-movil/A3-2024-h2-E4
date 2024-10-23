@@ -199,7 +199,7 @@ fun TopBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier =
                         Modifier
-                            .clickable { /*Ranked*/ }
+                            .clickable { navController.navigate(RankedRoute) }
                             .fillMaxWidth(),
                 ) {
                     Icon(

@@ -111,7 +111,10 @@ fun SelectPlayer(
                 ),
     ) {
         if (isLoading.value) {
-            Box(modifier = Modifier.fillMaxSize().background(Color.Black), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier.fillMaxSize().background(Color.Black),
+                contentAlignment = Alignment.Center,
+            ) {
                 CircularProgressIndicator(color = Color.Cyan)
             }
         } else {
@@ -217,7 +220,7 @@ fun TopBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier =
                         Modifier
-                            .clickable { /*Ranked*/ }
+                            .clickable { navController.navigate(RankedRoute) }
                             .fillMaxWidth(),
                 ) {
                     Icon(
