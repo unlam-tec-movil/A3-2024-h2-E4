@@ -88,6 +88,7 @@ firebase-firestore = {module = "com.google.firebase:firebase-firestore-ktx"}
 firebase-database = { module = "com.google.firebase:firebase-database" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

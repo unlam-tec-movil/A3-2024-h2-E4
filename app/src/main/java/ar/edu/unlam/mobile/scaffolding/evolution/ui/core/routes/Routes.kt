@@ -48,4 +48,7 @@ sealed class Routes {
 
     @Serializable
     data object RankedMapsUsersRoute : Routes()
+
+    @Serializable
+    data object PantallaPruebaRoute : Routes()
 }

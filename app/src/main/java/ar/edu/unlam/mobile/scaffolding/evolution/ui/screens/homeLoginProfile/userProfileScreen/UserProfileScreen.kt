@@ -33,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
 import coil.compose.rememberAsyncImagePainter
@@ -95,7 +96,7 @@ fun UserProfileScreen(
                         Modifier
                             .align(Alignment.BottomEnd)
                             .offset(10.dp),
-                    onClick = { onImageCapture },
+                    onClick = { navController.navigate(Routes.PantallaPruebaRoute) },
                 ) {
                     Icon(
                         Icons.Default.CameraEnhance,
