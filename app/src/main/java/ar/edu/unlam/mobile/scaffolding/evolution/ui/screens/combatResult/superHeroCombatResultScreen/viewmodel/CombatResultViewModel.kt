@@ -43,7 +43,8 @@ class CombatResultViewModel
             viewModelScope.launch {
                 _result.value = getResultDataScreen()
                 _playerWin.value = checkIfPlayerWin(_result.value!!)
-                if (_playerWin.value) {
+                // Agreguar que si es anonimus no actualize
+                if (_playerWin.value && firebaseAuth.currentUser != null) {
                     updateUserRanking()
                 }
                 _isLoading.value = false
@@ -70,7 +71,7 @@ class CombatResultViewModel
             viewModelScope.launch {
                 val userLocation = getLocation()
                 Log.i("LOCATIONRULES", "$userLocation")
-                val userRanked2 =
+                val userRanked =
                     UserRanked(
                         userID = firebaseAuth.currentUser?.uid,
                         userName = firebaseAuth.currentUser!!.email,
@@ -81,7 +82,7 @@ class CombatResultViewModel
                             ),
                         userVictories = 1,
                     )
-                updateUserRankingFireStore(userRanked2)
+                updateUserRankingFireStore(userRanked)
             }
         }
 
@@ -93,7 +94,6 @@ class CombatResultViewModel
                     LocationUser(latitude = it.latitude, longitude = it.longitude)
                 }
             } catch (e: Exception) {
-                // Manejo de errores
                 null
             }
     }

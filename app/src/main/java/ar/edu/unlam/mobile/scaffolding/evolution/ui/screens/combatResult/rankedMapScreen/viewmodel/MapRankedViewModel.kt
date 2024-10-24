@@ -1,39 +1,45 @@
-package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.mapRanked.viewmodel
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.rankedMapScreen.viewmodel
 
 import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.MarkerInfo
+import androidx.lifecycle.viewModelScope
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetUsersRankingFireStore
 import com.google.android.gms.maps.model.LatLng
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class MapRankedViewModel
     @Inject
-    constructor() : ViewModel() {
-        private val _markerList = MutableStateFlow<List<MarkerInfo>>(emptyList())
-        val markerList = _markerList.asStateFlow()
+    constructor(
+        private val getUsersRankingFireStore: GetUsersRankingFireStore,
+    ) : ViewModel() {
+        private val _usersRanked = MutableStateFlow<List<UserRanked>>(emptyList())
+        val usersRanked = _usersRanked.asStateFlow()
+
+        private val _isLoading = MutableStateFlow(true)
+        val isLoading = _isLoading.asStateFlow()
 
         init {
-
-            // ACA SE DEBERIA CARGAR LOS RANKED  EN EL TITULO IRIA EL NOMBRE DEL JUGADOR Y CANTIDAD DE VICTORIAS
-            val markers =
-                mutableListOf<MarkerInfo>().apply {
-                    add(MarkerInfo(position = LatLng(-34.666666666666664, -58.44805799945578), "PLAYER 1", "5 victories"))
-                    add(MarkerInfo(position = LatLng(40.270880, -16.64000), "PLAYER 2", "8 victories"))
-                    add(MarkerInfo(position = LatLng(35.000000, -15.00000), "PLAYER 3", "10 victories"))
+            viewModelScope.launch {
+                val usersFlow: Flow<List<UserRanked>> = getUsersRankingFireStore()
+                Log.i("FlowFirestore", "$usersFlow")
+                usersFlow.collect { users ->
+                    _usersRanked.value = users
+                    Log.i("FlowFirestore", "${_usersRanked.value}")
+                    _isLoading.value = false
                 }
-            _markerList.value = markers
+            }
         }
-
-      /*  fun addMarker(): Boolean {
-            _markerList
-
-            return true
-        }*/
 
         fun calculateDistance(
             start: LatLng,

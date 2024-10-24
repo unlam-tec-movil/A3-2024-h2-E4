@@ -71,12 +71,19 @@ import kotlinx.coroutines.delay
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    presentationScreenViewModel: HomeScreenViewModel = hiltViewModel(),
+    homeScreenViewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
-    SetOrientationScreen(context = LocalContext.current, orientation = OrientationScreen.PORTRAIT.orientation)
+    SetOrientationScreen(
+        context = LocalContext.current,
+        orientation = OrientationScreen.PORTRAIT.orientation,
+    )
     val context = LocalContext.current
     val activity = LocalContext.current as Activity
     var showExitConfirmation by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    var showAuthenticationFailConfirmation by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -86,6 +93,14 @@ fun HomeScreen(
         onConfirm = { activity.finishAffinity() },
         title = stringResource(id = R.string.ExitConfirmation),
         message = stringResource(id = R.string.ExitApp),
+    )
+
+    ExitConfirmation(
+        show = showAuthenticationFailConfirmation,
+        onDismiss = { showAuthenticationFailConfirmation = false },
+        onConfirm = { navController.navigate(SelectPlayerRoute) },
+        title = "ADVERTENCIA",
+        message = "Sin estar logado no rankearas !",
     )
 
     val audio =
@@ -105,15 +120,15 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            TopBarHome(navController, presentationScreenViewModel) {
+            TopBarHome(navController, homeScreenViewModel) {
                 showExitConfirmation = true
             }
         },
         content = {
             ContentViewHome(
                 navController = navController,
-                presentationScreenViewModel = presentationScreenViewModel,
-            )
+                homeScreenViewModel = homeScreenViewModel,
+            ) { showAuthenticationFailConfirmation = true }
         },
     )
 
@@ -125,9 +140,11 @@ fun HomeScreen(
 @Composable
 fun ContentViewHome(
     navController: NavHostController,
-    presentationScreenViewModel: HomeScreenViewModel,
+    homeScreenViewModel: HomeScreenViewModel,
+    onEnterGame: (Boolean) -> Unit,
 ) {
-    val logos by presentationScreenViewModel.logos.collectAsState()
+    val logos by homeScreenViewModel.logos.collectAsState()
+    val auth by homeScreenViewModel.auth.collectAsState()
 
     Box(
         modifier =
@@ -155,8 +172,11 @@ fun ContentViewHome(
         ButtonWithBackgroundImage(
             imageResId = R.drawable.iv_button,
             onClick = {
-                navController.navigate(SelectPlayerRoute)
-                // navController.navigate(SelectComRoute)
+                if (auth.currentUser != null) {
+                    navController.navigate(SelectPlayerRoute)
+                } else {
+                    onEnterGame(true)
+                }
             },
             modifier =
                 Modifier
@@ -181,10 +201,10 @@ fun ContentViewHome(
 @Composable
 fun TopBarHome(
     navController: NavHostController,
-    presentationScreenViewModel: HomeScreenViewModel,
+    homeScreenViewModel: HomeScreenViewModel,
     onChangeValue: (Boolean) -> Unit,
 ) {
-    val auth by presentationScreenViewModel.auth.collectAsState()
+    val auth by homeScreenViewModel.auth.collectAsState()
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
     val context = LocalContext.current
     val isLog = auth.currentUser != null

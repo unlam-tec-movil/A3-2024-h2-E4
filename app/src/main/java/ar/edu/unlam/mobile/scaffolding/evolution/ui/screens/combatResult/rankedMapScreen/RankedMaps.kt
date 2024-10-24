@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.mapRanked
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.rankedMapScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,8 +17,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.MarkerInfo
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.mapRanked.viewmodel.MapRankedViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.toLatLng
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.rankedMapScreen.viewmodel.MapRankedViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
@@ -30,9 +31,9 @@ fun RankedMaps(
     mapRankedViewModel: MapRankedViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    val markers by mapRankedViewModel.markerList.collectAsState()
+    val markers by mapRankedViewModel.usersRanked.collectAsState()
 
-    var selectedMarker by remember { mutableStateOf<MarkerInfo?>(null) }
+    var selectedMarker by remember { mutableStateOf<UserRanked?>(null) }
     var routePoints by remember { mutableStateOf<List<LatLng>>(emptyList()) }
     var distance by remember { mutableStateOf<Double?>(null) }
 
@@ -40,16 +41,20 @@ fun RankedMaps(
         GoogleMap(modifier = Modifier.weight(1f)) {
             markers.forEach { markerInfo ->
                 Marker(
-                    position = markerInfo.position,
-                    title = markerInfo.name,
-                    snippet = markerInfo.victories,
+                    position = markerInfo.userLocation!!.toLatLng(),
+                    title = markerInfo.userName,
+                    snippet = markerInfo.userVictories.toString(),
                     onClick = {
                         selectedMarker = markerInfo
-                        routePoints = listOf(markerInfo.position, LatLng(28.270833, -16.63916))
+                        routePoints =
+                            listOf(
+                                markerInfo.userLocation.toLatLng(),
+                                LatLng(-34.67055556, -58.56277778),
+                            )
                         distance =
                             mapRankedViewModel.calculateDistance(
-                                markerInfo.position,
-                                LatLng(28.270833, -16.63916),
+                                markerInfo.userLocation.toLatLng(),
+                                LatLng(-34.67055556, -58.56277778),
                             )
                         true
                     },
@@ -76,10 +81,10 @@ fun RankedMaps(
         selectedMarker?.let { marker ->
             AlertDialog(
                 onDismissRequest = { selectedMarker = null },
-                title = { Text(marker.name) },
+                title = { Text(marker.userName!!) },
                 text = {
                     Column {
-                        Text(marker.victories)
+                        Text(marker.userVictories.toString())
                         distance?.let { dist ->
                             Text("Distancia: %.2f km".format(dist))
                         }
@@ -87,7 +92,10 @@ fun RankedMaps(
                 },
                 confirmButton = {
                     Button(onClick = {
-                        mapRankedViewModel.openMaps(marker.position, context)
+                        mapRankedViewModel.openMaps(
+                            marker.userLocation!!.toLatLng(),
+                            context,
+                        )
                         selectedMarker = null // Cerrar el diálogo
                     }) {
                         Text("Cómo llegar")
