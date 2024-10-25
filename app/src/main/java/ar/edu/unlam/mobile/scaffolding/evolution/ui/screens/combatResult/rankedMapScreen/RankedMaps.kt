@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.rankedMapScreen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,10 +21,12 @@ import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.toLatLng
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.rankedMapScreen.viewmodel.MapRankedViewModel
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.Polyline
+import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun RankedMaps(
@@ -31,29 +34,34 @@ fun RankedMaps(
     mapRankedViewModel: MapRankedViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
-    val markers by mapRankedViewModel.usersRanked.collectAsState()
+    val usersRanked by mapRankedViewModel.usersRanked.collectAsState()
 
-    var selectedMarker by remember { mutableStateOf<UserRanked?>(null) }
+    var selectedUser by remember { mutableStateOf<UserRanked?>(null) }
     var routePoints by remember { mutableStateOf<List<LatLng>>(emptyList()) }
     var distance by remember { mutableStateOf<Double?>(null) }
 
+    val cameraPositionState =
+        rememberCameraPositionState {
+            position = CameraPosition.fromLatLngZoom(LatLng(-34.6037, -58.3816), 10f)
+        }
+
     Column(modifier = Modifier.fillMaxSize()) {
-        GoogleMap(modifier = Modifier.weight(1f)) {
-            markers.forEach { markerInfo ->
+        GoogleMap(modifier = Modifier.weight(1f), cameraPositionState = cameraPositionState) {
+            usersRanked.forEach { userInfo ->
                 Marker(
-                    position = markerInfo.userLocation!!.toLatLng(),
-                    title = markerInfo.userName,
-                    snippet = markerInfo.userVictories.toString(),
+                    position = userInfo.userLocation!!.toLatLng(),
+                    title = userInfo.userName,
+                    snippet = userInfo.userVictories.toString(),
                     onClick = {
-                        selectedMarker = markerInfo
+                        selectedUser = userInfo
                         routePoints =
                             listOf(
-                                markerInfo.userLocation.toLatLng(),
+                                userInfo.userLocation.toLatLng(),
                                 LatLng(-34.67055556, -58.56277778),
                             )
                         distance =
                             mapRankedViewModel.calculateDistance(
-                                markerInfo.userLocation.toLatLng(),
+                                userInfo.userLocation.toLatLng(),
                                 LatLng(-34.67055556, -58.56277778),
                             )
                         true
@@ -78,13 +86,13 @@ fun RankedMaps(
             )
         }
 
-        selectedMarker?.let { marker ->
+        selectedUser?.let { userInfo ->
             AlertDialog(
-                onDismissRequest = { selectedMarker = null },
-                title = { Text(marker.userName!!) },
+                onDismissRequest = { selectedUser = null },
+                title = { Text(userInfo.userName!!) },
                 text = {
                     Column {
-                        Text(marker.userVictories.toString())
+                        Text(userInfo.userVictories.toString())
                         distance?.let { dist ->
                             Text("Distancia: %.2f km".format(dist))
                         }
@@ -93,20 +101,24 @@ fun RankedMaps(
                 confirmButton = {
                     Button(onClick = {
                         mapRankedViewModel.openMaps(
-                            marker.userLocation!!.toLatLng(),
+                            userInfo.userLocation!!.toLatLng(),
                             context,
                         )
-                        selectedMarker = null // Cerrar el diálogo
+                        selectedUser = null // Cerrar el diálogo
                     }) {
                         Text("Cómo llegar")
                     }
                 },
                 dismissButton = {
-                    Button(onClick = { selectedMarker = null }) {
+                    Button(onClick = { selectedUser = null }) {
                         Text("Cerrar")
                     }
                 },
             )
         }
+    }
+
+    BackHandler {
+        navController.popBackStack()
     }
 }

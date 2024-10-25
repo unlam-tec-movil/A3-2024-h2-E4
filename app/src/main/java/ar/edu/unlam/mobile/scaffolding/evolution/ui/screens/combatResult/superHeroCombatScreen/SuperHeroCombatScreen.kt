@@ -1,7 +1,11 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen
 
 import android.media.MediaPlayer
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
@@ -52,6 +56,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
@@ -67,6 +72,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen.viewmodel.CombatViewModel
 import coil.compose.rememberAsyncImagePainter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SuperHeroCombat(
     navController: NavHostController,
@@ -87,6 +93,7 @@ fun SuperHeroCombat(
     val attackPlayer by viewModel.attackPlayer.collectAsState()
     val context = LocalContext.current
     val screenSizeSmall = screenSize(context)
+    val vibratorActivated by viewModel.vibratorActivated.collectAsState()
 
     val iconButtonPotion by viewModel.iconButtonPotion.collectAsState()
     val iconButtonPowerUp by viewModel.iconButtonPowerUp.collectAsState()
@@ -102,6 +109,11 @@ fun SuperHeroCombat(
     val comAttackActivated by viewModel.comAttackActivated.collectAsState()
     val playerHealingActivated by viewModel.playerHealingActivated.collectAsState()
     val comHealingActivated by viewModel.comHealingActivated.collectAsState()
+    val vibrator = remember { ContextCompat.getSystemService(context, Vibrator::class.java) }
+
+    if (vibratorActivated) {
+        vibrator?.vibrate(VibrationEffect.createOneShot(700, VibrationEffect.DEFAULT_AMPLITUDE))
+    }
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -112,7 +124,10 @@ fun SuperHeroCombat(
     if (isLoading) {
         if (screenSizeSmall) {
             Box(
-                modifier = Modifier.fillMaxSize().background(Color.Black),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color.Black),
                 contentAlignment = Alignment.Center,
             ) {
                 CircularProgressIndicator(color = Color.Cyan)

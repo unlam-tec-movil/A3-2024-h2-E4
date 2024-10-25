@@ -49,6 +49,8 @@ class CombatViewModel
         val navigationDone = _navigationDone.asStateFlow()
         private var _attackPlayer = MutableStateFlow(true)
         val attackPlayer = _attackPlayer.asStateFlow()
+        private var _vibratorActivated = MutableStateFlow(false)
+        val vibratorActivated = _vibratorActivated.asStateFlow()
 
         private var _iconButtonPotion = MutableStateFlow(true)
         val iconButtonPotion = _iconButtonPotion.asStateFlow()
@@ -105,8 +107,10 @@ class CombatViewModel
                 delay(2500)
                 _attackPlayer.value = false
                 getRandomAudioAttack()
+                _vibratorActivated.value = true
                 attackCom()
                 delay(2500)
+                _vibratorActivated.value = false
                 _buttonEnable.value = true
                 _attackEffect.value = false
                 _attackPlayer.value = true
