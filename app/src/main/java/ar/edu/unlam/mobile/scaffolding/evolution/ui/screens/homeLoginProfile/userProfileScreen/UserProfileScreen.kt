@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -50,7 +51,7 @@ fun UserProfileScreen(
 ) {
     val userId = auth.currentUser?.uid ?: ""
     val avatarUrl by produceState<String?>(initialValue = null) {
-        value = getAvatarUrl(auth)
+        value = getUserAvatarUrl(auth.currentUser!!.uid)
     }
 
     val onImageCapture: () -> Unit = { } // TODO Lógica de captura de imágen
@@ -106,21 +107,31 @@ fun UserProfileScreen(
                         ),
                     contentDescription = "Avatar Usuario",
                 )
-                IconButton(
+                Box(
                     modifier =
                         Modifier
                             .align(Alignment.BottomEnd)
                             .offset(10.dp),
-                    onClick = { navController.navigate(Routes.UploadImageScreenRoute) },
                 ) {
-                    Icon(
-                        Icons.Default.CameraEnhance,
-                        contentDescription = "Tomar Foto",
-                        modifier = Modifier.size(50.dp),
-                    )
+                    IconButton(
+                        onClick = { navController.navigate(Routes.UploadImageScreenRoute) }, // Navegación a la pantalla de carga de imagen
+                        modifier =
+                            Modifier
+                                .size(60.dp)
+                                .background(
+                                    colorResource(id = R.color.whatsappGreenSoft),
+                                    shape = CircleShape,
+                                ).clip(CircleShape),
+                    ) {
+                        Icon(
+                            Icons.Default.CameraEnhance,
+                            contentDescription = "Tomar Foto",
+                            tint = Color.Black,
+                            modifier = Modifier.size(35.dp),
+                        )
+                    }
                 }
             }
-
             Spacer(modifier = Modifier.height(20.dp))
             // Información del Usuario
             UserInfoField(
@@ -177,12 +188,12 @@ fun UserInfoField(
     }
 }
 
-suspend fun getAvatarUrl(
-    auth: FirebaseAuth,
-    // userId: String,
+suspend fun getUserAvatarUrl(
+    // auth: FirebaseAuth,
+    userId: String,
 ): String? {
     val db = FirebaseFirestore.getInstance()
-    val docRef = db.collection("userAvatarImages").document(auth.currentUser!!.uid)
+    val docRef = db.collection("userAvatarImages").document(userId)
     return try {
         val documentSnapshot = docRef.get().await()
         if (documentSnapshot.exists()) {

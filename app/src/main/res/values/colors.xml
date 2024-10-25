@@ -26,4 +26,6 @@
     <color name="attackSpecialEnabled">#E4112A</color>
     <color name="healingEnabled">#63d471</color>
     <color name="healingEnabledB">#9dd025</color>
+    <color name="whatsappGreen">#25D366</color>
+    <color name="whatsappGreenSoft">#06A77D</color>
 </resources>
