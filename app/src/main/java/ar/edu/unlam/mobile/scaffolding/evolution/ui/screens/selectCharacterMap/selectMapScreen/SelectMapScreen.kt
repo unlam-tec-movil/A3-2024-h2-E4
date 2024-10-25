@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -52,7 +54,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -70,10 +71,12 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScr
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.CombatScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.RankedRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
+import coil.compose.rememberAsyncImagePainter
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -245,7 +248,8 @@ fun ContentView(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .height(if (screenSizeSmall) 400.dp else 500.dp),
+                            .height(if (screenSizeSmall) 400.dp else 500.dp)
+                            .padding(vertical = 8.dp),
                 ) {
                     LazyRowWithImagesHeroPlayer(
                         backgroundList = backgroundList,
@@ -302,12 +306,19 @@ fun LazyRowWithImagesHeroPlayer(
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
+    val lazyListState = rememberLazyListState()
+    val flingBehavior = rememberSnapFlingBehavior(lazyListState)
+
     LazyRow(
-        modifier = Modifier.fillMaxSize(),
+        modifier =
+            Modifier
+                .fillMaxSize(),
+        state = lazyListState,
+        flingBehavior = flingBehavior,
         contentPadding = PaddingValues(4.dp),
         userScrollEnabled = true,
     ) {
-        items(backgroundList) { stage ->
+        items(backgroundList) { background ->
             Card(
                 modifier =
                     Modifier
@@ -316,18 +327,18 @@ fun LazyRowWithImagesHeroPlayer(
                         .height(500.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .clickable {
-                            selectCharacterViewModel.setBackground(stage)
-                            if (backgroundSelected == stage) cancelSelect.start() else selectAudio.start()
+                            selectCharacterViewModel.setBackground(background)
+                            if (backgroundSelected == background) cancelSelect.start() else selectAudio.start()
                         }.border(
                             width = 2.dp,
-                            color = if (backgroundSelected != null && backgroundSelected == stage) Color.Green else Color.Transparent,
+                            color = if (background == backgroundSelected) Color.Green else Color.Transparent,
                             shape = RoundedCornerShape(8.dp),
                         ),
                 elevation = CardDefaults.cardElevation(defaultElevation = 16.dp),
             ) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Image(
-                        painter = painterResource(id = stage.background),
+                        painter = rememberAsyncImagePainter(background.background),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize(),
@@ -337,17 +348,21 @@ fun LazyRowWithImagesHeroPlayer(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .height(30.dp)
+                                .height(50.dp)
                                 .align(Alignment.BottomCenter)
                                 .background(
                                     colorResource(id = R.color.superhero_item_name),
                                 ),
                     ) {
                         Text(
-                            text = stage.name,
-                            modifier = Modifier.align(Alignment.BottomCenter),
+                            text = background.name,
+                            modifier =
+                                Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .padding(bottom = 4.dp),
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
+                            fontSize = 30.sp,
                         )
                     }
                 }
