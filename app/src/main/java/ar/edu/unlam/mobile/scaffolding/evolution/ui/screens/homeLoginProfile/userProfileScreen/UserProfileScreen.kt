@@ -49,9 +49,9 @@ fun UserProfileScreen(
     navController: NavController,
     auth: FirebaseAuth,
 ) {
-    val userId = auth.currentUser?.uid ?: ""
+    val userId = auth.currentUser!!.uid
     val avatarUrl by produceState<String?>(initialValue = null) {
-        value = getUserAvatarUrl(auth.currentUser!!.uid)
+        value = getUserAvatarUrl(userId)
     }
 
     val onImageCapture: () -> Unit = { } // TODO Lógica de captura de imágen
