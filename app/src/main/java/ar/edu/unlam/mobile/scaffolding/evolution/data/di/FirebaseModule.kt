@@ -33,9 +33,11 @@ object FirebaseModule {
     fun provideImageRepository(
         storage: FirebaseStorage,
         db: FirebaseFirestore,
+        auth: FirebaseAuth,
     ): ImageRepository =
         StorageService(
             storage = storage,
             db = db,
+            auth = auth,
         )
 }

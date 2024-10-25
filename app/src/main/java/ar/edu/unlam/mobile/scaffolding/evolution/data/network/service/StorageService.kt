@@ -5,12 +5,12 @@ import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.UserDataResp
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.CREATED_AT
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGES
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGE_NAME
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.UID
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.URL
 import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.AddImageToStorageResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.AddImageUrlToFirestoreResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.GetImageFromFirestoreResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.ImageRepository
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -22,13 +22,14 @@ class StorageService
     constructor(
         private val storage: FirebaseStorage,
         private val db: FirebaseFirestore,
+        private val auth: FirebaseAuth,
     ) : ImageRepository {
         override suspend fun addImageToFirebaseStorage(imageUri: Uri): AddImageToStorageResponse =
             try {
                 val downloadUrl =
                     storage.reference
                         .child(IMAGES)
-                        .child(IMAGE_NAME)
+                        .child(auth.currentUser?.uid + IMAGE_NAME)
                         .putFile(imageUri)
                         .await()
                         .storage.downloadUrl
@@ -42,7 +43,7 @@ class StorageService
             try {
                 db
                     .collection(IMAGES)
-                    .document(UID)
+                    .document(auth.currentUser?.uid.toString())
                     .set(
                         mapOf(
                             URL to download,
@@ -59,7 +60,7 @@ class StorageService
                 val imageUrl =
                     db
                         .collection(IMAGES)
-                        .document(UID)
+                        .document(auth.currentUser?.uid.toString())
                         .get()
                         .await()
                         .getString(URL)

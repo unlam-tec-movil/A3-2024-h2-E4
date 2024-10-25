@@ -24,6 +24,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,12 +40,19 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.tasks.await
 
 @Composable
 fun UserProfileScreen(
     navController: NavController,
     auth: FirebaseAuth,
 ) {
+    val userId = auth.currentUser?.uid ?: ""
+    val avatarUrl by produceState<String?>(initialValue = null) {
+        value = getAvatarUrl(auth)
+    }
+
     val onImageCapture: () -> Unit = { } // TODO Lógica de captura de imágen
     val onEditField: (String) -> Unit = { } // TODO Lógica de edición de campo
 
@@ -88,7 +97,13 @@ fun UserProfileScreen(
                             .size((200.dp))
                             .clip(CircleShape)
                             .border(5.dp, Color.White, CircleShape),
-                    painter = rememberAsyncImagePainter(auth.currentUser),
+                    painter =
+                        rememberAsyncImagePainter(
+                            // model = auth.currentUser?.photoUrl,
+                            model = avatarUrl,
+                            placeholder = painterResource(id = R.drawable.im_default_avatar),
+                            error = painterResource(id = R.drawable.im_default_avatar),
+                        ),
                     contentDescription = "Avatar Usuario",
                 )
                 IconButton(
@@ -159,6 +174,25 @@ fun UserInfoField(
                 Icon(Icons.Default.Create, contentDescription = "Editar $label")
             }
         }
+    }
+}
+
+suspend fun getAvatarUrl(
+    auth: FirebaseAuth,
+    // userId: String,
+): String? {
+    val db = FirebaseFirestore.getInstance()
+    val docRef = db.collection("userAvatarImages").document(auth.currentUser!!.uid)
+    return try {
+        val documentSnapshot = docRef.get().await()
+        if (documentSnapshot.exists()) {
+            documentSnapshot.getString("url")
+        } else {
+            null
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
     }
 }
 
