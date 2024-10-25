@@ -29,7 +29,7 @@ class SuperHeroRankedViewModel
                 val usersFlow: Flow<List<UserRanked>> = getUsersRankingFireStore()
                 Log.i("FlowFirestore", "$usersFlow")
                 usersFlow.collect { users ->
-                    _usersRanked.value = users
+                    _usersRanked.value = users.sortedByDescending { it.userVictories }
                     Log.i("FlowFirestore", "${_usersRanked.value}")
                     _isLoading.value = false
                 }
