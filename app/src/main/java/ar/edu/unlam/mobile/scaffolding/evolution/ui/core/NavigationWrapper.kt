@@ -1,5 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.core
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,6 +29,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.s
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.superHeroDetailScreen.SuperHeroDetail
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.uploadImageScreen.UploadImageScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
     val auth by viewModel.auth.collectAsState()
@@ -71,7 +74,7 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
                 navController = navController,
             )
         }
-        composable<Routes.QRGenerateScreenRoute> { QRGenerateScreen() }
+        composable<Routes.QRGenerateScreenRoute> { QRGenerateScreen(auth) }
         composable<Routes.SignUpScreenRoute> { SignUpScreen(navController = navController, auth) }
         composable<Routes.CreateAccountScreenRoute> {
             CreateAccountScreen(

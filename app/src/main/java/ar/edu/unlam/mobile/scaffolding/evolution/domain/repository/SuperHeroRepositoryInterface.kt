@@ -25,6 +25,8 @@ interface SuperHeroRepositoryInterface {
         lifeCom: Int,
     )
 
+    suspend fun getUserByIdFromFirestore(userId: String): Flow<UserRanked?>
+
     suspend fun getAllUsersFromFireStore(): Flow<List<UserRanked>>
 
     suspend fun addUserFireStore(user: UserRanked)

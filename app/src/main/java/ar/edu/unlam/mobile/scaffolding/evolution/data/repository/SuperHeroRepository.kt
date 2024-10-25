@@ -50,6 +50,28 @@ class SuperHeroRepository
                 ResultData(superHeroPlayer, superHeroCom, lifePlayer, lifeCom)
         }
 
+        override suspend fun getUserByIdFromFirestore(userId: String): Flow<UserRanked?> =
+            callbackFlow {
+                val listener =
+                    firestore
+                        .collection(firestore_collection_userRanking)
+                        .document(userId)
+                        .addSnapshotListener { snapshot, error ->
+                            if (error != null) {
+                                Log.e("FirestoreError", "Error al obtener el usuario.", error)
+                                close(error)
+                                return@addSnapshotListener
+                            }
+                            if (snapshot != null && snapshot.exists()) {
+                                val user = snapshot.toObject(UserRanked::class.java)
+                                trySend(user).isSuccess
+                            } else {
+                                trySend(null).isSuccess
+                            }
+                        }
+                awaitClose { listener.remove() }
+            }
+
         override suspend fun getAllUsersFromFireStore(): Flow<List<UserRanked>> =
             callbackFlow {
                 val listener =

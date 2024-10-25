@@ -19,17 +19,16 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ar.edu.unlam.mobile.scaffolding.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 
-@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun QRGenerateScreen() {
+fun QRGenerateScreen(auth: FirebaseAuth) {
     Scaffold {
         Column(
             modifier =
@@ -53,7 +52,7 @@ fun QRGenerateScreen() {
                     ),
             )
             Spacer(modifier = Modifier.size(width = 0.dp, height = 180.dp))
-            Image(bitmap = getQrCodeBitMap("no se que poner"), "My qr code")
+            Image(bitmap = getQrCodeBitMap("${auth.currentUser?.uid}"), "My qr code")
         }
     }
 }
