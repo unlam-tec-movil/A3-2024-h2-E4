@@ -112,7 +112,7 @@ fun SuperHeroCombat(
     val vibrator = remember { ContextCompat.getSystemService(context, Vibrator::class.java) }
 
     if (vibratorActivated) {
-        vibrator?.vibrate(VibrationEffect.createOneShot(700, VibrationEffect.DEFAULT_AMPLITUDE))
+        vibrator?.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE))
     }
 
     SetOrientationScreen(

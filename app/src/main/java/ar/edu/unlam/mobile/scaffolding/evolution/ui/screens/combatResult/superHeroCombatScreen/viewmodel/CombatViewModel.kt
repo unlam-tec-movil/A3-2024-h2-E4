@@ -107,10 +107,8 @@ class CombatViewModel
                 delay(2500)
                 _attackPlayer.value = false
                 getRandomAudioAttack()
-                _vibratorActivated.value = true
                 attackCom()
                 delay(2500)
-                _vibratorActivated.value = false
                 _buttonEnable.value = true
                 _attackEffect.value = false
                 _attackPlayer.value = true
@@ -217,11 +215,13 @@ class CombatViewModel
         private fun specialAttackCom() {
             viewModelScope.launch {
                 if (iconButtonPowerUpCom.value) {
+                    _vibratorActivated.value = true
                     _comAttackActivated.value = true
                     val attackAttribute = superHero2.attack
                     val attackEnhanced = attackAttribute.times(2.5)
                     _superHeroCom.value!!.attack = attackEnhanced.roundToInt()
                     delay(12000)
+                    _vibratorActivated.value = false
                     superHero2.attack = attackAttribute
                     _superHeroCom.value = superHero2
                 }
