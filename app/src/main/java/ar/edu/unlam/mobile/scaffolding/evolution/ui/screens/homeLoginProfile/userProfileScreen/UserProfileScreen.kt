@@ -24,8 +24,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,25 +34,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel.UserProfileScreenViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.tasks.await
 
 @Composable
 fun UserProfileScreen(
     navController: NavController,
     auth: FirebaseAuth,
+    userProfileScreenViewModel: UserProfileScreenViewModel = hiltViewModel(),
 ) {
-    val userId = auth.currentUser!!.uid
-    val avatarUrl by produceState<String?>(initialValue = null) {
-        value = getUserAvatarUrl(userId)
-    }
+    val name by userProfileScreenViewModel.name.collectAsState()
+    val nickName by userProfileScreenViewModel.nickName.collectAsState()
+    val infoUser by userProfileScreenViewModel.infoUser.collectAsState()
+    val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
 
     val onImageCapture: () -> Unit = { } // TODO Lógica de captura de imágen
     val onEditField: (String) -> Unit = { } // TODO Lógica de edición de campo
@@ -187,37 +188,3 @@ fun UserInfoField(
         }
     }
 }
-
-suspend fun getUserAvatarUrl(
-    // auth: FirebaseAuth,
-    userId: String,
-): String? {
-    val db = FirebaseFirestore.getInstance()
-    val docRef = db.collection("userAvatarImages").document(userId)
-    return try {
-        val documentSnapshot = docRef.get().await()
-        if (documentSnapshot.exists()) {
-            documentSnapshot.getString("url")
-        } else {
-            null
-        }
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
-    }
-}
-
-// @Composable
-// fun UserProfileScreen(auth: FirebaseAuth) {
-//    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-//        Column {
-//            Text(text = "User Profile")
-//            Spacer(modifier = Modifier.size(16.dp))
-//            Text(text = "${auth.currentUser!!.email}")
-//            Spacer(modifier = Modifier.size(16.dp))
-//            Text(text = "${auth.currentUser!!.isAnonymous}")
-//            Spacer(modifier = Modifier.size(16.dp))
-//            Text(text = auth.currentUser!!.providerId)
-//        }
-//    }
-// }
