@@ -44,6 +44,53 @@ class UserProfileScreenViewModel
             }
         }
 
+        private fun fetchUserProfile() {
+            viewModelScope.launch {
+                val userId = auth.currentUser?.uid ?: return@launch
+
+                db.collection("users").document(userId).get().addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        _name.value = document.getString("name") ?: ""
+                        _nickName.value = document.getString("nickName") ?: ""
+                        _avatarUrl.value = document.getString("avatarUrl") ?: ""
+                        _infoUser.value = document.getString("infoUser") ?: ""
+                    }
+                }
+            }
+        }
+
+        fun updateName(newName: String) {
+            viewModelScope.launch {
+                val userId = auth.currentUser?.uid ?: return@launch
+                db.collection("users").document(userId).update("name", newName)
+                _name.value = newName
+            }
+        }
+
+        fun updateNickName(newNickName: String) {
+            viewModelScope.launch {
+                val userId = auth.currentUser?.uid ?: return@launch
+                db.collection("users").document(userId).update("nickName", newNickName)
+                _nickName.value = newNickName
+            }
+        }
+
+        fun updateAvatarUrl(newAvatarUrl: String) {
+            viewModelScope.launch {
+                val userId = auth.currentUser?.uid ?: return@launch
+                db.collection("users").document(userId).update("avatarUrl", newAvatarUrl)
+                _avatarUrl.value = newAvatarUrl
+            }
+        }
+
+        fun updateInfoUser(newInfoUser: String) {
+            viewModelScope.launch {
+                val userId = auth.currentUser?.uid ?: return@launch
+                db.collection("users").document(userId).update("infoUser", newInfoUser)
+                _infoUser.value = newInfoUser
+            }
+        }
+
         private fun getUserAvatarUrl(userId: String) {
             viewModelScope.launch {
                 val db = FirebaseFirestore.getInstance()
