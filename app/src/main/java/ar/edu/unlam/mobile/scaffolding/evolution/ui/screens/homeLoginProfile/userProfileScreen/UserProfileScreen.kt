@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraEnhance
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,7 +34,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
@@ -52,6 +55,7 @@ fun UserProfileScreen(
 ) {
     val name by userProfileScreenViewModel.name.collectAsState()
     val nickName by userProfileScreenViewModel.nickName.collectAsState()
+    val email by userProfileScreenViewModel.email.collectAsState()
     val infoUser by userProfileScreenViewModel.infoUser.collectAsState()
     val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
 
@@ -133,30 +137,37 @@ fun UserProfileScreen(
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             // Información del Usuario
-            UserInfoField(
+            UserInfoCard(
+                label = "Apodo",
+                value = nickName,
+                // onEditField = onEditField,
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            UserInfoCard(
                 label = "Nombre",
-                value = auth.currentUser?.email!!,
-                onEditField = onEditField,
+                value = name,
+                // onEditField = onEditField,
             )
-            UserInfoField(
-                label = "Apellido",
-                value = auth.currentUser?.email!!,
-                onEditField = onEditField,
-            )
-            UserInfoField(
+            Spacer(modifier = Modifier.height(6.dp))
+            UserInfoCard(
                 label = "Información Adicional",
-                value = auth.currentUser!!.isAnonymous.toString(),
-                onEditField = onEditField,
+                value = email,
+                // onEditField = onEditField,
             )
-            UserInfoField(
+            Spacer(modifier = Modifier.height(6.dp))
+            UserInfoCard(
                 label = "Fecha de Creación",
-                value = auth.currentUser!!.uid,
-                onEditField = onEditField,
+                value = auth.currentUser!!.isAnonymous.toString(),
+                // onEditField = onEditField,
             )
         }
     }
+
+//    userProfileScreenViewModel.getNameFromFirestore()
+//    userProfileScreenViewModel.getNicknameFromFirestore()
+//    userProfileScreenViewModel.getEmailFromFirestore()
 }
 
 @Composable
@@ -184,6 +195,49 @@ fun UserInfoField(
         onEditField?.let {
             IconButton(onClick = { it(label) }) {
                 Icon(Icons.Default.Create, contentDescription = "Editar $label")
+            }
+        }
+    }
+}
+
+@Composable
+fun UserInfoCard(
+    label: String,
+    value: String,
+) {
+    Box(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(
+                    color = Color.White.copy(alpha = 0.2f),
+                    // Brush.linearGradient(listOf(Purple80, Purple40)),
+                    shape = RoundedCornerShape(8.dp),
+                ).padding(16.dp),
+    ) {
+        Row {
+            Column {
+                Text(text = label, color = Color.Black, style = MaterialTheme.typography.bodyMedium)
+                Spacer(modifier = Modifier.height(8.dp))
+                if (true) {
+                    Text(
+                        text = value,
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                } else {
+                    CircularProgressIndicator()
+                }
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            IconButton(onClick = { }) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_lapiz),
+                    contentDescription = "",
+                    modifier = Modifier.size(24.dp),
+                )
             }
         }
     }
