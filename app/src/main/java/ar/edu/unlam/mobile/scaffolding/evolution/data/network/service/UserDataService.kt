@@ -104,13 +104,18 @@ class UserDataService
         }
 
         override suspend fun getUserDataAvatarUrl(userId: String): String {
-            val db = FirebaseFirestore.getInstance() // manifiesta la instancia actual de la Firestore en uso
+            val db =
+                FirebaseFirestore.getInstance() // manifiesta la instancia actual de la Firestore en uso
             val documentRef = db.collection(IMAGES).document(userId)
             var errorRef: String
             try {
-                val documentSnapshot = documentRef.get().await() // aca buscamos en la colección IMAGES, el documento del usuario
+                val documentSnapshot =
+                    documentRef
+                        .get()
+                        .await() // aca buscamos en la colección IMAGES, el documento del usuario
                 if (documentSnapshot.exists()) {
-                    return documentSnapshot.getString("url") ?: "" // si existe el documento y el campo correcto, lo devuelvo
+                    return documentSnapshot.getString("url")
+                        ?: "" // si existe el documento y el campo correcto, lo devuelvo
                 } else {
                     errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
                     return errorRef
