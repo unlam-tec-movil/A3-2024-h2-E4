@@ -1,11 +1,11 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.network.service
 
-import android.util.Log
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userFutureFight
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.UserDataResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.AVATAR
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.EMAIL
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGES
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.NAME
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.NICKNAME
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERDATA
@@ -19,9 +19,6 @@ import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.UserDataReposit
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -32,26 +29,22 @@ class UserDataService
         private val db: FirebaseFirestore,
         private val auth: FirebaseAuth,
     ) : UserDataRepository {
-        override suspend fun getUserDataFromFirestore(userId: String): Flow<UserData?> =
-            callbackFlow {
-                val listener =
+        override suspend fun getUserDataFromFirestore(userId: String): UserData? =
+            try {
+                val documentSnapshot =
                     db
-                        .collection(firestore_collection_userFutureFight)
+                        .collection(USERDATA)
                         .document(userId)
-                        .addSnapshotListener { snapshot, error ->
-                            if (error != null) {
-                                Log.e("FirestoreError", "Error al obtener el usuario.", error)
-                                close(error)
-                                return@addSnapshotListener
-                            }
-                            if (snapshot != null && snapshot.exists()) {
-                                val user = snapshot.toObject(UserData::class.java)
-                                trySend(user).isSuccess
-                            } else {
-                                trySend(null).isSuccess
-                            }
-                        }
-                awaitClose { listener.remove() }
+                        .get()
+                        .await()
+                if (documentSnapshot.exists()) {
+                    documentSnapshot.toObject(UserData::class.java)
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
             }
 
         override suspend fun addUserFireStore(user: UserData): AddUserFireStoreResponse =
@@ -73,6 +66,63 @@ class UserDataService
             } catch (e: Exception) {
                 UserDataResponse.Failure(e)
             }
+
+        override suspend fun getNameFromFirestore(userId: String): String {
+            val documentRef = db.collection(USERDATA).document(userId)
+            var errorRef: String
+            try {
+                val documentSnapshot = documentRef.get().await()
+                if (documentSnapshot.exists()) {
+                    return documentSnapshot.getString(NAME) ?: ""
+                } else {
+                    errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                    return errorRef
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                return errorRef
+            }
+        }
+
+        override suspend fun getNicknameFromFirestore(userId: String): String {
+            val documentRef = db.collection(USERDATA).document(userId)
+            var errorRef: String
+            try {
+                val documentSnapshot = documentRef.get().await()
+                if (documentSnapshot.exists()) {
+                    return documentSnapshot.getString(NICKNAME) ?: ""
+                } else {
+                    errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                    return errorRef
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                return errorRef
+            }
+        }
+
+        override suspend fun getUserDataAvatarUrl(userId: String): String {
+            val db = FirebaseFirestore.getInstance() // manifiesta la instancia actual de la Firestore en uso
+            val documentRef = db.collection(IMAGES).document(userId)
+            var errorRef: String
+            try {
+                val documentSnapshot = documentRef.get().await() // aca buscamos en la colección IMAGES, el documento del usuario
+                if (documentSnapshot.exists()) {
+                    return documentSnapshot.getString("url") ?: "" // si existe el documento y el campo correcto, lo devuelvo
+                } else {
+                    errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                    return errorRef
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                return errorRef
+            }
+        }
+
+        // TODO Funciones que implementan el UserDataResponse - traen datos Success {Data = Ejemplo}
 
         override suspend fun getNameFromFirestoreResponse(): GetNameFromFirestoreResponse =
             try {
