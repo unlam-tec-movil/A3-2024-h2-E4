@@ -43,7 +43,6 @@ import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel.UserProfileScreenViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverB
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.auth.FirebaseAuth
@@ -70,7 +69,7 @@ fun UserProfileScreen(
                 .background(
                     brush =
                         Brush.verticalGradient(
-                            listOf(SilverA, SilverB, IndigoDye),
+                            listOf(SilverB, IndigoDye),
                             startY = 0f,
                             endY = 1100f,
                         ),
@@ -183,7 +182,7 @@ fun UserInfoField(
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
                 .background(
-                    color = Color.White.copy(alpha = 0.2f),
+                    color = Color.White.copy(alpha = 0.5f),
                     shape = RoundedCornerShape(8.dp),
                 ).padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,

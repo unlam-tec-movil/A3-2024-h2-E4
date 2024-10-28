@@ -1,8 +1,7 @@
-package ar.edu.unlam.mobile.scaffolding.evolution.data.network.service
+package ar.edu.unlam.mobile.scaffolding.evolution.domain.services
 
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userFutureFight
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.UserDataResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.AVATAR
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.EMAIL
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGES
@@ -11,11 +10,12 @@ import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.NI
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERDATA
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERID
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERINFO
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.AddUserFireStoreResponse
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.GetEmailFromFirestoreResponse
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.GetNameFromFirestoreResponse
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.GetNicknameFromFirestoreResponse
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.UserDataRepository
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.AddUserFireStoreResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.GetEmailFromFirestoreResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.GetNameFromFirestoreResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.GetNicknameFromFirestoreResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.UserDataRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage

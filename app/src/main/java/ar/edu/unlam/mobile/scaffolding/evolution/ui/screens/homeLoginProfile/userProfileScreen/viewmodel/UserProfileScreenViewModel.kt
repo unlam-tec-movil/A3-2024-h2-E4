@@ -1,12 +1,10 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.ImageRepository
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.UserDataRepository
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.ImageRepository
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.UserDataRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage

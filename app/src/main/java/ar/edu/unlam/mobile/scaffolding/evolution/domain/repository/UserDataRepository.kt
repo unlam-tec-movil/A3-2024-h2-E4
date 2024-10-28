@@ -1,7 +1,7 @@
-package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
+package ar.edu.unlam.mobile.scaffolding.evolution.domain.repository
 
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.UserDataResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse
 
 typealias GetNameFromFirestoreResponse = UserDataResponse<String>
 typealias GetNicknameFromFirestoreResponse = UserDataResponse<String>

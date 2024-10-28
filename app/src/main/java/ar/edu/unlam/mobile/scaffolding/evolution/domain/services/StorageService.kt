@@ -1,15 +1,15 @@
-package ar.edu.unlam.mobile.scaffolding.evolution.data.network.service
+package ar.edu.unlam.mobile.scaffolding.evolution.domain.services
 
 import android.net.Uri
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.UserDataResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.CREATED_AT
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGES
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGE_NAME
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.URL
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.AddImageToStorageResponse
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.AddImageUrlToFirestoreResponse
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.GetImageFromFirestoreResponse
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.ImageRepository
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.AddImageToStorageResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.AddImageUrlToFirestoreResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.GetImageFromFirestoreResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.ImageRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore

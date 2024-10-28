@@ -6,9 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.UserDataResponse
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.model.UserDataResponse.Success
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.ImageRepository
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse.Success
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.ImageRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
