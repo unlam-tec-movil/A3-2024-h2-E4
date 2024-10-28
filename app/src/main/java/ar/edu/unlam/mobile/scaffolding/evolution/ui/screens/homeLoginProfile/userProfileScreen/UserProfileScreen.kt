@@ -42,8 +42,9 @@ import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel.UserProfileScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverB
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.auth.FirebaseAuth
 
@@ -69,9 +70,9 @@ fun UserProfileScreen(
                 .background(
                     brush =
                         Brush.verticalGradient(
-                            listOf(SilverA, VioletSky),
+                            listOf(SilverA, SilverB, IndigoDye),
                             startY = 0f,
-                            endY = 800f,
+                            endY = 1100f,
                         ),
                 ),
         contentAlignment = Alignment.Center,

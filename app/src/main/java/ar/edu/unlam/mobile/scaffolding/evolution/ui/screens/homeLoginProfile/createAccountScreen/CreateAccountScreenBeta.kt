@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
+import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERDATA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverB
@@ -105,6 +106,7 @@ fun CreateAccountScreenBeta(
                 )
                 UserFormCreateAccount(isCreateAccount = true) { email, password, name, nickname ->
                     Log.d("FutureFightPrueba", "Logueado con $email, $password, $name y $nickname")
+                    createUser(auth, email, password, name, nickname, navController, context)
                 }
             }
             Spacer(modifier = Modifier.height(15.dp))
@@ -372,13 +374,14 @@ fun createUser(
     name: String,
     nickname: String,
     navController: NavController,
+    context: Context,
 ) {
     auth
         .createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.d("FutureFightPrueba", "Cuenta creada exitosamente")
-                // Guardar datos adicionales en Firestore
+                // TODO Guardar datos adicionales en Firestore
                 val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
                 val userData =
                     UserData(
@@ -386,26 +389,40 @@ fun createUser(
                         name = name,
                         nickname = nickname,
                         email = email,
-                        infoUser = "",
+                        infoUser = "Info Default",
                     )
-                saveUserDataToFirestore(userData)
-                // Navegar a la pantalla principal
-                navController.navigate("main_screen")
+                saveUserDataToFirestore(userData, context)
+                // TODO navega hacia la pantalla principal si la cuenta fue creada
+                navController.navigate(HomeScreenRoute) {
+                    popUpTo<HomeScreenRoute> { inclusive = true }
+                }
             } else {
                 Log.e("FutureFightPrueba", "Creación de cuenta fallida: ${task.exception}")
+                Toast
+                    .makeText(context, "Account Already Exists", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 }
 
-fun saveUserDataToFirestore(userData: UserData) {
+fun saveUserDataToFirestore(
+    userData: UserData,
+    context: Context,
+) {
     val db = FirebaseFirestore.getInstance()
     db
-        .collection("users")
+        .collection(USERDATA)
         .document(userData.userID!!)
         .set(userData)
         .addOnSuccessListener {
+            Toast
+                .makeText(context, "Account Created Successful", Toast.LENGTH_SHORT)
+                .show()
             Log.d("FutureFightPrueba", "Datos de usuario guardados en Firestore")
         }.addOnFailureListener { e ->
             Log.e("FutureFightPrueba", "Error al guardar datos de usuario: $e")
+            Toast
+                .makeText(context, "Error Creating Account", Toast.LENGTH_SHORT)
+                .show()
         }
 }
