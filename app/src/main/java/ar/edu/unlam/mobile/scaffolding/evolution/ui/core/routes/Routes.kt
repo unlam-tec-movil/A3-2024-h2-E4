@@ -44,6 +44,9 @@ sealed class Routes {
     data object CreateAccountScreenRoute : Routes()
 
     @Serializable
+    data object CreateAccountScreenBetaRoute : Routes()
+
+    @Serializable
     data object UserProfileScreenRoute : Routes()
 
     @Serializable

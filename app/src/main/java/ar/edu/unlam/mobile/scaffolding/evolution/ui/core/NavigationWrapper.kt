@@ -19,6 +19,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHe
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.authenticationScreen.AuthenticationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.cameraScreen.CameraScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.createAccountScreen.CreateAccountScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.createAccountScreen.CreateAccountScreenBeta
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.ui.HomeScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.signUpScreen.SignUpScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.UserProfileScreen
@@ -78,6 +79,12 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
         composable<Routes.SignUpScreenRoute> { SignUpScreen(navController = navController, auth) }
         composable<Routes.CreateAccountScreenRoute> {
             CreateAccountScreen(
+                navController = navController,
+                auth,
+            )
+        }
+        composable<Routes.CreateAccountScreenBetaRoute> {
+            CreateAccountScreenBeta(
                 navController = navController,
                 auth,
             )

@@ -32,9 +32,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.DarkPurple
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.DelftBlue
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -57,7 +57,7 @@ fun SignUpScreen(
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        listOf(SilverA, VioletSky),
+                        listOf(SilverA, IndigoDye),
                         startY = 0f,
                         endY = 600f,
                     ),
@@ -96,8 +96,9 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
                     .height(54.dp),
-            onClick = { navController.navigate(CreateAccountScreenRoute) },
-            colors = ButtonDefaults.buttonColors(containerColor = DarkPurple),
+            // onClick = { navController.navigate(CreateAccountScreenRoute) },
+            onClick = { navController.navigate(CreateAccountScreenBetaRoute) }, // TODO yendo a la pantalla beta
+            colors = ButtonDefaults.buttonColors(containerColor = DelftBlue),
         ) {
             Text(
                 text = stringResource(id = R.string.SignUpFree),
