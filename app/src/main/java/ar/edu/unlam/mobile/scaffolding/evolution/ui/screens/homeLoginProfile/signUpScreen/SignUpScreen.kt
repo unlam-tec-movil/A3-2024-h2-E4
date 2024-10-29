@@ -31,7 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.CreateAccountScreenBetaRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.DelftBlue
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
@@ -96,8 +97,7 @@ fun SignUpScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
                     .height(54.dp),
-            // onClick = { navController.navigate(CreateAccountScreenRoute) },
-            onClick = { navController.navigate(CreateAccountScreenBetaRoute) }, // TODO yendo a la pantalla beta
+            onClick = { navController.navigate(CreateAccountScreenBetaRoute) },
             colors = ButtonDefaults.buttonColors(containerColor = DelftBlue),
         ) {
             Text(
@@ -117,7 +117,7 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.size(24.dp))
 
         Text(
-            modifier = Modifier.clickable { navController.navigate(AuthenticationScreenRoute) },
+            modifier = Modifier.clickable { navController.navigate(CreateAccountScreenBetaRoute) },
             text = "Log In",
             color = Color.White,
             fontSize = 18.sp,

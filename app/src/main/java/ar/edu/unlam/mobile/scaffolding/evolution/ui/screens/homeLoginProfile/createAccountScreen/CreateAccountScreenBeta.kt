@@ -114,7 +114,8 @@ fun CreateAccountScreenBeta(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val textQuestion = if (showLoginForm.value) "Don't have an account yet?" else "Already have an account?"
+                val textQuestion =
+                    if (showLoginForm.value) "Don't have an account yet?" else "Already have an account?"
                 val textAnswer = if (showLoginForm.value) "Create an Account" else "Log In"
                 Text(text = textQuestion)
                 Text(
@@ -135,7 +136,7 @@ fun CreateAccountScreenBeta(
 @Composable
 fun UserFormLogin(
     isCreateAccount: Boolean = false,
-    onDone: (String, String) -> Unit = { email, password -> },
+    onDone: (String, String) -> Unit,
 ) {
     val email =
         rememberSaveable {
@@ -175,7 +176,7 @@ fun UserFormLogin(
 @Composable
 fun UserFormCreateAccount(
     isCreateAccount: Boolean = false,
-    onDone: (String, String, String, String) -> Unit = { email, password, name, nickname -> },
+    onDone: (String, String, String, String) -> Unit,
 ) {
     val email =
         rememberSaveable {
@@ -219,7 +220,12 @@ fun UserFormCreateAccount(
             textId = if (isCreateAccount) "Create Account" else "Login",
             validInput = validValue,
         ) {
-            onDone(email.value.trim(), password.value.trim(), name.value.trim(), nickname.value.trim())
+            onDone(
+                email.value.trim(),
+                password.value.trim(),
+                name.value.trim(),
+                nickname.value.trim(),
+            )
             keyboardController?.hide()
         }
     }
@@ -253,7 +259,8 @@ fun PasswordInput(
     labelId: String,
     passwordVisible: MutableState<Boolean>,
 ) {
-    val visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation()
+    val visualTransformation =
+        if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation()
     OutlinedTextField(
         value = passwordState.value,
         onValueChange = { passwordState.value = it },
@@ -380,8 +387,6 @@ fun createUser(
         .createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Log.d("FutureFightPrueba", "Cuenta creada exitosamente")
-                // TODO Guardar datos adicionales en Firestore
                 val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
                 val userData =
                     UserData(

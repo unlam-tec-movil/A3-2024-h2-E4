@@ -38,12 +38,6 @@ sealed class Routes {
     data object SignUpScreenRoute : Routes()
 
     @Serializable
-    data object AuthenticationScreenRoute : Routes()
-
-    @Serializable
-    data object CreateAccountScreenRoute : Routes()
-
-    @Serializable
     data object CreateAccountScreenBetaRoute : Routes()
 
     @Serializable

@@ -56,19 +56,6 @@ class UserProfileScreenViewModel
             getNicknameFromDatabase(userId)
         }
 
-        private fun fetchUserProfile() {
-            viewModelScope.launch {
-                val userId = auth.currentUser?.uid ?: return@launch
-                val userData = userDataRepository.getUserDataFromFirestore(userId)
-                userData?.let {
-                    _name.value = it.name ?: ""
-                    _nickName.value = it.nickname ?: ""
-                    _infoUser.value = it.infoUser ?: ""
-                    _email.value = it.email ?: ""
-                }
-            }
-        }
-
         private fun getUserAvatarUrl(userId: String) {
             viewModelScope.launch {
                 // val userId = auth.currentUser?.uid ?: return@launch
@@ -86,10 +73,6 @@ class UserProfileScreenViewModel
             viewModelScope.launch {
                 _nickName.value = userDataRepository.getNicknameFromFirestore(userId)
             }
-        }
-
-        suspend fun setNuevoUsuario(nuevoUsuario: UserData) {
-            userDataRepository.addUserFireStore(nuevoUsuario)
         }
 
         fun updateNickName(newNickName: String) {

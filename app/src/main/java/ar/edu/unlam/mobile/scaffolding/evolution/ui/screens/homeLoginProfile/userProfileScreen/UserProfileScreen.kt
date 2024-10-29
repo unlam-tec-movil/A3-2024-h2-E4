@@ -59,9 +59,6 @@ fun UserProfileScreen(
     val infoUser by userProfileScreenViewModel.infoUser.collectAsState()
     val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
 
-    val onImageCapture: () -> Unit = { } // TODO Lógica de captura de imágen
-    val onEditField: (String) -> Unit = { } // TODO Lógica de edición de campo
-
     Box(
         modifier =
             Modifier
@@ -164,10 +161,6 @@ fun UserProfileScreen(
             )
         }
     }
-
-//    userProfileScreenViewModel.getNameFromFirestore()
-//    userProfileScreenViewModel.getNicknameFromFirestore()
-//    userProfileScreenViewModel.getEmailFromFirestore()
 }
 
 @Composable
