@@ -39,4 +39,6 @@ interface SuperHeroRepositoryInterface {
     suspend fun setUserDataFromFireStore(userData: UserData)
 
     suspend fun addUserDataFireStore(user: UserData)
+
+    suspend fun getUserDataAvatarUrl(): String
 }

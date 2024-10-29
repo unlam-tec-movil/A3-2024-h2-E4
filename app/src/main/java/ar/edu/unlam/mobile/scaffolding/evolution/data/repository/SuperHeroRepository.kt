@@ -3,6 +3,7 @@ package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
 import android.util.Log
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_IMAGES
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userFutureFight
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userRanking
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
@@ -179,5 +180,29 @@ class SuperHeroRepository
 
         override suspend fun addUserDataFireStore(user: UserData) {
             firestore.collection(firestore_collection_userFutureFight).add(user)
+        }
+
+        override suspend fun getUserDataAvatarUrl(): String {
+            val db =
+                FirebaseFirestore.getInstance() // manifiesta la instancia actual de la Firestore en uso
+            val documentRef = db.collection(firestore_collection_IMAGES).document(auth.uid!!)
+            var errorRef: String
+            try {
+                val documentSnapshot =
+                    documentRef
+                        .get()
+                        .await() // aca buscamos en la colección IMAGES, el documento del usuario
+                if (documentSnapshot.exists()) {
+                    return documentSnapshot.getString("url")
+                        ?: "" // si existe el documento y el campo correcto, lo devuelvo
+                } else {
+                    errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                    return errorRef
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                return errorRef
+            }
         }
     }
