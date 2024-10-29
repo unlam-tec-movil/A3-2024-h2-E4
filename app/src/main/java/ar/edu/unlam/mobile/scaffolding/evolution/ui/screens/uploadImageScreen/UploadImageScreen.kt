@@ -15,8 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.ALL_IMAGES
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel.UploadImageScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.ALL_IMAGES
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.uploadImageScreen.image.AbrirGaleria
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.uploadImageScreen.image.AddImageToDatabase
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.uploadImageScreen.image.AddImageToStorage

@@ -1,15 +1,15 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.services
 
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.IMAGES
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.AVATAR
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.EMAIL
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.NAME
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.NICKNAME
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.USERDATA
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.USERID
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.USERINFO
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userFutureFight
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.AVATAR
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.EMAIL
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGES
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.NAME
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.NICKNAME
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERDATA
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERID
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERINFO
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.AddUserFireStoreResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.GetEmailFromFirestoreResponse

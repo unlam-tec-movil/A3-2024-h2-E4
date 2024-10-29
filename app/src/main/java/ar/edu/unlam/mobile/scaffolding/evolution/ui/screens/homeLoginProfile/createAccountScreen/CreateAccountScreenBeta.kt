@@ -45,8 +45,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.USERDATA
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.USERDATA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverB

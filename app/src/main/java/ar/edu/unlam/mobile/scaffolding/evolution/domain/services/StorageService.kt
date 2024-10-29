@@ -1,10 +1,10 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.services
 
 import android.net.Uri
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.CREATED_AT
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGES
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.IMAGE_NAME
-import ar.edu.unlam.mobile.scaffolding.evolution.data.network.utils.Constants.URL
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.CREATED_AT
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.IMAGES
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.IMAGE_NAME
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.URL
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.AddImageToStorageResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.AddImageUrlToFirestoreResponse

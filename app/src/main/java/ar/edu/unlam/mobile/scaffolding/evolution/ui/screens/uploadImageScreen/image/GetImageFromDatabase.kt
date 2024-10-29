@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse.Failure
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse.Loading
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse.Success
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel.UploadImageScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.uploadImageScreen.UploadImageScreenViewModel
 
 @Composable
 fun GetImageFromDatabase(

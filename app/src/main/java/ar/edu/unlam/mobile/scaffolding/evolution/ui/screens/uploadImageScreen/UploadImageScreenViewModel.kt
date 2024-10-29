@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel
+package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.uploadImageScreen
 
 import android.net.Uri
 import androidx.compose.runtime.getValue
