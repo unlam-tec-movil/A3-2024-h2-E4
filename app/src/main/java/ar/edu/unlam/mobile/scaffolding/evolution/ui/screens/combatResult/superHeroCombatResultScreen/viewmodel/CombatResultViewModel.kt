@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.LocationUser
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.ResultDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetNickNameUseCase
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetResultDataScreenUseCase
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.UpdateUserRankingFireStore
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -26,6 +27,7 @@ class CombatResultViewModel
         private val updateUserRankingFireStore: UpdateUserRankingFireStore,
         private val firebaseAuth: FirebaseAuth,
         private val fusedLocationProviderClient: FusedLocationProviderClient,
+        private val getNickNameUseCase: GetNickNameUseCase,
     ) : ViewModel() {
         private val _result = MutableStateFlow<ResultDataScreen?>(null)
         val result = _result.asStateFlow()
@@ -43,7 +45,6 @@ class CombatResultViewModel
             viewModelScope.launch {
                 _result.value = getResultDataScreen()
                 _playerWin.value = checkIfPlayerWin(_result.value!!)
-                // Agreguar que si es anonimus no actualize
                 if (_playerWin.value && firebaseAuth.currentUser != null) {
                     updateUserRanking()
                 }
@@ -74,7 +75,7 @@ class CombatResultViewModel
                 val userRanked =
                     UserRanked(
                         userID = firebaseAuth.currentUser?.uid,
-                        userName = firebaseAuth.currentUser!!.email,
+                        userName = getNickNameUseCase(),
                         userLocation =
                             LocationUser(
                                 latitude = userLocation!!.latitude,
