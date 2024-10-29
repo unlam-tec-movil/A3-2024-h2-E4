@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
@@ -20,6 +21,9 @@ class UserProfileScreenViewModel
         private val setUserDataFireStoreUseCase: SetUserDataFireStoreUseCase,
         private val getUserAvatarUrlUseCase: GetUserAvatarUrlUseCase,
     ) : ViewModel() {
+        private val _isLoading = MutableStateFlow(true)
+        val isLoading = _isLoading.asStateFlow()
+
         private var _userData = MutableStateFlow<UserData?>(null)
         val userData = _userData.asStateFlow()
 
@@ -32,6 +36,8 @@ class UserProfileScreenViewModel
                 val userData = getUserDataFromFireStoreUseCase()
                 userData.collect { user ->
                     _userData.value = user
+                    Log.i("FlowFirestore", "${_userData.value}")
+                    _isLoading.value = false
                 }
             }
         }

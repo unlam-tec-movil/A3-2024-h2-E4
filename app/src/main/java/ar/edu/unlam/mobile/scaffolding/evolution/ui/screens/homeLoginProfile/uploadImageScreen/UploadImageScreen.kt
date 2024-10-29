@@ -47,7 +47,8 @@ fun UploadImageScreen(
             ) {
                 AbrirGaleria(
                     openGallery = {
-                        galleryLauncher.launch(ALL_IMAGES)
+                        val allimage: String = "image/*"
+                        galleryLauncher.launch(allimage)
                     },
                 )
             }
