@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.evolution.domain.services
+package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
 
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.IMAGES
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.AVATAR

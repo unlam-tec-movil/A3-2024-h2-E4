@@ -1,4 +1,4 @@
-package ar.edu.unlam.mobile.scaffolding.evolution.domain.services
+package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
 
 import android.net.Uri
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.CREATED_AT
