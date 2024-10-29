@@ -166,7 +166,7 @@ class SuperHeroRepository
                     for (document in querySnapshot.documents) {
                         val existingUser = document.toObject(UserData::class.java)
                         firestore
-                            .collection(firestore_collection_userRanking)
+                            .collection(firestore_collection_userFutureFight)
                             .document(document.id)
                             .set(existingUser!!)
                     }
