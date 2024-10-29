@@ -34,7 +34,9 @@ interface SuperHeroRepositoryInterface {
 
     suspend fun updateUserRankingFireStore(user: UserRanked)
 
-    suspend fun getUserDataFromFireStore(): UserData
+    suspend fun getUserDataFromFireStore(): Flow<UserData>
 
     suspend fun setUserDataFromFireStore(userData: UserData)
+
+    suspend fun addUserDataFireStore(user: UserData)
 }

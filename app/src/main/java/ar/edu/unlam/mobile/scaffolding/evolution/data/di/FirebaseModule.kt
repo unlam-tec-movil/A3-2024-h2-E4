@@ -1,9 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.di
 
 import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.StorageService
-import ar.edu.unlam.mobile.scaffolding.evolution.data.repository.UserDataService
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.ImageRepository
-import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.UserDataRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -38,18 +36,6 @@ object FirebaseModule {
         auth: FirebaseAuth,
     ): ImageRepository =
         StorageService(
-            storage = storage,
-            db = db,
-            auth = auth,
-        )
-
-    @Provides
-    fun provideUserDataRepository(
-        storage: FirebaseStorage,
-        db: FirebaseFirestore,
-        auth: FirebaseAuth,
-    ): UserDataRepository =
-        UserDataService(
             storage = storage,
             db = db,
             auth = auth,

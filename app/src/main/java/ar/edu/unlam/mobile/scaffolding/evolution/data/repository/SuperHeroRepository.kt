@@ -3,6 +3,7 @@ package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
 import android.util.Log
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userFutureFight
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userRanking
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.CombatBackgroundsData
@@ -13,6 +14,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.service.SuperHeroService
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.SuperHeroRepositoryInterface
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +30,7 @@ class SuperHeroRepository
         private val combatBackgroundsData: CombatBackgroundsData,
         private val resultDataScreen: ResultDataScreen,
         private val firestore: FirebaseFirestore,
+        private val auth: FirebaseAuth,
     ) : SuperHeroRepositoryInterface {
         override suspend fun getSuperHeroListByName(query: String): List<SuperHeroItem> = superHeroService.getSuperHeroList(query)
 
@@ -128,11 +131,53 @@ class SuperHeroRepository
             }
         }
 
-        override suspend fun getUserDataFromFireStore(): UserData {
-            TODO("Not yet implemented")
-        }
+        override suspend fun getUserDataFromFireStore(): Flow<UserData> =
+            callbackFlow {
+                val listener =
+                    firestore
+                        .collection(firestore_collection_userFutureFight)
+                        .document(auth.currentUser!!.uid)
+                        .addSnapshotListener { snapshot, error ->
+                            if (error != null) {
+                                close(error)
+                                return@addSnapshotListener
+                            }
+                            if (snapshot != null && snapshot.exists()) {
+                                val user = snapshot.toObject(UserData::class.java)
+                                trySend(user!!).isSuccess
+                            }
+                        }
+                awaitClose { listener.remove() }
+            }
 
         override suspend fun setUserDataFromFireStore(userData: UserData) {
-            TODO("Not yet implemented")
+            try {
+                // Verificar si el usuario ya existe en Firestore
+                val querySnapshot =
+                    firestore
+                        .collection(firestore_collection_userFutureFight)
+                        .whereEqualTo("userID", userData.userID)
+                        .get()
+                        .await()
+
+                if (querySnapshot.documents.isNotEmpty()) {
+                    // Si el usuario existe
+                    for (document in querySnapshot.documents) {
+                        val existingUser = document.toObject(UserData::class.java)
+                        firestore
+                            .collection(firestore_collection_userRanking)
+                            .document(document.id)
+                            .set(existingUser!!)
+                    }
+                } else {
+                    addUserDataFireStore(userData)
+                }
+            } catch (e: Exception) {
+                Log.e("KlyxFirestore", "Error al buscar/actualizar el usuario", e)
+            }
+        }
+
+        override suspend fun addUserDataFireStore(user: UserData) {
+            firestore.collection(firestore_collection_userFutureFight).add(user)
         }
     }
