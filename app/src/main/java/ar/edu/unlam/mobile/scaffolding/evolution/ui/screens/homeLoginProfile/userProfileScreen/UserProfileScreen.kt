@@ -55,107 +55,113 @@ fun UserProfileScreen(
 ) {
     val user by userProfileScreenViewModel.userData.collectAsState()
     val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
+    val isLoading by userProfileScreenViewModel.isLoading.collectAsState()
 
-    Box(
-        modifier =
+    if (isLoading){
+        CircularProgressIndicator()
+    }else{
+
+        Box(
+            modifier =
             Modifier
                 .fillMaxSize()
                 .background(
                     brush =
-                        Brush.verticalGradient(
-                            listOf(SilverB, IndigoDye),
-                            startY = 0f,
-                            endY = 1100f,
-                        ),
+                    Brush.verticalGradient(
+                        listOf(SilverB, IndigoDye),
+                        startY = 0f,
+                        endY = 1100f,
+                    ),
                 ),
-        contentAlignment = Alignment.Center,
-    ) {
-        Column(
-            modifier =
+            contentAlignment = Alignment.Center,
+        ) {
+            Column(
+                modifier =
                 Modifier
                     .fillMaxSize()
                     .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Spacer(modifier = Modifier.height(1.dp))
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Spacer(modifier = Modifier.height(1.dp))
 
-            // Ajuste del logo encima del AVATAR (Queda feo si se ubica en esquina superior derecha)
-            Image(
-                painter = painterResource(id = R.drawable.iv_logo), // probar insertar el Logo de FF
-                contentDescription = "Future Fight Logo",
-                modifier =
+                // Ajuste del logo encima del AVATAR (Queda feo si se ubica en esquina superior derecha)
+                Image(
+                    painter = painterResource(id = R.drawable.iv_logo), // probar insertar el Logo de FF
+                    contentDescription = "Future Fight Logo",
+                    modifier =
                     Modifier
                         .size(150.dp) // Ajusta el tamaño según sea necesario
                         .padding(16.dp),
-            )
-            Spacer(modifier = Modifier.height(1.dp))
+                )
+                Spacer(modifier = Modifier.height(1.dp))
 
-            Box(contentAlignment = Alignment.Center) {
-                Image(
-                    modifier =
+                Box(contentAlignment = Alignment.Center) {
+                    Image(
+                        modifier =
                         Modifier
                             .size((200.dp))
                             .clip(CircleShape)
                             .border(5.dp, Color.White, CircleShape),
-                    painter =
+                        painter =
                         rememberAsyncImagePainter(
                             // model = auth.currentUser?.photoUrl,
                             model = avatarUrl,
                             placeholder = painterResource(id = R.drawable.im_default_avatar),
                             error = painterResource(id = R.drawable.im_default_avatar),
                         ),
-                    contentDescription = "Avatar Usuario",
-                )
-                Box(
-                    modifier =
+                        contentDescription = "Avatar Usuario",
+                    )
+                    Box(
+                        modifier =
                         Modifier
                             .align(Alignment.BottomEnd)
                             .offset(10.dp),
-                ) {
-                    IconButton(
-                        onClick = { navController.navigate(Routes.UploadImageScreenRoute) }, // Navegación a la pantalla de carga de imagen
-                        modifier =
+                    ) {
+                        IconButton(
+                            onClick = { navController.navigate(Routes.UploadImageScreenRoute) }, // Navegación a la pantalla de carga de imagen
+                            modifier =
                             Modifier
                                 .size(60.dp)
                                 .background(
                                     colorResource(id = R.color.whatsappGreenSoft),
                                     shape = CircleShape,
                                 ).clip(CircleShape),
-                    ) {
-                        Icon(
-                            Icons.Default.CameraEnhance,
-                            contentDescription = "Tomar Foto",
-                            tint = Color.Black,
-                            modifier = Modifier.size(35.dp),
-                        )
+                        ) {
+                            Icon(
+                                Icons.Default.CameraEnhance,
+                                contentDescription = "Tomar Foto",
+                                tint = Color.Black,
+                                modifier = Modifier.size(35.dp),
+                            )
+                        }
                     }
                 }
+                Spacer(modifier = Modifier.height(16.dp))
+                // Información del Usuario
+                UserInfoCard(
+                    label = "Apodo",
+                    value = user!!.nickname!!,
+                    // onEditField = onEditField,
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                UserInfoCard(
+                    label = "Nombre",
+                    value = user!!.name!!,
+                    // onEditField = onEditField,
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                UserInfoCard(
+                    label = "Información Adicional",
+                    value = user!!.email!!,
+                    // onEditField = onEditField,
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+                UserInfoCard(
+                    label = "Fecha de Creación",
+                    value = auth.currentUser!!.isAnonymous.toString(),
+                    // onEditField = onEditField,
+                )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            // Información del Usuario
-            UserInfoCard(
-                label = "Apodo",
-                value = user!!.nickname!!,
-                // onEditField = onEditField,
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            UserInfoCard(
-                label = "Nombre",
-                value = user!!.name!!,
-                // onEditField = onEditField,
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            UserInfoCard(
-                label = "Información Adicional",
-                value = user!!.email!!,
-                // onEditField = onEditField,
-            )
-            Spacer(modifier = Modifier.height(6.dp))
-            UserInfoCard(
-                label = "Fecha de Creación",
-                value = auth.currentUser!!.isAnonymous.toString(),
-                // onEditField = onEditField,
-            )
         }
     }
 }

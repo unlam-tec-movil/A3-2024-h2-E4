@@ -15,37 +15,40 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserProfileScreenViewModel
-    @Inject
-    constructor(
-        private val getUserDataFromFireStoreUseCase: GetUserDataFromFireStoreUseCase,
-        private val setUserDataFireStoreUseCase: SetUserDataFireStoreUseCase,
-        private val getUserAvatarUrlUseCase: GetUserAvatarUrlUseCase,
-    ) : ViewModel() {
-        private val _isLoading = MutableStateFlow(true)
-        val isLoading = _isLoading.asStateFlow()
+@Inject
+constructor(
+    private val getUserDataFromFireStoreUseCase: GetUserDataFromFireStoreUseCase,
+    private val setUserDataFireStoreUseCase: SetUserDataFireStoreUseCase,
+    private val getUserAvatarUrlUseCase: GetUserAvatarUrlUseCase,
+) : ViewModel() {
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading = _isLoading.asStateFlow()
 
-        private var _userData = MutableStateFlow<UserData?>(null)
-        val userData = _userData.asStateFlow()
+    private var _userData = MutableStateFlow<UserData?>(null)
+    val userData = _userData.asStateFlow()
 
-        private var _avatarUrl = MutableStateFlow("")
-        val avatarUrl = _avatarUrl.asStateFlow()
+    private var _avatarUrl = MutableStateFlow("")
+    val avatarUrl = _avatarUrl.asStateFlow()
 
-        init {
-            viewModelScope.launch {
-                _avatarUrl.value = getUserAvatarUrlUseCase()
-                val userData = getUserDataFromFireStoreUseCase()
-                userData.collect { user ->
-                    _userData.value = user
-                    Log.i("FlowFirestore", "${_userData.value}")
+    init {
+        viewModelScope.launch {
+            _avatarUrl.value = getUserAvatarUrlUseCase()
+            val userData = getUserDataFromFireStoreUseCase()
+            userData.collect { user ->
+                _userData.value = user
+                Log.i("FlowFirestore", "${_userData.value}")
+                if (_userData.value != null) {
                     _isLoading.value = false
                 }
             }
-        }
 
-        fun updateNickName(newNickName: String) {
-            val userUpdate = _userData.value!!.copy(nickname = newNickName)
-            viewModelScope.launch {
-                setUserDataFireStoreUseCase(userUpdate)
-            }
         }
     }
+
+    fun updateNickName(newNickName: String) {
+        val userUpdate = _userData.value!!.copy(nickname = newNickName)
+        viewModelScope.launch {
+            setUserDataFireStoreUseCase(userUpdate)
+        }
+    }
+}

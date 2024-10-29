@@ -132,24 +132,25 @@ class SuperHeroRepository
             }
         }
 
-        override suspend fun getUserDataFromFireStore(): Flow<UserData> =
-            callbackFlow {
-                val listener =
-                    firestore
-                        .collection(firestore_collection_userFutureFight)
-                        .document(auth.currentUser!!.uid)
-                        .addSnapshotListener { snapshot, error ->
-                            if (error != null) {
-                                close(error)
-                                return@addSnapshotListener
-                            }
-                            if (snapshot != null && snapshot.exists()) {
-                                val user = snapshot.toObject(UserData::class.java)
-                                trySend(user!!).isSuccess
-                            }
-                        }
-                awaitClose { listener.remove() }
+    override suspend fun getUserDataFromFireStore(): Flow<UserData> = callbackFlow {
+        val listener = firestore
+            .collection(firestore_collection_userFutureFight)
+            .whereEqualTo("userID", auth.currentUser!!.uid)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    close(error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null && !snapshot.isEmpty) {
+                    val userDocument = snapshot.documents[0]
+                    val user = userDocument.toObject(UserData::class.java)
+                    if (user != null) {
+                        trySend(user).isSuccess
+                    }
+                }
             }
+        awaitClose { listener.remove() }
+    }
 
         override suspend fun setUserDataFromFireStore(userData: UserData) {
             try {
