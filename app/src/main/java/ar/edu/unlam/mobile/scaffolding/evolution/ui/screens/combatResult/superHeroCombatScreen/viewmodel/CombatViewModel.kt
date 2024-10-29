@@ -29,7 +29,7 @@ class CombatViewModel
         private val setResultDataScreen: SetResultDataScreenUseCase,
         private val getNickNameUseCase: GetNickNameUseCase,
     ) : ViewModel() {
-        private val _nickName = MutableStateFlow<String>("")
+        private val _nickName = MutableStateFlow("")
         val nickName = _nickName.asStateFlow()
         private var _superHeroPlayer = MutableStateFlow<SuperHeroCombat?>(null)
         val superHeroPlayer = _superHeroPlayer.asStateFlow()
