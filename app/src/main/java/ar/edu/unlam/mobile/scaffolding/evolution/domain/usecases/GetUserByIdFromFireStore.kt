@@ -10,5 +10,5 @@ class GetUserByIdFromFireStore
     constructor(
         private val repository: SuperHeroRepository,
     ) {
-        suspend operator fun invoke(userId: String): Flow<UserRanked?> = repository.getUserByIdFromFirestore(userId)
+        suspend operator fun invoke(userId: String): Flow<UserRanked?> = repository.getUserByIdFromFireStore(userId)
     }

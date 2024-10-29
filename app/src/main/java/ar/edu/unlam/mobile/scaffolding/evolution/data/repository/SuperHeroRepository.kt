@@ -1,6 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
 
 import android.util.Log
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userRanking
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
@@ -50,7 +51,7 @@ class SuperHeroRepository
                 ResultData(superHeroPlayer, superHeroCom, lifePlayer, lifeCom)
         }
 
-        override suspend fun getUserByIdFromFirestore(userId: String): Flow<UserRanked?> =
+        override suspend fun getUserByIdFromFireStore(userId: String): Flow<UserRanked?> =
             callbackFlow {
                 val listener =
                     firestore
@@ -125,5 +126,13 @@ class SuperHeroRepository
             } catch (e: Exception) {
                 Log.e("KlyxFirestore", "Error al buscar/actualizar el usuario", e)
             }
+        }
+
+        override suspend fun getUserDataFromFireStore(): UserData {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun setUserDataFromFireStore(userData: UserData) {
+            TODO("Not yet implemented")
         }
     }

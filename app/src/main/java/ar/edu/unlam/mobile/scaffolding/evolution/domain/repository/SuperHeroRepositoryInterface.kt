@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.repository
 
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.ResultDataScreen
@@ -25,11 +26,15 @@ interface SuperHeroRepositoryInterface {
         lifeCom: Int,
     )
 
-    suspend fun getUserByIdFromFirestore(userId: String): Flow<UserRanked?>
+    suspend fun getUserByIdFromFireStore(userId: String): Flow<UserRanked?>
 
     suspend fun getAllUsersFromFireStore(): Flow<List<UserRanked>>
 
     suspend fun addUserFireStore(user: UserRanked)
 
     suspend fun updateUserRankingFireStore(user: UserRanked)
+
+    suspend fun getUserDataFromFireStore(): UserData
+
+    suspend fun setUserDataFromFireStore(userData: UserData)
 }
