@@ -1,7 +1,10 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
 
 import android.util.Log
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_IMAGES
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userFutureFight
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userRanking
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.CombatBackgroundsData
@@ -12,6 +15,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.data.local.SuperHeroItem
 import ar.edu.unlam.mobile.scaffolding.evolution.data.network.service.SuperHeroService
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.SuperHeroRepositoryInterface
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +31,7 @@ class SuperHeroRepository
         private val combatBackgroundsData: CombatBackgroundsData,
         private val resultDataScreen: ResultDataScreen,
         private val firestore: FirebaseFirestore,
+        private val auth: FirebaseAuth,
     ) : SuperHeroRepositoryInterface {
         override suspend fun getSuperHeroListByName(query: String): List<SuperHeroItem> = superHeroService.getSuperHeroList(query)
 
@@ -50,7 +55,7 @@ class SuperHeroRepository
                 ResultData(superHeroPlayer, superHeroCom, lifePlayer, lifeCom)
         }
 
-        override suspend fun getUserByIdFromFirestore(userId: String): Flow<UserRanked?> =
+        override suspend fun getUserByIdFromFireStore(userId: String): Flow<UserRanked?> =
             callbackFlow {
                 val listener =
                     firestore
@@ -115,7 +120,14 @@ class SuperHeroRepository
                         firestore
                             .collection(firestore_collection_userRanking)
                             .document(document.id)
-                            .update("userVictories", newVictories) // update
+                            .update(
+                                "userVictories",
+                                newVictories,
+                                "userName",
+                                user.userName,
+                                "avatarUrl",
+                                user.avatarUrl,
+                            )
                     }
                 } else {
                     // Usuario no encontrado, agregarlo con 1 victoria
@@ -124,6 +136,83 @@ class SuperHeroRepository
                 }
             } catch (e: Exception) {
                 Log.e("KlyxFirestore", "Error al buscar/actualizar el usuario", e)
+            }
+        }
+
+        override suspend fun getUserDataFromFireStore(): Flow<UserData> =
+            callbackFlow {
+                val listener =
+                    firestore
+                        .collection(firestore_collection_userFutureFight)
+                        .whereEqualTo("userID", auth.currentUser!!.uid)
+                        .addSnapshotListener { snapshot, error ->
+                            if (error != null) {
+                                close(error)
+                                return@addSnapshotListener
+                            }
+                            if (snapshot != null && !snapshot.isEmpty) {
+                                val userDocument = snapshot.documents[0]
+                                val user = userDocument.toObject(UserData::class.java)
+                                if (user != null) {
+                                    trySend(user).isSuccess
+                                }
+                            }
+                        }
+                awaitClose { listener.remove() }
+            }
+
+        override suspend fun setUserDataFromFireStore(userData: UserData) {
+            try {
+                // Verificar si el usuario ya existe en Firestore
+                val querySnapshot =
+                    firestore
+                        .collection(firestore_collection_userFutureFight)
+                        .whereEqualTo("userID", userData.userID)
+                        .get()
+                        .await()
+
+                if (querySnapshot.documents.isNotEmpty()) {
+                    // Si el usuario existe, actualizar con los datos nuevos
+                    for (document in querySnapshot.documents) {
+                        firestore
+                            .collection(firestore_collection_userFutureFight)
+                            .document(document.id)
+                            .set(userData) // Usamos userData, que contiene la información actualizada
+                    }
+                } else {
+                    addUserDataFireStore(userData) // Si no existe, lo añadimos como nuevo
+                }
+            } catch (e: Exception) {
+                Log.e("KlyxFirestore", "Error al buscar/actualizar el usuario", e)
+            }
+        }
+
+        override suspend fun addUserDataFireStore(user: UserData) {
+            firestore.collection(firestore_collection_userFutureFight).add(user)
+        }
+
+        override suspend fun getUserDataAvatarUrl(): String {
+            val userID = auth.currentUser?.uid ?: ""
+            val db =
+                FirebaseFirestore.getInstance() // manifiesta la instancia actual de la Firestore en uso
+            val documentRef = db.collection(firestore_collection_IMAGES).document(userID)
+            var errorRef: String
+            try {
+                val documentSnapshot =
+                    documentRef
+                        .get()
+                        .await() // aca buscamos en la colección IMAGES, el documento del usuario
+                if (documentSnapshot.exists()) {
+                    return documentSnapshot.getString("url")
+                        ?: "" // si existe el documento y el campo correcto, lo devuelvo
+                } else {
+                    errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                    return errorRef
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                return errorRef
             }
         }
     }

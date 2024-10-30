@@ -10,7 +10,7 @@ typealias GetImageFromFirestoreResponse = UserDataResponse<String>
 interface ImageRepository {
     suspend fun addImageToFirebaseStorage(imageUri: Uri): AddImageToStorageResponse
 
-    suspend fun addImageUrlToFirestore(download: Uri): AddImageUrlToFirestoreResponse
+    suspend fun addImageUrlToFireStore(download: Uri): AddImageUrlToFirestoreResponse
 
-    suspend fun getImageUrlFromFirestore(): GetImageFromFirestoreResponse
+    suspend fun getImageUrlFromFireStore(): GetImageFromFirestoreResponse
 }

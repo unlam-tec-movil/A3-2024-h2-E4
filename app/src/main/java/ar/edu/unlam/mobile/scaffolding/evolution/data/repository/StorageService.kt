@@ -1,10 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
 
 import android.net.Uri
-import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.CREATED_AT
-import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.IMAGES
-import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.IMAGE_NAME
-import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.URL
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_IMAGES
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.UserDataResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.AddImageToStorageResponse
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.AddImageUrlToFirestoreResponse
@@ -24,12 +21,21 @@ class StorageService
         private val db: FirebaseFirestore,
         private val auth: FirebaseAuth,
     ) : ImageRepository {
+        @Suppress("ktlint:standard:property-naming")
+        private val imageName: String = "${auth.uid}.jpg"
+
+        @Suppress("ktlint:standard:property-naming")
+        private val url = "url"
+
+        @Suppress("ktlint:standard:property-naming")
+        private val createAt = "createdAt"
+
         override suspend fun addImageToFirebaseStorage(imageUri: Uri): AddImageToStorageResponse =
             try {
                 val downloadUrl =
                     storage.reference
-                        .child(IMAGES)
-                        .child(auth.currentUser?.uid + IMAGE_NAME)
+                        .child(firestore_collection_IMAGES)
+                        .child(auth.currentUser?.uid + imageName)
                         .putFile(imageUri)
                         .await()
                         .storage.downloadUrl
@@ -39,15 +45,15 @@ class StorageService
                 UserDataResponse.Failure(e)
             }
 
-        override suspend fun addImageUrlToFirestore(download: Uri): AddImageUrlToFirestoreResponse =
+        override suspend fun addImageUrlToFireStore(download: Uri): AddImageUrlToFirestoreResponse =
             try {
                 db
-                    .collection(IMAGES)
+                    .collection(firestore_collection_IMAGES)
                     .document(auth.currentUser?.uid.toString())
                     .set(
                         mapOf(
-                            URL to download,
-                            CREATED_AT to FieldValue.serverTimestamp(),
+                            url to download,
+                            createAt to FieldValue.serverTimestamp(),
                         ),
                     ).await()
                 UserDataResponse.Success(true)
@@ -55,15 +61,15 @@ class StorageService
                 UserDataResponse.Failure(e)
             }
 
-        override suspend fun getImageUrlFromFirestore(): GetImageFromFirestoreResponse =
+        override suspend fun getImageUrlFromFireStore(): GetImageFromFirestoreResponse =
             try {
                 val imageUrl =
                     db
-                        .collection(IMAGES)
+                        .collection(firestore_collection_IMAGES)
                         .document(auth.currentUser?.uid.toString())
                         .get()
                         .await()
-                        .getString(URL)
+                        .getString(url)
                 UserDataResponse.Success(imageUrl)
             } catch (e: Exception) {
                 UserDataResponse.Failure(e)

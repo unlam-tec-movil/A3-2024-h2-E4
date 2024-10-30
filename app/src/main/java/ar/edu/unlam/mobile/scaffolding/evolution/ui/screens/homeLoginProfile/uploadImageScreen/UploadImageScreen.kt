@@ -15,7 +15,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsAvatarUrl.ALL_IMAGES
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.uploadImageScreen.image.AbrirGaleria
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.uploadImageScreen.image.AddImageToDatabase
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.uploadImageScreen.image.AddImageToStorage
@@ -48,7 +47,8 @@ fun UploadImageScreen(
             ) {
                 AbrirGaleria(
                     openGallery = {
-                        galleryLauncher.launch(ALL_IMAGES)
+                        val allimage: String = "image/*"
+                        galleryLauncher.launch(allimage)
                     },
                 )
             }

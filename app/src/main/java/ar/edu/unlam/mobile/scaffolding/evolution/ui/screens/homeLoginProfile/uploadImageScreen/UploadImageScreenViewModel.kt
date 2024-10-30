@@ -35,12 +35,12 @@ class UploadImageScreenViewModel
         fun addImageToDatabase(downloadUrl: Uri) =
             viewModelScope.launch {
                 addImageToDatabaseResponse = UserDataResponse.Loading
-                addImageToDatabaseResponse = repository.addImageUrlToFirestore(downloadUrl)
+                addImageToDatabaseResponse = repository.addImageUrlToFireStore(downloadUrl)
             }
 
         fun getImageFromDatabase() =
             viewModelScope.launch {
                 getImageFromDatabaseResponse = UserDataResponse.Loading
-                getImageFromDatabaseResponse = repository.getImageUrlFromFirestore()
+                getImageFromDatabaseResponse = repository.getImageUrlFromFireStore()
             }
     }

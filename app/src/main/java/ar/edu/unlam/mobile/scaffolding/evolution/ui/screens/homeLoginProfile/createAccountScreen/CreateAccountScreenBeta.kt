@@ -45,8 +45,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.evolution.data.database.ConstantsUserData.USERDATA
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
+import ar.edu.unlam.mobile.scaffolding.evolution.data.database.firestore_collection_userFutureFight
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.HomeScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverB
@@ -416,7 +416,7 @@ fun saveUserDataToFirestore(
 ) {
     val db = FirebaseFirestore.getInstance()
     db
-        .collection(USERDATA)
+        .collection(firestore_collection_userFutureFight)
         .document(userData.userID!!)
         .set(userData)
         .addOnSuccessListener {
