@@ -192,9 +192,10 @@ class SuperHeroRepository
         }
 
         override suspend fun getUserDataAvatarUrl(): String {
+            val userID = auth.currentUser?.uid ?: ""
             val db =
                 FirebaseFirestore.getInstance() // manifiesta la instancia actual de la Firestore en uso
-            val documentRef = db.collection(firestore_collection_IMAGES).document(auth.uid!!)
+            val documentRef = db.collection(firestore_collection_IMAGES).document(userID)
             var errorRef: String
             try {
                 val documentSnapshot =

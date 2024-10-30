@@ -54,14 +54,13 @@ fun UserProfileScreen(
     auth: FirebaseAuth,
     userProfileScreenViewModel: UserProfileScreenViewModel = hiltViewModel(),
 ) {
-    val user by userProfileScreenViewModel.userData.collectAsState()
+    val userData by userProfileScreenViewModel.userData.collectAsState()
     val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
     val isLoading by userProfileScreenViewModel.isLoading.collectAsState()
 
-    if (isLoading)
-        {
-            CircularProgressIndicator()
-        } else {
+    if (isLoading) {
+        CircularProgressIndicator()
+    } else {
         Box(
             modifier =
                 Modifier
@@ -141,19 +140,19 @@ fun UserProfileScreen(
                 // Información del Usuario
                 UserInfoCard(
                     label = "Apodo",
-                    value = user!!.nickname!!,
+                    value = userData!!.nickname!!,
                     // onEditField = onEditField,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
                     label = "Nombre",
-                    value = user!!.name!!,
+                    value = userData!!.name!!,
                     // onEditField = onEditField,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
                     label = "Información Adicional",
-                    value = user!!.email!!,
+                    value = userData!!.email!!,
                     // onEditField = onEditField,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
