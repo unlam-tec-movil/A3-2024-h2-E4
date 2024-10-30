@@ -120,7 +120,14 @@ class SuperHeroRepository
                         firestore
                             .collection(firestore_collection_userRanking)
                             .document(document.id)
-                            .update("userVictories", newVictories) // update
+                            .update(
+                                "userVictories",
+                                newVictories,
+                                "userName",
+                                user.userName,
+                                "avatarUrl",
+                                user.avatarUrl,
+                            )
                     }
                 } else {
                     // Usuario no encontrado, agregarlo con 1 victoria
@@ -132,25 +139,27 @@ class SuperHeroRepository
             }
         }
 
-    override suspend fun getUserDataFromFireStore(): Flow<UserData> = callbackFlow {
-        val listener = firestore
-            .collection(firestore_collection_userFutureFight)
-            .whereEqualTo("userID", auth.currentUser!!.uid)
-            .addSnapshotListener { snapshot, error ->
-                if (error != null) {
-                    close(error)
-                    return@addSnapshotListener
-                }
-                if (snapshot != null && !snapshot.isEmpty) {
-                    val userDocument = snapshot.documents[0]
-                    val user = userDocument.toObject(UserData::class.java)
-                    if (user != null) {
-                        trySend(user).isSuccess
-                    }
-                }
+        override suspend fun getUserDataFromFireStore(): Flow<UserData> =
+            callbackFlow {
+                val listener =
+                    firestore
+                        .collection(firestore_collection_userFutureFight)
+                        .whereEqualTo("userID", auth.currentUser!!.uid)
+                        .addSnapshotListener { snapshot, error ->
+                            if (error != null) {
+                                close(error)
+                                return@addSnapshotListener
+                            }
+                            if (snapshot != null && !snapshot.isEmpty) {
+                                val userDocument = snapshot.documents[0]
+                                val user = userDocument.toObject(UserData::class.java)
+                                if (user != null) {
+                                    trySend(user).isSuccess
+                                }
+                            }
+                        }
+                awaitClose { listener.remove() }
             }
-        awaitClose { listener.remove() }
-    }
 
         override suspend fun setUserDataFromFireStore(userData: UserData) {
             try {
@@ -163,16 +172,15 @@ class SuperHeroRepository
                         .await()
 
                 if (querySnapshot.documents.isNotEmpty()) {
-                    // Si el usuario existe
+                    // Si el usuario existe, actualizar con los datos nuevos
                     for (document in querySnapshot.documents) {
-                        val existingUser = document.toObject(UserData::class.java)
                         firestore
                             .collection(firestore_collection_userFutureFight)
                             .document(document.id)
-                            .set(existingUser!!)
+                            .set(userData) // Usamos userData, que contiene la información actualizada
                     }
                 } else {
-                    addUserDataFireStore(userData)
+                    addUserDataFireStore(userData) // Si no existe, lo añadimos como nuevo
                 }
             } catch (e: Exception) {
                 Log.e("KlyxFirestore", "Error al buscar/actualizar el usuario", e)

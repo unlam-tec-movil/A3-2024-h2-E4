@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraEnhance
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -57,29 +58,29 @@ fun UserProfileScreen(
     val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
     val isLoading by userProfileScreenViewModel.isLoading.collectAsState()
 
-    if (isLoading){
-        CircularProgressIndicator()
-    }else{
-
+    if (isLoading)
+        {
+            CircularProgressIndicator()
+        } else {
         Box(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .background(
-                    brush =
-                    Brush.verticalGradient(
-                        listOf(SilverB, IndigoDye),
-                        startY = 0f,
-                        endY = 1100f,
+                Modifier
+                    .fillMaxSize()
+                    .background(
+                        brush =
+                            Brush.verticalGradient(
+                                listOf(SilverB, IndigoDye),
+                                startY = 0f,
+                                endY = 1100f,
+                            ),
                     ),
-                ),
             contentAlignment = Alignment.Center,
         ) {
             Column(
                 modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+                    Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Spacer(modifier = Modifier.height(1.dp))
@@ -89,43 +90,43 @@ fun UserProfileScreen(
                     painter = painterResource(id = R.drawable.iv_logo), // probar insertar el Logo de FF
                     contentDescription = "Future Fight Logo",
                     modifier =
-                    Modifier
-                        .size(150.dp) // Ajusta el tamaño según sea necesario
-                        .padding(16.dp),
+                        Modifier
+                            .size(150.dp) // Ajusta el tamaño según sea necesario
+                            .padding(16.dp),
                 )
                 Spacer(modifier = Modifier.height(1.dp))
 
                 Box(contentAlignment = Alignment.Center) {
                     Image(
                         modifier =
-                        Modifier
-                            .size((200.dp))
-                            .clip(CircleShape)
-                            .border(5.dp, Color.White, CircleShape),
+                            Modifier
+                                .size((200.dp))
+                                .clip(CircleShape)
+                                .border(5.dp, Color.White, CircleShape),
                         painter =
-                        rememberAsyncImagePainter(
-                            // model = auth.currentUser?.photoUrl,
-                            model = avatarUrl,
-                            placeholder = painterResource(id = R.drawable.im_default_avatar),
-                            error = painterResource(id = R.drawable.im_default_avatar),
-                        ),
+                            rememberAsyncImagePainter(
+                                // model = auth.currentUser?.photoUrl,
+                                model = avatarUrl,
+                                placeholder = painterResource(id = R.drawable.im_default_avatar),
+                                error = painterResource(id = R.drawable.im_default_avatar),
+                            ),
                         contentDescription = "Avatar Usuario",
                     )
                     Box(
                         modifier =
-                        Modifier
-                            .align(Alignment.BottomEnd)
-                            .offset(10.dp),
+                            Modifier
+                                .align(Alignment.BottomEnd)
+                                .offset(10.dp),
                     ) {
                         IconButton(
                             onClick = { navController.navigate(Routes.UploadImageScreenRoute) }, // Navegación a la pantalla de carga de imagen
                             modifier =
-                            Modifier
-                                .size(60.dp)
-                                .background(
-                                    colorResource(id = R.color.whatsappGreenSoft),
-                                    shape = CircleShape,
-                                ).clip(CircleShape),
+                                Modifier
+                                    .size(60.dp)
+                                    .background(
+                                        colorResource(id = R.color.whatsappGreenSoft),
+                                        shape = CircleShape,
+                                    ).clip(CircleShape),
                         ) {
                             Icon(
                                 Icons.Default.CameraEnhance,
@@ -161,6 +162,10 @@ fun UserProfileScreen(
                     value = auth.currentUser!!.isAnonymous.toString(),
                     // onEditField = onEditField,
                 )
+                Spacer(modifier = Modifier.height(6.dp))
+                Button(onClick = { userProfileScreenViewModel.updateNickName() }) {
+                    Text("Apply changes")
+                }
             }
         }
     }
