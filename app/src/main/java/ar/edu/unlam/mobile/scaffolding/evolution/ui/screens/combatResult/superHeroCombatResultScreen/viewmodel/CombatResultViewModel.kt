@@ -72,6 +72,7 @@ class CombatResultViewModel
 
         private fun updateUserRanking() {
             viewModelScope.launch {
+                val userID = firebaseAuth.currentUser?.uid ?: ""
                 val userLocation = getLocation()
                 val imageUrl = getUserAvatarUrlUseCase()
                 Log.i("LOCATIONRULES", "$userLocation")

@@ -39,7 +39,7 @@ class UserProfileScreenViewModel
             }
         }
 
-        fun updateNickName(newNickName: String = "pepePower") {
+        fun updateNickName(newNickName: String = "DummyNick") {
             // Aca agarras el _userData.value? actual y haces una copia con los datos nuevos
             val userUpdate = _userData.value?.copy(nickname = newNickName)
 
