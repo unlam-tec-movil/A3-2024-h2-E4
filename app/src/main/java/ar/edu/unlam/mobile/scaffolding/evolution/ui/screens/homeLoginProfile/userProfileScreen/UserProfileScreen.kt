@@ -59,7 +59,12 @@ fun UserProfileScreen(
     val isLoading by userProfileScreenViewModel.isLoading.collectAsState()
 
     if (isLoading) {
-        CircularProgressIndicator()
+        Box(
+            modifier = Modifier.fillMaxSize().background(Color.Black),
+            contentAlignment = Alignment.Center,
+        ) {
+            CircularProgressIndicator(color = Color.Cyan)
+        }
     } else {
         Box(
             modifier =
@@ -118,7 +123,7 @@ fun UserProfileScreen(
                                 .offset(10.dp),
                     ) {
                         IconButton(
-                            onClick = { navController.navigate(Routes.UploadImageScreenRoute) }, // Navegación a la pantalla de carga de imagen
+                            onClick = { navController.navigate(Routes.UploadImageScreenRoute) },
                             modifier =
                                 Modifier
                                     .size(60.dp)
