@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.data.repository
 
+import android.content.Context
 import android.util.Log
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserData
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
@@ -17,6 +18,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.repository.SuperHeroRepositoryInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -32,6 +34,8 @@ class SuperHeroRepository
         private val resultDataScreen: ResultDataScreen,
         private val firestore: FirebaseFirestore,
         private val auth: FirebaseAuth,
+        private val context: Context,
+        private val remoteConfig: FirebaseRemoteConfig,
     ) : SuperHeroRepositoryInterface {
         override suspend fun getSuperHeroListByName(query: String): List<SuperHeroItem> = superHeroService.getSuperHeroList(query)
 
@@ -214,5 +218,20 @@ class SuperHeroRepository
                 errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
                 return errorRef
             }
+        }
+
+        override suspend fun getCurrentVersion(): List<Int> =
+            try {
+                val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+                packageInfo.versionName.split(".").map { it.toInt() }
+            } catch (e: Exception) {
+                listOf(0, 0)
+            }
+
+        override suspend fun minAllowedVersion(): List<Int> {
+            remoteConfig.fetch(0)
+            remoteConfig.activate().await()
+            val minVersion = remoteConfig.getString("min_version")
+            return if (minVersion.isBlank()) listOf(0, 0) else minVersion.split(".").map { it.toInt() }
         }
     }
