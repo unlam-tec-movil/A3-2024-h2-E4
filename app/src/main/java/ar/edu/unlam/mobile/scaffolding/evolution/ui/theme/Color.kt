@@ -2,6 +2,10 @@ package ar.edu.unlam.mobile.scaffolding.evolution.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+@Suppress("ktlint:standard:property-naming")
+var ColorWay = Color(0xFF009DDB)
+
+val PowderBlue = Color(0xFFB8C5D6)
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
@@ -15,7 +19,6 @@ val UnselectedField = Color(0xFF4a4a4a)
 val PowderBlue = Color(0xFFB8C5D6)
 val Turquoise = Color(0xFF3CDBD3)
 val CoolGray = Color(0xFF7D869C)
-
 val BlackCustom = Color(0xFF000000)
 val CyanWay = Color(0xFF009DDB)
 val Carmine = Color(0xFF931621)
