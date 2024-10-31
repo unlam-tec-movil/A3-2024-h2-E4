@@ -15,7 +15,8 @@ val UnselectedField = Color(0xFF4a4a4a)
 
 val BlackCustom = Color(0xFF000000)
 
-val CyanWay = Color(0xFF009DDB)
+@Suppress("ktlint:standard:property-naming")
+var ColorWay = Color(0xFF009DDB)
 
 val PowderBlue = Color(0xFFB8C5D6)
 val VioletSky = Color(0xFF592E83)

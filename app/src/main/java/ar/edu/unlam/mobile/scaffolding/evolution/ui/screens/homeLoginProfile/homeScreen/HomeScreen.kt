@@ -75,7 +75,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.SelectPla
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.SignUpScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.UserProfileScreenRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.viewmodel.HomeScreenViewModel
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.CyanWay
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.ColorWay
 import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -283,7 +283,7 @@ fun TopBarHome(
     val isLog = auth.currentUser != null
     var changeColor by remember { mutableStateOf(false) }
     val animatedColor by animateColorAsState(
-        targetValue = if (changeColor) Color.White else CyanWay,
+        targetValue = if (changeColor) Color.White else ColorWay,
         animationSpec =
             androidx.compose.animation.core
                 .tween(durationMillis = 1000),

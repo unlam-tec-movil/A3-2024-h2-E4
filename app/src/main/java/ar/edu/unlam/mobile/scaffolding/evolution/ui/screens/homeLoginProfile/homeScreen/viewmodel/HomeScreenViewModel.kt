@@ -3,6 +3,7 @@ package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.ho
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.CanAccessToAppUseCase
@@ -46,15 +47,22 @@ class HomeScreenViewModel
                 val logosList = getWallpaperLogosUseCase()
                 _logos.value = logosList[0]
                 _isLoading.value = _logos.value == 0
-
+                Log.i("LOGOSREADY", "$logosList")
                 if (_auth.value.currentUser != null) {
                     initUserData()
                 }
-                while (true) {
-                    delay(2000)
-                    val randomNumber = logosList.random()
-                    _logos.value = randomNumber
-                }
+                initRandomLogo(logosList)
+            }
+        }
+
+        private suspend fun initRandomLogo(logosList: List<Int>) {
+            while (true) {
+                var randomLogo: Int
+                do {
+                    randomLogo = logosList.random()
+                } while (randomLogo == _logos.value)
+                delay(3000)
+                _logos.value = randomLogo
             }
         }
 
@@ -86,7 +94,6 @@ class HomeScreenViewModel
                     Intent.ACTION_VIEW,
                     Uri.parse("market://details?id=$appPackage"),
                 ).apply {
-                    // Manejo del intent alternativo
                     if (resolveActivity(context.packageManager) == null) {
                         data = Uri.parse("https://play.google.com/store/apps/details?id=$appPackage")
                     }
