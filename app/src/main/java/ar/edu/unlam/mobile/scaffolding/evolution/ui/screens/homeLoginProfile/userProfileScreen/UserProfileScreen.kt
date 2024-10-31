@@ -90,7 +90,7 @@ fun UserProfileScreen(
                     contentDescription = "Future Fight Logo",
                     modifier =
                         Modifier
-                            .size(150.dp) // Ajusta el tamaño según sea necesario
+                            .size(130.dp) // Ajusta el tamaño según sea necesario
                             .padding(16.dp),
                 )
                 Spacer(modifier = Modifier.height(1.dp))
@@ -99,7 +99,7 @@ fun UserProfileScreen(
                     Image(
                         modifier =
                             Modifier
-                                .size((200.dp))
+                                .size((180.dp))
                                 .clip(CircleShape)
                                 .border(5.dp, Color.White, CircleShape),
                         painter =
