@@ -33,6 +33,7 @@ accompanistVersion = "0.36.0"
 firebaseBom = "33.5.0"
 services = "4.4.2"
 crashlytics = "3.0.2"
+performance = "1.4.2"
 
 mapsCompose = "1.0.0"
 playServicesMaps = "19.0.0"
@@ -88,6 +89,7 @@ firebase-storage = { module = "com.google.firebase:firebase-storage-ktx" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx" }
 firebase-database = { module = "com.google.firebase:firebase-database" }
 firebase-config = {module = "com.google.firebase:firebase-config-ktx"}
+firebase-perf = {module = "com.google.firebase:firebase-perf-ktx"}
 
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
@@ -102,6 +104,6 @@ kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-
+performance = {id = "com.google.firebase.firebase-perf" , version.ref = "performance"}
 googleServices = { id = "com.google.gms.google-services", version.ref = "services" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
