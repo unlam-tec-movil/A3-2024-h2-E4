@@ -20,6 +20,9 @@ class UserProfileScreenViewModel
         private val setUserDataFireStoreUseCase: SetUserDataFireStoreUseCase,
         private val getUserAvatarUrlUseCase: GetUserAvatarUrlUseCase,
     ) : ViewModel() {
+        private val _showUpdateData = MutableStateFlow(false)
+        val showUpdateData = _showUpdateData.asStateFlow()
+
         private val _isLoading = MutableStateFlow(true)
         val isLoading = _isLoading.asStateFlow()
 
@@ -52,5 +55,13 @@ class UserProfileScreenViewModel
                     _userData.value = it // Asignamos el nuevo valor a _userData
                 }
             }
+        }
+
+        fun updateDataSelected() {
+            _showUpdateData.value = true
+        }
+
+        fun dismissUpdateDataSelected() {
+            _showUpdateData.value = false
         }
     }

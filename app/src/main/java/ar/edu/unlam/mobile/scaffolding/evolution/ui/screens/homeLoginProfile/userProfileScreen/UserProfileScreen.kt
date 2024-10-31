@@ -42,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.profileComponent.UpdateData
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel.UserProfileScreenViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverB
@@ -57,10 +58,15 @@ fun UserProfileScreen(
     val userData by userProfileScreenViewModel.userData.collectAsState()
     val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
     val isLoading by userProfileScreenViewModel.isLoading.collectAsState()
+    val showUpdateData by userProfileScreenViewModel.showUpdateData.collectAsState()
 
     if (isLoading) {
         CircularProgressIndicator()
     } else {
+        if (showUpdateData) {
+            UpdateData(onDismiss = { userProfileScreenViewModel.dismissUpdateDataSelected() })
+        }
+
         Box(
             modifier =
                 Modifier
@@ -90,7 +96,7 @@ fun UserProfileScreen(
                     contentDescription = "Future Fight Logo",
                     modifier =
                         Modifier
-                            .size(150.dp) // Ajusta el tamaño según sea necesario
+                            .size(130.dp) // Ajusta el tamaño según sea necesario
                             .padding(16.dp),
                 )
                 Spacer(modifier = Modifier.height(1.dp))
@@ -99,7 +105,7 @@ fun UserProfileScreen(
                     Image(
                         modifier =
                             Modifier
-                                .size((200.dp))
+                                .size((180.dp))
                                 .clip(CircleShape)
                                 .border(5.dp, Color.White, CircleShape),
                         painter =
@@ -118,7 +124,8 @@ fun UserProfileScreen(
                                 .offset(10.dp),
                     ) {
                         IconButton(
-                            onClick = { navController.navigate(Routes.UploadImageScreenRoute) }, // Navegación a la pantalla de carga de imagen
+                            // TODO Navegación a la pantalla de carga de imagen
+                            onClick = { navController.navigate(Routes.UploadImageScreenRoute) },
                             modifier =
                                 Modifier
                                     .size(60.dp)
@@ -162,7 +169,7 @@ fun UserProfileScreen(
                     // onEditField = onEditField,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                Button(onClick = { userProfileScreenViewModel.updateNickName() }) {
+                Button(onClick = { userProfileScreenViewModel.updateDataSelected() }) {
                     Text("Apply changes")
                 }
             }
