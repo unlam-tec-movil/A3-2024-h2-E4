@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraEnhance
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -44,6 +47,10 @@ import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.profileComponent.UpdateData
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel.UserProfileScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.BlackCustom
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.Carmine
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.CyanWay
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.DarkPurple
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverB
 import coil.compose.rememberAsyncImagePainter
@@ -64,7 +71,16 @@ fun UserProfileScreen(
         CircularProgressIndicator()
     } else {
         if (showUpdateData) {
-            UpdateData(onDismiss = { userProfileScreenViewModel.dismissUpdateDataSelected() })
+            UpdateData(
+                onDismiss = { userProfileScreenViewModel.dismissUpdateDataSelected() },
+                onUpdateDataAdded = { name, nickname, infoUser ->
+                    userProfileScreenViewModel.addUpdateData(
+                        name,
+                        nickname,
+                        infoUser,
+                    )
+                },
+            )
         }
 
         Box(
@@ -146,31 +162,50 @@ fun UserProfileScreen(
                 Spacer(modifier = Modifier.height(16.dp))
                 // Información del Usuario
                 UserInfoCard(
-                    label = "Apodo",
+                    label = "Nickname",
                     value = userData!!.nickname!!,
                     // onEditField = onEditField,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
-                    label = "Nombre",
+                    label = "Name",
                     value = userData!!.name!!,
                     // onEditField = onEditField,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
-                    label = "Información Adicional",
-                    value = userData!!.email!!,
+                    label = "User information",
+                    value = userData!!.infoUser!!,
                     // onEditField = onEditField,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
-                    label = "Fecha de Creación",
-                    value = auth.currentUser!!.isAnonymous.toString(),
+                    label = "Registered Email",
+                    value = auth.currentUser!!.email!!,
                     // onEditField = onEditField,
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                Button(onClick = { userProfileScreenViewModel.updateDataSelected() }) {
-                    Text("Apply changes")
+                Button(
+                    onClick = { userProfileScreenViewModel.updateDataSelected() },
+                    border = BorderStroke(width = 2.dp, color = Carmine),
+                    modifier = Modifier.fillMaxWidth(),
+                    colors =
+                        ButtonColors(
+                            containerColor = DarkPurple,
+                            contentColor = IndigoDye,
+                            disabledContentColor = BlackCustom,
+                            disabledContainerColor = CyanWay,
+                        ),
+                ) {
+                    Text(
+                        "Edit your profile",
+                        color = SilverB,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.headlineMedium,
+                    )
                 }
             }
         }
