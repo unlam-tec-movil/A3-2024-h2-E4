@@ -2,7 +2,9 @@ package ar.edu.unlam.mobile.scaffolding.evolution.data.local
 
 import ar.edu.unlam.mobile.scaffolding.R
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class WallpaperLogos
     @Inject
     constructor() {
