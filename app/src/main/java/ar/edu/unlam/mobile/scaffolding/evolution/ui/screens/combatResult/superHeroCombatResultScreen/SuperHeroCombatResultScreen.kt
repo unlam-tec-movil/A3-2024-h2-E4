@@ -68,21 +68,26 @@ fun SuperHeroCombatResult(
 
     val permissionLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission()) { permissionsGranted ->
-            viewModel.setPermissionCamera(permissionsGranted)
+            if (permissionsGranted) {
+                viewModel.setPermissionCamera(true)
+            } else {
+                viewModel.setPermissionCamera(false)
+            }
         }
 
-    LaunchedEffect(permissionLocationGranted) {
-        if (!permissionLocationGranted) {
-            permissionLauncher.launch(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-            )
-        }
+    LaunchedEffect(Unit) {
+        permissionLauncher.launch(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+        )
     }
 
     if (permissionLocationGranted) {
         ContentView(navController = navController, viewModel = viewModel)
     } else {
-        Box(modifier = Modifier.fillMaxSize().background(BlackCustom), contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier.fillMaxSize().background(BlackCustom),
+            contentAlignment = Alignment.Center,
+        ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp),
