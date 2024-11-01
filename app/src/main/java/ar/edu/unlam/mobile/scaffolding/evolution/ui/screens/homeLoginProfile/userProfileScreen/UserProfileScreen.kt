@@ -26,10 +26,16 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,6 +43,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -65,6 +72,9 @@ fun UserProfileScreen(
     val userData by userProfileScreenViewModel.userData.collectAsState()
     val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
     val isLoading by userProfileScreenViewModel.isLoading.collectAsState()
+    var nickname by rememberSaveable { mutableStateOf("") }
+    var name by rememberSaveable { mutableStateOf("") }
+    var infoUser by rememberSaveable { mutableStateOf("") }
     val showUpdateData by userProfileScreenViewModel.showUpdateData.collectAsState()
 
     if (isLoading) {
@@ -167,28 +177,27 @@ fun UserProfileScreen(
                 // Información del Usuario
                 UserInfoCard(
                     label = "Nickname",
-                    value = userData!!.nickname!!,
-                    // onEditField = onEditField,
+                    value = nickname,
+                    onValueChange = { newValue -> nickname = newValue },
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
                     label = "Name",
-                    value = userData!!.name!!,
-                    // onEditField = onEditField,
+                    value = name,
+                    onValueChange = { newValue -> name = newValue },
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
                     label = "User information",
-                    value = userData!!.infoUser!!,
-                    // onEditField = onEditField,
+                    value = infoUser,
+                    onValueChange = { newValue -> infoUser = newValue },
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                UserInfoCard(
-                    label = "Registered Email",
-                    value = auth.currentUser!!.email!!,
-                    // onEditField = onEditField,
-                )
-                Spacer(modifier = Modifier.height(6.dp))
+//                UserInfoField(
+//                    label = "Registered Email",
+//                    value = userData?.email,
+//                )
+//                Spacer(modifier = Modifier.height(6.dp))
                 Button(
                     onClick = { userProfileScreenViewModel.updateDataSelected() },
                     border = BorderStroke(width = 2.dp, color = Carmine),
@@ -250,7 +259,11 @@ fun UserInfoField(
 fun UserInfoCard(
     label: String,
     value: String,
+    onValueChange: (String) -> Unit,
 ) {
+    var isEditing by remember { mutableStateOf(false) }
+    var currentValue by remember { mutableStateOf("") }
+
     Box(
         modifier =
             Modifier
@@ -265,16 +278,37 @@ fun UserInfoCard(
             Column {
                 Text(text = label, color = Color.Black, style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = value,
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold,
-                    style = MaterialTheme.typography.titleMedium,
-                )
+                if (isEditing) {
+                    OutlinedTextField(
+                        value = currentValue,
+                        onValueChange = { newValue -> currentValue = newValue },
+                        textStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
+                        colors = OutlinedTextFieldDefaults.colors(Color.Black),
+                    )
+                } else {
+                    Text(
+                        text = currentValue,
+                        fontSize = 16.sp,
+                        color = BlackCustom,
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                }
+//                Text(
+//                    text = value,
+//                    fontSize = 16.sp,
+//                    color = Color.Black,
+//                    fontWeight = FontWeight.Bold,
+//                    style = MaterialTheme.typography.titleMedium,
+//                )
             }
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = { }) {
+            IconButton(onClick = {
+                if (isEditing) {
+                    onValueChange(currentValue)
+                }
+                isEditing = !isEditing
+            }) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_lapiz),
                     contentDescription = "",
