@@ -47,7 +47,7 @@ class CombatResultViewModel
             viewModelScope.launch {
                 _result.value = getResultDataScreen()
                 _playerWin.value = checkIfPlayerWin(_result.value!!)
-                if (_playerWin.value && firebaseAuth.currentUser != null) {
+                if (_playerWin.value && firebaseAuth.currentUser != null && _permissionLocation.value) {
                     updateUserRanking()
                 }
                 _isLoading.value = false
@@ -72,7 +72,6 @@ class CombatResultViewModel
 
         private fun updateUserRanking() {
             viewModelScope.launch {
-                val userID = firebaseAuth.currentUser?.uid ?: ""
                 val userLocation = getLocation()
                 val imageUrl = getUserAvatarUrlUseCase()
                 Log.i("LOCATIONRULES", "$userLocation")
