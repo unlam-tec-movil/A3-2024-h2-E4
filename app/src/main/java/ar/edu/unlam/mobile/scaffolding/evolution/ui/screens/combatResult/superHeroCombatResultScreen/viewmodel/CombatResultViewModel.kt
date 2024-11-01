@@ -44,6 +44,8 @@ class CombatResultViewModel
         private val _playerWin = MutableStateFlow(false)
         val playerWin = _playerWin.asStateFlow()
 
+        private var hasUpdatedRanking = false
+
         private val _permissionLocation = MutableStateFlow(checkPermissionGranted(context))
 
         private fun checkPermissionGranted(context: Context) =
@@ -60,10 +62,15 @@ class CombatResultViewModel
                 _result.value = getResultDataScreen()
                 _playerWin.value = checkIfPlayerWin(_result.value!!)
                 Log.i("PERMISSIONG", "${_permissionLocation.value}")
-                if (_playerWin.value && firebaseAuth.currentUser != null && _permissionLocation.value) {
-                    updateUserRanking()
-                }
+                updateUserRankingDB()
                 _isLoading.value = false
+            }
+        }
+
+        fun updateUserRankingDB() {
+            if (!hasUpdatedRanking && _playerWin.value && firebaseAuth.currentUser != null && _permissionLocation.value) {
+                updateUserRanking()
+                hasUpdatedRanking = true
             }
         }
 

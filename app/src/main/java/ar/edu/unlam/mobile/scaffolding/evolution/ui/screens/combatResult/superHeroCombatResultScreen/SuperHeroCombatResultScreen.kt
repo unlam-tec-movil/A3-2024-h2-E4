@@ -81,6 +81,12 @@ fun SuperHeroCombatResult(
         )
     }
 
+    LaunchedEffect(permissionLocationGranted) {
+        if (permissionLocationGranted) {
+            viewModel.updateUserRankingDB()
+        }
+    }
+
     if (permissionLocationGranted) {
         ContentView(navController = navController, viewModel = viewModel)
     } else {
