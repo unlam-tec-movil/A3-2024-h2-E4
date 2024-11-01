@@ -16,6 +16,7 @@ class WallpaperLogos
             )
         val christmas =
             listOf(
+                Logo(R.drawable.im_avengers_navidad0),
                 Logo(R.drawable.im_avengers_navidad1),
                 Logo(R.drawable.im_avengers_navidad2),
                 Logo(R.drawable.im_avengers_navidad3),
@@ -24,17 +25,19 @@ class WallpaperLogos
 
         val halloween =
             listOf(
-                Logo(R.drawable.im_avengers_halloweenb),
-                Logo(R.drawable.im_avengers_halloween),
-                Logo(R.drawable.im_avengers_halloweenb),
-                Logo(R.drawable.im_avengers_halloween),
+                Logo(R.drawable.im_avengers_halloween0),
+                Logo(R.drawable.im_avengers_halloween1),
+                Logo(R.drawable.im_avengers_halloween2),
+                Logo(R.drawable.im_avengers_halloween3),
+                Logo(R.drawable.im_avengers_halloween4),
             )
 
         val saintPatrick =
             listOf(
-                Logo(R.drawable.im_avengers_sanpatricio),
-                Logo(R.drawable.iv_marvelone),
-                Logo(R.drawable.iv_marvelone),
-                Logo(R.drawable.im_avengers_sanpatricio),
+                Logo(R.drawable.im_avengers_sanpatricio1),
+                Logo(R.drawable.im_avengers_sanpatricio2),
+                Logo(R.drawable.im_avengers_sanpatricio3),
+                Logo(R.drawable.im_avengers_sanpatricio4),
+                Logo(R.drawable.im_avengers_sanpatricio5),
             )
     }
