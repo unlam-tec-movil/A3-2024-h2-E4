@@ -1,4 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -20,7 +21,6 @@ class QrScannerUtil(
         launcher.launch(integrator.createScanIntent())
     }
 
-    // Maneja el resultado del escáner
     fun handleScanResult(
         resultCode: Int,
         data: Intent?,
@@ -30,7 +30,7 @@ class QrScannerUtil(
             if (scanResult.contents == null) {
                 Toast.makeText(context, "Cancelado", Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(context, "El valor escaneado es: ${scanResult.contents}", Toast.LENGTH_LONG).show()
+                // val scannedValue = scanResult.contents
             }
         }
     }
