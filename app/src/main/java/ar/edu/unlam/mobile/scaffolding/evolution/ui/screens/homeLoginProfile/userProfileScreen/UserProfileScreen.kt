@@ -18,8 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AlternateEmail
 import androidx.compose.material.icons.filled.CameraEnhance
-import androidx.compose.material.icons.filled.Create
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CircularProgressIndicator
@@ -69,13 +69,14 @@ fun UserProfileScreen(
     auth: FirebaseAuth,
     userProfileScreenViewModel: UserProfileScreenViewModel = hiltViewModel(),
 ) {
+    val showUpdateData by userProfileScreenViewModel.showUpdateData.collectAsState()
     val userData by userProfileScreenViewModel.userData.collectAsState()
     val avatarUrl by userProfileScreenViewModel.avatarUrl.collectAsState()
     val isLoading by userProfileScreenViewModel.isLoading.collectAsState()
+
     var nickname by rememberSaveable { mutableStateOf("") }
     var name by rememberSaveable { mutableStateOf("") }
     var infoUser by rememberSaveable { mutableStateOf("") }
-    val showUpdateData by userProfileScreenViewModel.showUpdateData.collectAsState()
 
     if (isLoading) {
         Box(
@@ -177,48 +178,78 @@ fun UserProfileScreen(
                 // Información del Usuario
                 UserInfoCard(
                     label = "Nickname",
-                    value = nickname,
+                    value = userData!!.nickname!!,
                     onValueChange = { newValue -> nickname = newValue },
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
                     label = "Name",
-                    value = name,
+                    value = userData!!.name!!,
                     onValueChange = { newValue -> name = newValue },
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 UserInfoCard(
                     label = "User information",
-                    value = infoUser,
+                    value = userData!!.infoUser!!,
                     onValueChange = { newValue -> infoUser = newValue },
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-//                UserInfoField(
-//                    label = "Registered Email",
-//                    value = userData?.email,
-//                )
-//                Spacer(modifier = Modifier.height(6.dp))
-                Button(
-                    onClick = { userProfileScreenViewModel.updateDataSelected() },
-                    border = BorderStroke(width = 2.dp, color = Carmine),
-                    modifier = Modifier.fillMaxWidth(),
-                    colors =
-                        ButtonColors(
-                            containerColor = DarkPurple,
-                            contentColor = IndigoDye,
-                            disabledContentColor = BlackCustom,
-                            disabledContainerColor = CyanWay,
-                        ),
-                ) {
-                    Text(
-                        "Edit your profile",
-                        color = SilverB,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineMedium,
-                    )
+                UserInfoField(
+                    label = "Registered Email",
+                    value = auth.currentUser!!.email!!,
+                    onEditField = { },
+                )
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Row(modifier = Modifier.fillMaxWidth()) {
+                    Button(
+                        onClick = { userProfileScreenViewModel.updateDataSelected() },
+                        border = BorderStroke(width = 2.dp, color = Carmine),
+                        // modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.weight(1f).padding(end = 4.dp),
+                        colors =
+                            ButtonColors(
+                                containerColor = DarkPurple,
+                                contentColor = IndigoDye,
+                                disabledContentColor = BlackCustom,
+                                disabledContainerColor = CyanWay,
+                            ),
+                    ) {
+                        Text(
+                            "Edit profile",
+                            color = SilverB,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.headlineMedium,
+                        )
+                    }
+                    Button(
+                        onClick = {
+                            userProfileScreenViewModel.updateAllData(name, nickname, infoUser)
+                        },
+                        border = BorderStroke(width = 2.dp, color = Carmine),
+                        // modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.weight(1f).padding(start = 4.dp),
+                        colors =
+                            ButtonColors(
+                                containerColor = DarkPurple,
+                                contentColor = IndigoDye,
+                                disabledContentColor = BlackCustom,
+                                disabledContainerColor = CyanWay,
+                            ),
+                    ) {
+                        Text(
+                            "Apply changes",
+                            color = SilverB,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.headlineMedium,
+                        )
+                    }
                 }
             }
         }
@@ -249,7 +280,7 @@ fun UserInfoField(
         }
         onEditField?.let {
             IconButton(onClick = { it(label) }) {
-                Icon(Icons.Default.Create, contentDescription = "Editar $label")
+                Icon(Icons.Default.AlternateEmail, contentDescription = "Editar $label")
             }
         }
     }
@@ -262,7 +293,7 @@ fun UserInfoCard(
     onValueChange: (String) -> Unit,
 ) {
     var isEditing by remember { mutableStateOf(false) }
-    var currentValue by remember { mutableStateOf("") }
+    var currentValue by remember { mutableStateOf(value) }
 
     Box(
         modifier =
@@ -277,12 +308,12 @@ fun UserInfoCard(
         Row {
             Column {
                 Text(text = label, color = Color.Black, style = MaterialTheme.typography.bodyMedium)
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 if (isEditing) {
                     OutlinedTextField(
                         value = currentValue,
                         onValueChange = { newValue -> currentValue = newValue },
-                        textStyle = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
+                        textStyle = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
                         colors = OutlinedTextFieldDefaults.colors(Color.Black),
                     )
                 } else {
