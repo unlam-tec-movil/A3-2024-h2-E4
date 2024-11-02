@@ -89,11 +89,11 @@ fun UserProfileScreen(
         if (showUpdateData) {
             UpdateData(
                 onDismiss = { userProfileScreenViewModel.dismissUpdateDataSelected() },
-                onUpdateDataAdded = { name, nickname, infoUser ->
+                onUpdateDataAdded = { nameUD, nicknameUD, infoUserUD ->
                     userProfileScreenViewModel.addUpdateData(
-                        name,
-                        nickname,
-                        infoUser,
+                        nameUD,
+                        nicknameUD,
+                        infoUserUD,
                     )
                 },
             )

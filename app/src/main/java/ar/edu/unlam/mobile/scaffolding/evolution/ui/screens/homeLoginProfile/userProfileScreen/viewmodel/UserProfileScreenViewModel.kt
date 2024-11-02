@@ -90,9 +90,9 @@ class UserProfileScreenViewModel
         ) {
             val userUpdate = _userData.value?.copy(name = newName, nickname = newNickname, infoUser = newInfoUser)
             userUpdate?.let {
+                _userData.value = it
                 viewModelScope.launch {
                     setUserDataFireStoreUseCase(it)
-                    _userData.value = it
                 }
             }
         }
