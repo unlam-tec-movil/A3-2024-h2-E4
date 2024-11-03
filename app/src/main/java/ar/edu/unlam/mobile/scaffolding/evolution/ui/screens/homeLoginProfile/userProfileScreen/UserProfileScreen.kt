@@ -186,6 +186,35 @@ fun UserProfileScreen(
                                 color = animatedColor,
                             )
                         }
+                        Spacer(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(8.dp),
+                        )
+                        Row(
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier =
+                                Modifier
+                                    .clickable { navController.navigate(Routes.QRGenerateScreenRoute) }
+                                    .fillMaxWidth(),
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_qrcode_generate),
+                                contentDescription = null,
+                                modifier = Modifier.padding(start = 5.dp).size(24.dp),
+                                tint = animatedColor,
+                            )
+
+                            Text(
+                                text = "Generate Qr",
+                                fontSize = 19.sp,
+                                fontWeight = FontWeight.Normal,
+                                modifier = Modifier.padding(end = 16.dp),
+                                color = animatedColor,
+                            )
+                        }
                     }
                 },
             )
