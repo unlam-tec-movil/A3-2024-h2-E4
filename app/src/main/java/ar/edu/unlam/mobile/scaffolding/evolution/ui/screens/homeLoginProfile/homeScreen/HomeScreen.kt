@@ -5,8 +5,6 @@ import android.app.Activity
 import android.media.MediaPlayer
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -69,7 +67,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
-import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.QrScannerUtil
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
@@ -295,12 +292,6 @@ fun TopBarHome(
                 .tween(durationMillis = 1000),
         label = "",
     )
-
-    val qrScannerUtil = remember { QrScannerUtil(context) }
-    val qrScanLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            qrScannerUtil.handleScanResult(result.resultCode, result.data)
-        }
     LaunchedEffect(Unit) {
         while (true) {
             delay(1500)
@@ -474,35 +465,7 @@ fun TopBarHome(
                                 .fillMaxWidth()
                                 .height(8.dp),
                     )
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier =
-                            Modifier
-                                .clickable { qrScannerUtil.startQrScan(qrScanLauncher) }
-                                .fillMaxWidth(),
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.icon_qr),
-                            contentDescription = null,
-                            modifier = Modifier.padding(start = 5.dp),
-                            tint = animatedColor,
-                        )
 
-                        Text(
-                            text = "Show Scan",
-                            fontSize = 19.sp,
-                            fontWeight = FontWeight.Normal,
-                            modifier = Modifier.padding(end = 16.dp),
-                            color = animatedColor,
-                        )
-                    }
-                    Spacer(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(8.dp),
-                    )
                     Row(
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
