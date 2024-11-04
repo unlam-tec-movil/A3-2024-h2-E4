@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen
 
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateColorAsState
@@ -43,7 +44,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -96,9 +96,6 @@ fun UserProfileScreen(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             qrScannerUtil.handleScanResult(result.resultCode, result.data)
         }
-    var nickname by rememberSaveable { mutableStateOf("") }
-    var name by rememberSaveable { mutableStateOf("") }
-    var infoUser by rememberSaveable { mutableStateOf("") }
     var changeColor by remember { mutableStateOf(false) }
     val animatedColor by animateColorAsState(
         targetValue = if (changeColor) Color.White else ColorWay,
@@ -116,12 +113,19 @@ fun UserProfileScreen(
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
     if (isLoading) {
         Box(
-            modifier = Modifier.fillMaxSize().background(Color.Black),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(Color.Black),
             contentAlignment = Alignment.Center,
         ) {
             CircularProgressIndicator(color = Color.Cyan)
         }
     } else {
+        var nickname by remember { mutableStateOf(userData!!.nickname) }
+        var name by remember { mutableStateOf(userData!!.name) }
+        var infoUser by remember { mutableStateOf(userData!!.infoUser) }
+
         if (showUpdateData) {
             UpdateData(
                 onDismiss = { userProfileScreenViewModel.dismissUpdateDataSelected() },
@@ -203,7 +207,10 @@ fun UserProfileScreen(
                             Icon(
                                 painter = painterResource(R.drawable.ic_qrcode_generate),
                                 contentDescription = null,
-                                modifier = Modifier.padding(start = 5.dp).size(24.dp),
+                                modifier =
+                                    Modifier
+                                        .padding(start = 5.dp)
+                                        .size(24.dp),
                                 tint = animatedColor,
                             )
 
@@ -325,7 +332,10 @@ fun UserProfileScreen(
                             onClick = { userProfileScreenViewModel.updateDataSelected() },
                             border = BorderStroke(width = 2.dp, color = Carmine),
                             // modifier = Modifier.fillMaxWidth(),
-                            modifier = Modifier.weight(1f).padding(end = 4.dp),
+                            modifier =
+                                Modifier
+                                    .weight(1f)
+                                    .padding(end = 4.dp),
                             colors =
                                 ButtonColors(
                                     containerColor = DarkPurple,
@@ -346,11 +356,19 @@ fun UserProfileScreen(
                         }
                         Button(
                             onClick = {
-                                userProfileScreenViewModel.updateAllData(name, nickname, infoUser)
+                                userProfileScreenViewModel.updateAllData(
+                                    name!!,
+                                    nickname!!,
+                                    infoUser!!,
+                                )
+                                Toast.makeText(context, "Save succefull", Toast.LENGTH_SHORT).show()
                             },
                             border = BorderStroke(width = 2.dp, color = Carmine),
                             // modifier = Modifier.fillMaxWidth(),
-                            modifier = Modifier.weight(1f).padding(start = 4.dp),
+                            modifier =
+                                Modifier
+                                    .weight(1f)
+                                    .padding(start = 4.dp),
                             colors =
                                 ButtonColors(
                                     containerColor = DarkPurple,
