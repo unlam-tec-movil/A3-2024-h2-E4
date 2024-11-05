@@ -31,6 +31,7 @@ class QrScannerUtil(
                 Toast.makeText(context, "Cancelado", Toast.LENGTH_LONG).show()
             } else {
                 // val scannedValue = scanResult.contents
+                Toast.makeText(context, "El valor escaneado es: ${scanResult.contents}", Toast.LENGTH_LONG).show()
             }
         }
     }

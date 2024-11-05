@@ -3,11 +3,15 @@ package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.qr
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +21,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -29,30 +35,50 @@ import com.google.zxing.qrcode.QRCodeWriter
 
 @Composable
 fun QRGenerateScreen(auth: FirebaseAuth) {
-    Scaffold {
-        Column(
-            modifier =
-                Modifier
-                    .background(Color.Black)
-                    .padding(it)
-                    .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+    Scaffold { paddingValues ->
+        Box(
+            modifier = Modifier.fillMaxSize(),
         ) {
-            Spacer(modifier = Modifier.size(width = 0.dp, height = 50.dp))
-
-            Text(
-                text = "READ THE CODE",
-                color = Color.White,
-                fontSize = 40.sp,
-                fontFamily =
-                    FontFamily(
-                        Font(
-                            R.font.creepster_regular,
-                        ),
-                    ),
+            Image(
+                painter = painterResource(id = R.drawable.im_ironman),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
             )
-            Spacer(modifier = Modifier.size(width = 0.dp, height = 180.dp))
-            Image(bitmap = getQrCodeBitMap("${auth.currentUser?.uid}"), "My qr code")
+
+            Column(
+                modifier =
+                    Modifier
+                        .padding(paddingValues)
+                        .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Spacer(modifier = Modifier.size(50.dp))
+
+                Text(
+                    text = "READ THE CODE",
+                    color = Color.White,
+                    fontSize = 40.sp,
+                    fontFamily = FontFamily(Font(R.font.creepster_regular)),
+                    modifier = Modifier.padding(bottom = 20.dp),
+                )
+
+                Box(
+                    modifier =
+                        Modifier
+                            .size(250.dp)
+                            .background(Color.Black.copy(alpha = 0.7f), shape = RoundedCornerShape(15.dp))
+                            .border(3.dp, Color.White, shape = RoundedCornerShape(15.dp)) // Marco blanco
+                            .padding(16.dp),
+                ) {
+                    Image(
+                        bitmap = getQrCodeBitMap("${auth.currentUser?.uid}"),
+                        contentDescription = "My QR code",
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
+            }
         }
     }
 }
