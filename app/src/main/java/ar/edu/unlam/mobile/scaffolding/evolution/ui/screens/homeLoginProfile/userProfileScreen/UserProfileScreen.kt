@@ -58,6 +58,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -282,7 +283,8 @@ fun UserProfileScreen(
                                     .offset(10.dp),
                         ) {
                             IconButton(
-                                onClick = { navController.navigate(Routes.UploadImageScreenRoute) },
+                                onClick = { navController.navigate(Routes.CameraScreenRoute) },
+                                // onClick = { navController.navigate(Routes.UploadImageScreenRoute) },
                                 modifier =
                                     Modifier
                                         .size(60.dp)
@@ -361,7 +363,7 @@ fun UserProfileScreen(
                                     nickname!!,
                                     infoUser!!,
                                 )
-                                Toast.makeText(context, "Save succefull", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Successfully saved", Toast.LENGTH_SHORT).show()
                             },
                             border = BorderStroke(width = 2.dp, color = Carmine),
                             // modifier = Modifier.fillMaxWidth(),
@@ -452,6 +454,9 @@ fun UserInfoCard(
                         value = currentValue,
                         onValueChange = { newValue -> currentValue = newValue },
                         textStyle = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                        visualTransformation = VisualTransformation.None,
+                        singleLine = true,
+                        maxLines = 1,
                         colors = OutlinedTextFieldDefaults.colors(Color.Black),
                     )
                 } else {
