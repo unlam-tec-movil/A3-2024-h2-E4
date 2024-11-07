@@ -20,6 +20,7 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.cam
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.createAccountScreen.CreateAccountScreenBeta
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.homeScreen.HomeScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.qrGenerateScreen.QRGenerateScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.qrGenerateScreen.ShowScanScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.signUpScreen.SignUpScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.uploadImageScreen.UploadImageScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.UserProfileScreen
@@ -75,6 +76,12 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
             )
         }
         composable<Routes.QRGenerateScreenRoute> { QRGenerateScreen(auth) }
+        composable<Routes.ShowScanScreenRoute> {
+            ShowScanScreen(
+                auth = auth,
+                navController = navController,
+            )
+        }
         composable<Routes.SignUpScreenRoute> { SignUpScreen(navController = navController, auth) }
         composable<Routes.CreateAccountScreenBetaRoute> {
             CreateAccountScreenBeta(

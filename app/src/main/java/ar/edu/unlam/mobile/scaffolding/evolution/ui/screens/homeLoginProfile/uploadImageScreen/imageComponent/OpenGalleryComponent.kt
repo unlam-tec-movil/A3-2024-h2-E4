@@ -17,13 +17,13 @@ fun AbrirGaleria(openGallery: () -> Unit) {
         modifier =
             Modifier
                 .fillMaxSize()
-                .padding(48.dp),
+                .padding(46.dp),
         contentAlignment = Alignment.BottomStart,
     ) {
         Button(onClick = openGallery) {
             Text(
                 text = "Open Gallery",
-                fontSize = 18.sp,
+                fontSize = 17.sp,
             )
         }
     }
