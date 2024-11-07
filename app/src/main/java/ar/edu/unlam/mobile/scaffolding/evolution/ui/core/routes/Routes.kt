@@ -51,4 +51,7 @@ sealed class Routes {
 
     @Serializable
     data object CameraScreenBetaRoute : Routes()
+
+    @Serializable
+    data object ShowScanScreenRoute : Routes()
 }

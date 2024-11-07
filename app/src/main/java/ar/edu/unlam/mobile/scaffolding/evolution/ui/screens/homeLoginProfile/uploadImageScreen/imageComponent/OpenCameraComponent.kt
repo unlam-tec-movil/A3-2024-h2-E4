@@ -17,13 +17,13 @@ fun AbrirCamara(openCamera: () -> Unit) {
         modifier =
             Modifier
                 .fillMaxSize()
-                .padding(48.dp),
+                .padding(46.dp),
         contentAlignment = Alignment.BottomEnd,
     ) {
         Button(onClick = openCamera) {
             Text(
                 text = "Take Picture",
-                fontSize = 18.sp,
+                fontSize = 17.sp,
             )
         }
     }
