@@ -283,8 +283,7 @@ fun UserProfileScreen(
                                     .offset(10.dp),
                         ) {
                             IconButton(
-                                onClick = { navController.navigate(Routes.CameraScreenRoute) },
-                                // onClick = { navController.navigate(Routes.UploadImageScreenRoute) },
+                                onClick = { navController.navigate(Routes.UploadImageScreenRoute) },
                                 modifier =
                                     Modifier
                                         .size(60.dp)
