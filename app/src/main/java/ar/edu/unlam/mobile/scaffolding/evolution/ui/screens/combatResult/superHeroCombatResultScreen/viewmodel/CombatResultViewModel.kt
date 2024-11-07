@@ -1,13 +1,18 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatResultScreen.viewmodel
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.LocationUser
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.ResultDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCurrentUserUseCase
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetResultDataScreenUseCase
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetUserAvatarUrlUseCase
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.UpdateUserRankingFireStore
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +31,9 @@ class CombatResultViewModel
         private val updateUserRankingFireStore: UpdateUserRankingFireStore,
         private val firebaseAuth: FirebaseAuth,
         private val fusedLocationProviderClient: FusedLocationProviderClient,
+        private val getCurrentUserUseCase: GetCurrentUserUseCase,
+        private val getUserAvatarUrlUseCase: GetUserAvatarUrlUseCase,
+        context: Context,
     ) : ViewModel() {
         private val _result = MutableStateFlow<ResultDataScreen?>(null)
         val result = _result.asStateFlow()
@@ -36,18 +44,33 @@ class CombatResultViewModel
         private val _playerWin = MutableStateFlow(false)
         val playerWin = _playerWin.asStateFlow()
 
-        private val _permissionLocation = MutableStateFlow(false)
+        private var isAlreadyUpdate = false
+
+        private val _permissionLocation = MutableStateFlow(checkPermissionGranted(context))
+
+        private fun checkPermissionGranted(context: Context) =
+            ContextCompat.checkSelfPermission(
+                context,
+                @Suppress("ktlint:standard:max-line-length")
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            ) == PackageManager.PERMISSION_GRANTED
+
         val permissionLocation = _permissionLocation.asStateFlow()
 
         init {
             viewModelScope.launch {
                 _result.value = getResultDataScreen()
                 _playerWin.value = checkIfPlayerWin(_result.value!!)
-                // Agreguar que si es anonimus no actualize
-                if (_playerWin.value && firebaseAuth.currentUser != null) {
-                    updateUserRanking()
-                }
+                Log.i("PERMISSIONG", "${_permissionLocation.value}")
+                updateUserRankingDB()
                 _isLoading.value = false
+            }
+        }
+
+        fun updateUserRankingDB() {
+            if (!isAlreadyUpdate && _playerWin.value && firebaseAuth.currentUser != null && _permissionLocation.value) {
+                updateUserRanking()
+                isAlreadyUpdate = true
             }
         }
 
@@ -69,18 +92,21 @@ class CombatResultViewModel
 
         private fun updateUserRanking() {
             viewModelScope.launch {
+                Log.i("PERMISSIONG", "PASA")
                 val userLocation = getLocation()
+                val imageUrl = getUserAvatarUrlUseCase()
                 Log.i("LOCATIONRULES", "$userLocation")
                 val userRanked =
                     UserRanked(
                         userID = firebaseAuth.currentUser?.uid,
-                        userName = firebaseAuth.currentUser!!.email,
+                        userName = getCurrentUserUseCase().nickname!!,
                         userLocation =
                             LocationUser(
                                 latitude = userLocation!!.latitude,
                                 longitude = userLocation.longitude,
                             ),
                         userVictories = 1,
+                        avatarUrl = imageUrl,
                     )
                 updateUserRankingFireStore(userRanked)
             }
