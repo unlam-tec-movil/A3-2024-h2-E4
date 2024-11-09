@@ -113,7 +113,6 @@ fun NavigationWrapper(viewModel: NavigationWrapperViewModel = hiltViewModel()) {
 
         composable<Routes.CameraScreenBetaRoute> {
             CameraScreenBeta(
-                auth = auth,
                 navController = navController,
             )
         }
