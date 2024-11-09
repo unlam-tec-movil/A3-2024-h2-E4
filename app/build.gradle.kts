@@ -144,4 +144,6 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.database)
     implementation(libs.firebase.config)
+
+    implementation(libs.zxing.android.embedded.v430)
 }

@@ -1,7 +1,7 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.qrGenerateScreen
 
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,32 +43,44 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.QrScannerUtil
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.userProfileScreen.viewmodel.UserProfileScreenViewModel
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.qrGenerateScreen.viewmodel.ScanResultViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.ColorWay
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.IndigoDye
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverB
-import com.google.firebase.auth.FirebaseAuth
+import com.journeyapps.barcodescanner.ScanContract
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShowScanScreen(
     navController: NavController,
-    auth: FirebaseAuth,
-    userProfileScreenViewModel: UserProfileScreenViewModel = hiltViewModel(),
+    scanResultViewModel: ScanResultViewModel,
 ) {
     val context = LocalContext.current
-    val qrScannerUtil = remember { QrScannerUtil(context) }
+    val qrScannerUtil = remember { QrScannerUtil() }
+    val scanResult by scanResultViewModel.scanResult.collectAsState()
     val qrScanLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            qrScannerUtil.handleScanResult(result.resultCode, result.data)
+        rememberLauncherForActivityResult(
+            ScanContract(),
+        ) { result ->
+            // Manejar el resultado del escaneo
+            if (result != null) {
+                scanResultViewModel.setScanResult(result.contents.toString())
+                navController.navigate(Routes.ScanResultScreen)
+            } else {
+                Toast.makeText(context, "Escaneo cancelado", Toast.LENGTH_LONG).show()
+            }
         }
 
+    LaunchedEffect(scanResult) {
+        if (scanResult != null) {
+            Toast.makeText(context, "Resultado del escaneo: $scanResult", Toast.LENGTH_LONG).show()
+        }
+    }
     var changeColor by remember { mutableStateOf(false) }
     val animatedColor by animateColorAsState(
         targetValue = if (changeColor) Color.White else ColorWay,
@@ -83,6 +96,8 @@ fun ShowScanScreen(
         }
     }
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
+
+//
 
     Box(
         modifier =
@@ -132,8 +147,9 @@ fun ShowScanScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier =
                                 Modifier
-                                    .clickable { qrScannerUtil.startQrScan(qrScanLauncher) }
-                                    .fillMaxWidth(),
+                                    .clickable {
+                                        qrScannerUtil.startQrScan(qrScanLauncher)
+                                    }.fillMaxWidth(),
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.icon_qr),
@@ -185,6 +201,22 @@ fun ShowScanScreen(
                     }
                 },
             )
+
+            Box(
+                modifier =
+                    Modifier
+                        .fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "Scan the QR on your friend's device to see their profile or share the QR so they can see yours",
+                    fontSize = 30.sp,
+                    color = Color.White,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                    lineHeight = 35.sp,
+                )
+            }
         }
     }
 }

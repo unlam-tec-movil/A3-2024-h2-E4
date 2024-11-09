@@ -39,6 +39,7 @@ fun QRGenerateScreen(auth: FirebaseAuth) {
         Box(
             modifier = Modifier.fillMaxSize(),
         ) {
+            // Fondo de la imagen
             Image(
                 painter = painterResource(id = R.drawable.im_ironman),
                 contentDescription = null,
@@ -67,9 +68,9 @@ fun QRGenerateScreen(auth: FirebaseAuth) {
                 Box(
                     modifier =
                         Modifier
-                            .size(250.dp)
-                            .background(Color.Black.copy(alpha = 0.7f), shape = RoundedCornerShape(15.dp))
-                            .border(3.dp, Color.White, shape = RoundedCornerShape(15.dp)) // Marco blanco
+                            .size(280.dp) // Aumenté el tamaño del QR
+                            .background(Color.Black.copy(alpha = 0.5f), shape = RoundedCornerShape(15.dp)) // Fondo menos opaco
+                            .border(4.dp, Color.White, shape = RoundedCornerShape(15.dp)) // Marco blanco más grueso
                             .padding(16.dp),
                 ) {
                     Image(
@@ -87,14 +88,14 @@ fun getQrCodeBitMap(qrCodeContent: String): ImageBitmap {
     val size = 1024
     val hints =
         hashMapOf<EncodeHintType, Int>().also {
-            it[EncodeHintType.MARGIN] = 1
+            it[EncodeHintType.MARGIN] = 2 // Márgenes un poco más grandes para ayudar al escaneo
         }
     val bits = QRCodeWriter().encode(qrCodeContent, BarcodeFormat.QR_CODE, size, size, hints)
     val bitmap =
         Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565).also {
             for (x in 0 until size) {
                 for (y in 0 until size) {
-                    val color = if (bits[x, y]) Color.White else Color.Black
+                    val color = if (bits[x, y]) Color.Black else Color.White // Blanco sobre fondo negro
                     it.setPixel(x, y, color.toArgb())
                 }
             }
