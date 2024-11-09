@@ -1,7 +1,9 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.qrGenerateScreen
 
+import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +27,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.QrScannerUtil
@@ -62,25 +64,42 @@ fun ShowScanScreen(
 ) {
     val context = LocalContext.current
     val qrScannerUtil = remember { QrScannerUtil() }
-    val scanResult by scanResultViewModel.scanResult.collectAsState()
     val qrScanLauncher =
         rememberLauncherForActivityResult(
             ScanContract(),
         ) { result ->
-            // Manejar el resultado del escaneo
-            if (result != null) {
-                scanResultViewModel.setScanResult(result.contents.toString())
+
+            result?.contents?.let {
+                scanResultViewModel.setScanResult(it)
                 navController.navigate(Routes.ScanResultScreen)
-            } else {
+            } ?: run {
                 Toast.makeText(context, "Escaneo cancelado", Toast.LENGTH_LONG).show()
             }
         }
 
-    LaunchedEffect(scanResult) {
-        if (scanResult != null) {
-            Toast.makeText(context, "Resultado del escaneo: $scanResult", Toast.LENGTH_LONG).show()
+    val requestCameraPermissionLauncher =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.RequestPermission(),
+        ) { isGranted ->
+            if (isGranted) {
+                qrScannerUtil.startQrScan(qrScanLauncher)
+            } else {
+                Toast.makeText(context, "Permiso de cámara denegado", Toast.LENGTH_LONG).show()
+            }
+        }
+
+    fun startQrScanWithPermission() {
+        if (ContextCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.CAMERA,
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            qrScannerUtil.startQrScan(qrScanLauncher)
+        } else {
+            requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
     }
+
     var changeColor by remember { mutableStateOf(false) }
     val animatedColor by animateColorAsState(
         targetValue = if (changeColor) Color.White else ColorWay,
@@ -148,13 +167,13 @@ fun ShowScanScreen(
                             modifier =
                                 Modifier
                                     .clickable {
-                                        qrScannerUtil.startQrScan(qrScanLauncher)
+                                        startQrScanWithPermission()
                                     }.fillMaxWidth(),
                         ) {
                             Icon(
                                 painter = painterResource(R.drawable.icon_qr),
                                 contentDescription = null,
-                                modifier = Modifier.padding(start = 5.dp),
+                                modifier = Modifier.padding(start = 5.dp).size(24.dp),
                                 tint = animatedColor,
                             )
 
