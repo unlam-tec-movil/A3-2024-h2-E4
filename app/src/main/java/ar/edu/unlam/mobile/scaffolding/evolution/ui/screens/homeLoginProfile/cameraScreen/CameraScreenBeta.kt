@@ -1,7 +1,10 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.cameraScreen
 
 import android.Manifest
+import android.content.Context
 import android.media.MediaPlayer
+import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Environment
 import android.view.ViewGroup
 import android.widget.Toast
@@ -114,7 +117,9 @@ fun CameraScreenBeta(navController: NavController) {
                 },
                 onOpenDirectory = {
                     val allimage = "image/*"
-                    galleryLauncher.launch(allimage)
+                    scanMediaFile(context, Uri.fromFile(directory)) {
+                        galleryLauncher.launch(allimage)
+                    }
                 },
                 onFlashActivated = { enabled ->
                     cameraController.imageCaptureFlashMode =
@@ -140,6 +145,18 @@ fun CameraScreenBeta(navController: NavController) {
             audio.release()
         }
     }
+}
+
+fun scanMediaFile(
+    context: Context,
+    uri: Uri,
+    onScanCompleted: () -> Unit,
+) {
+    MediaScannerConnection.scanFile(
+        context,
+        arrayOf(uri.path),
+        arrayOf("image/*"),
+    ) { _, _ -> onScanCompleted() }
 }
 
 @Composable
