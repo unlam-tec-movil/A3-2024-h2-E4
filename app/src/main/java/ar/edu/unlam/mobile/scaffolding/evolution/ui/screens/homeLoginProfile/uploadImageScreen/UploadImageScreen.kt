@@ -1,5 +1,6 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.uploadImageScreen
 
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.compose.foundation.layout.Box
@@ -98,4 +99,10 @@ fun UploadImageScreen(
             ImageContent(imageUrl)
         },
     )
+
+    BackHandler {
+        navController.navigate(Routes.UserProfileScreenRoute) {
+            popUpTo<Routes.UserProfileScreenRoute> { inclusive = true }
+        }
+    }
 }

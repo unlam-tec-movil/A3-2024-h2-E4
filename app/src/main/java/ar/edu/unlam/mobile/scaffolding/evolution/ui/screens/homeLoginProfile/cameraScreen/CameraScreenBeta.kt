@@ -16,10 +16,15 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -35,18 +40,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavController
 import ar.edu.unlam.mobile.scaffolding.R
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgroundImage
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatResultScreen.openAppSettings
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.BlackCustom
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import java.io.File
@@ -89,12 +102,14 @@ fun CameraScreenBeta(navController: NavController) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    audio.start()
-                    Toast
-                        .makeText(context, "Picture take successful :)", Toast.LENGTH_SHORT)
-                        .show()
-                    val executor = ContextCompat.getMainExecutor(context)
-                    takePicture(cameraController, executor, directory)
+                    if (permissionState.allPermissionsGranted) {
+                        audio.start()
+                        Toast
+                            .makeText(context, "Picture take successful :)", Toast.LENGTH_SHORT)
+                            .show()
+                        val executor = ContextCompat.getMainExecutor(context)
+                        takePicture(cameraController, executor, directory)
+                    }
                 },
             ) {
                 Icon(
@@ -131,7 +146,7 @@ fun CameraScreenBeta(navController: NavController) {
         if (permissionState.allPermissionsGranted) {
             CamaraComposable(cameraController, lifecycle, modifier = Modifier.padding(it))
         } else {
-            Text(text = "Permissions has been delegated", modifier = Modifier.padding(it))
+            PermissionDeniedScreen(context)
         }
     }
 
@@ -143,6 +158,46 @@ fun CameraScreenBeta(navController: NavController) {
         onDispose {
             audio.stop()
             audio.release()
+        }
+    }
+}
+
+@Composable
+fun PermissionDeniedScreen(context: Context) {
+    Box(
+        modifier = Modifier.fillMaxSize().background(BlackCustom),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                modifier = Modifier.padding(horizontal = 8.dp),
+                text = "Please push in setting and granted permissions to use this feature ... ",
+                color = Color.White,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Spacer(modifier = Modifier.size(16.dp))
+            ButtonWithBackgroundImage(
+                imageResId = R.drawable.iv_button,
+                onClick = {
+                    openAppSettings(context)
+                },
+                modifier =
+                    Modifier
+                        .width(300.dp)
+                        .height(120.dp)
+                        .padding(vertical = 22.dp),
+            ) {
+                Text(
+                    text = "Go settings",
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = FontFamily(Font(R.font.font_firestar)),
+                    fontStyle = FontStyle.Italic,
+                    fontSize = 28.sp,
+                    color = Color.Black,
+                )
+            }
+            Spacer(modifier = Modifier.size(16.dp))
         }
     }
 }
