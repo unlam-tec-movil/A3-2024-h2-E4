@@ -104,18 +104,18 @@ class UserProfileScreenViewModel
             }
         }
 
-        fun updateNickName(newnickname: String) {
-            // Aca agarras el _userData.value? actual y haces una copia con los datos nuevos
-            val userUpdate = _userData.value?.copy(nickname = newnickname)
-
-            userUpdate?.let {
-                viewModelScope.launch {
-                    // Actualizas la DB en el Hilo secundario
-                    setUserDataFireStoreUseCase(it)
-                    // Actualizas la vista manualmente para no tener que esperar otra llamada de la BD
-                    // La proxima ves que se recargue la pantalla si va a trar los datos actualizados
-                    _userData.value = it // Asignamos el nuevo valor a _userData
-                }
-            }
-        }
+//        fun updateNickName(newnickname: String) {
+//            // Aca agarras el _userData.value? actual y haces una copia con los datos nuevos
+//            val userUpdate = _userData.value?.copy(nickname = newnickname)
+//
+//            userUpdate?.let {
+//                viewModelScope.launch {
+//                    // Actualizas la DB en el Hilo secundario
+//                    setUserDataFireStoreUseCase(it)
+//                    // Actualizas la vista manualmente para no tener que esperar otra llamada de la BD
+//                    // La proxima ves que se recargue la pantalla si va a trar los datos actualizados
+//                    _userData.value = it // Asignamos el nuevo valor a _userData
+//                }
+//            }
+//        }
     }
