@@ -35,11 +35,17 @@ class UserProfileScreenViewModel
 
         init {
             viewModelScope.launch {
-                _avatarUrl.value = getUserAvatarUrlUseCase()
+                getUserAvatar()
                 _userData.value = getCurrentUserUseCase()
                 if (_userData.value != null) {
                     _isLoading.value = false
                 }
+            }
+        }
+
+        fun getUserAvatar() {
+            viewModelScope.launch {
+                _avatarUrl.value = getUserAvatarUrlUseCase()
             }
         }
 
@@ -88,7 +94,8 @@ class UserProfileScreenViewModel
             newNickname: String,
             newInfoUser: String,
         ) {
-            val userUpdate = _userData.value?.copy(name = newName, nickname = newNickname, infoUser = newInfoUser)
+            val userUpdate =
+                _userData.value?.copy(name = newName, nickname = newNickname, infoUser = newInfoUser)
             userUpdate?.let {
                 _userData.value = it
                 viewModelScope.launch {

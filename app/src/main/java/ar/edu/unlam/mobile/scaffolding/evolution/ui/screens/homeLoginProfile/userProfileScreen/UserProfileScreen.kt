@@ -72,6 +72,7 @@ fun UserProfileScreen(
     auth: FirebaseAuth,
     userProfileScreenViewModel: UserProfileScreenViewModel = hiltViewModel(),
 ) {
+    userProfileScreenViewModel.getUserAvatar()
     val context = LocalContext.current
     val showUpdateData by userProfileScreenViewModel.showUpdateData.collectAsState()
     val userData by userProfileScreenViewModel.userData.collectAsState()
