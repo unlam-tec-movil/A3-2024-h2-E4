@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -70,10 +72,11 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.IconPowerDetail
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SearchHero
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.mediaPlayer
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.DetailRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectMapRoute
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.SelectPlayerRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.DetailRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.RankedRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.SelectMapRoute
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.selectCharacterMap.selectPlayerScreen.viewmodel.SelectCharacterViewModel
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.SilverA
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.theme.VioletSky
@@ -92,6 +95,7 @@ fun SelectCom(
     }
     val audioPosition = selectCharacterViewModel.audioPosition.collectAsState()
     val audio = mediaPlayer(context, audioPosition)
+    val screenSizeSmall = screenSize(context)
 
     SetOrientationScreen(
         context = context,
@@ -122,6 +126,7 @@ fun SelectCom(
                         navController,
                         selectCharacterViewModel,
                         context,
+                        screenSizeSmall,
                     ) { showExitConfirmation = true }
                 },
                 content = {
@@ -130,6 +135,7 @@ fun SelectCom(
                         selectCharacterViewModel = selectCharacterViewModel,
                         context = context,
                         audio = audio,
+                        screenSizeSmall = screenSizeSmall,
                     )
                 },
             )
@@ -140,9 +146,7 @@ fun SelectCom(
             onDismiss = { showExitConfirmation = false },
             onConfirm = {
                 selectCharacterViewModel.setAudioPosition(audio.currentPosition)
-                navController.navigate(SelectPlayerRoute) {
-                    popUpTo(SelectPlayerRoute) { inclusive = true }
-                }
+                navController.popBackStack()
             },
             title = stringResource(id = R.string.ExitConfirmation),
             message = stringResource(id = R.string.ExitSelectCharacter),
@@ -161,6 +165,7 @@ fun TopBar(
     navController: NavHostController,
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
+    screenSizeSmall: Boolean,
     showExitConfirmation: (Boolean) -> Unit,
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
@@ -176,7 +181,7 @@ fun TopBar(
                         .padding(top = 8.dp),
                 textAlign = TextAlign.Start,
                 color = Color.White,
-                fontSize = 20.sp,
+                fontSize = if (screenSizeSmall) 16.sp else 20.sp,
             )
         },
         navigationIcon = {
@@ -216,7 +221,7 @@ fun TopBar(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier =
                         Modifier
-                            .clickable { /*Ranked*/ }
+                            .clickable { navController.navigate(RankedRoute) }
                             .fillMaxWidth(),
                 ) {
                     Icon(
@@ -243,6 +248,7 @@ fun ContentView(
     selectCharacterViewModel: SelectCharacterViewModel,
     context: Context,
     audio: MediaPlayer,
+    screenSizeSmall: Boolean,
 ) {
     val playerList by selectCharacterViewModel.superHeroList.collectAsState()
     var searchHeroPlayer by remember { mutableStateOf("") }
@@ -270,7 +276,8 @@ fun ContentView(
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .height(500.dp),
+                            .height(if (screenSizeSmall) 400.dp else 500.dp)
+                            .padding(vertical = 8.dp),
                 ) {
                     LazyRowWithImagesHeroPlayer(
                         heroList = playerList,
@@ -301,7 +308,7 @@ fun ContentView(
                         Modifier
                             .width(500.dp)
                             .height(200.dp)
-                            .padding(bottom = 22.dp),
+                            .padding(bottom = if (screenSizeSmall) 4.dp else 22.dp),
                 ) {
                     Text(
                         text = "Continue",
@@ -331,8 +338,15 @@ fun LazyRowWithImagesHeroPlayer(
 ) {
     val selectAudio = MediaPlayer.create(LocalContext.current, R.raw.raw_select)
     val cancelSelect = MediaPlayer.create(LocalContext.current, R.raw.raw_cancelselect)
+    val lazyListState = rememberLazyListState()
+    val flingBehavior = rememberSnapFlingBehavior(lazyListState)
+
     LazyRow(
-        modifier = Modifier.fillMaxSize(),
+        modifier =
+            Modifier
+                .fillMaxSize(),
+        state = lazyListState,
+        flingBehavior = flingBehavior,
         contentPadding = PaddingValues(4.dp),
         userScrollEnabled = true,
     ) {
@@ -364,8 +378,8 @@ fun LazyRowWithImagesHeroPlayer(
                     IconButton(
                         onClick = {
                             selectCharacterViewModel.setSuperHeroDetail(hero)
-                            navController.navigate(DetailRoute)
                             selectCharacterViewModel.setAudioPosition(audio.currentPosition)
+                            navController.navigate(DetailRoute)
                         },
                         modifier =
                             Modifier.align(
@@ -379,7 +393,7 @@ fun LazyRowWithImagesHeroPlayer(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .height(30.dp)
+                                .height(50.dp)
                                 .align(Alignment.BottomCenter)
                                 .background(
                                     colorResource(id = R.color.superhero_item_name),
@@ -387,9 +401,13 @@ fun LazyRowWithImagesHeroPlayer(
                     ) {
                         Text(
                             text = hero.name,
-                            modifier = Modifier.align(Alignment.BottomCenter),
+                            modifier =
+                                Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .padding(bottom = 4.dp),
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
+                            fontSize = 30.sp,
                         )
                     }
                 }

@@ -1,7 +1,11 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen
 
 import android.media.MediaPlayer
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.activity.compose.BackHandler
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.infiniteRepeatable
@@ -24,6 +28,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
@@ -51,6 +56,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ar.edu.unlam.mobile.scaffolding.R
@@ -60,16 +66,19 @@ import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ButtonWithBackgro
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.ExitConfirmation
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.SetOrientationScreen
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.StatsBattle
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.components.screenSize
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.local.OrientationScreen
-import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.HomeScreenRoute
+import ar.edu.unlam.mobile.scaffolding.evolution.ui.core.routes.Routes.*
 import ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.combatResult.superHeroCombatScreen.viewmodel.CombatViewModel
 import coil.compose.rememberAsyncImagePainter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SuperHeroCombat(
     navController: NavHostController,
     viewModel: CombatViewModel = hiltViewModel(),
 ) {
+    val nickName by viewModel.nickName.collectAsState()
     val superHeroPlayer by viewModel.superHeroPlayer.collectAsState()
     val superHeroCom by viewModel.superHeroCom.collectAsState()
     val backgroundData by viewModel.background.collectAsState()
@@ -84,6 +93,8 @@ fun SuperHeroCombat(
     var showExitConfirmation by rememberSaveable { mutableStateOf(false) }
     val attackPlayer by viewModel.attackPlayer.collectAsState()
     val context = LocalContext.current
+    val screenSizeSmall = screenSize(context)
+    val vibratorActivated by viewModel.vibratorActivated.collectAsState()
 
     val iconButtonPotion by viewModel.iconButtonPotion.collectAsState()
     val iconButtonPowerUp by viewModel.iconButtonPowerUp.collectAsState()
@@ -99,6 +110,16 @@ fun SuperHeroCombat(
     val comAttackActivated by viewModel.comAttackActivated.collectAsState()
     val playerHealingActivated by viewModel.playerHealingActivated.collectAsState()
     val comHealingActivated by viewModel.comHealingActivated.collectAsState()
+    val vibrator = remember { ContextCompat.getSystemService(context, Vibrator::class.java) }
+    val vibratorOff =
+        remember {
+            mutableStateOf(false)
+        }
+
+    if (vibratorActivated && !vibratorOff.value) {
+        vibrator?.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE))
+        vibratorOff.value = true
+    }
 
     SetOrientationScreen(
         context = LocalContext.current,
@@ -107,26 +128,38 @@ fun SuperHeroCombat(
     )
 
     if (isLoading) {
-        Box(Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = R.drawable.iv_vs),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-            )
-            LinearProgressIndicator(
-                Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp)
-                    .fillMaxWidth(),
-            )
-            Text(
-                text = "Loading ...",
+        if (screenSizeSmall) {
+            Box(
                 modifier =
                     Modifier
+                        .fillMaxSize()
+                        .background(Color.Black),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator(color = Color.Cyan)
+            }
+        } else {
+            Box(Modifier.fillMaxSize()) {
+                Image(
+                    painter = painterResource(id = R.drawable.iv_vs),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                )
+                LinearProgressIndicator(
+                    Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 16.dp),
-            )
+                        .padding(bottom = 8.dp)
+                        .fillMaxWidth(),
+                )
+                Text(
+                    text = "Loading ...",
+                    modifier =
+                        Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 16.dp),
+                )
+            }
         }
     } else {
         val audio =
@@ -143,22 +176,23 @@ fun SuperHeroCombat(
                 audio.release()
             }
         }
-//
-//        if ((superHeroPlayer!!.life <= 0 || superHeroCom!!.life <= 0) && !navigationOK) {
-//            viewModel.setDataScreenResult(
-//                superHeroPlayer = superHeroPlayer!!,
-//                superHeroCombat = superHeroCom!!
-//            )
-//            viewModel.markNavigationDone()
-//            navController.navigate(Routes.SuperHeroCombatResultScreen.route)
-//        }
+
+        if ((superHeroPlayer!!.life <= 0 || superHeroCom!!.life <= 0) && !navigationOK) {
+            viewModel.setDataScreenResult(
+                superHeroPlayer = superHeroPlayer!!,
+                superHeroCombat = superHeroCom!!,
+            )
+            viewModel.markNavigationDone()
+            navController.navigate(CombatResultRoute)
+        }
 
         Box(
             modifier =
                 Modifier
                     .fillMaxSize(),
         ) {
-            Image( // BACKGROUND
+            Image(
+                // BACKGROUND
                 painter = painterResource(id = backgroundData!!.background),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
@@ -172,7 +206,8 @@ fun SuperHeroCombat(
                         .padding(start = 8.dp, end = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Box( // BOX PLAYER
+                Box(
+                    // BOX PLAYER
                     modifier =
                         Modifier
                             .fillMaxHeight()
@@ -187,7 +222,8 @@ fun SuperHeroCombat(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceAround,
                         ) {
-                            IconButton( // HEAL PLAYER
+                            IconButton(
+                                // HEAL PLAYER
                                 onClick = {
                                     viewModel.healingPotion(lifePlayer.toInt())
                                 },
@@ -206,7 +242,8 @@ fun SuperHeroCombat(
                                 )
                             }
 
-                            IconButton( // ATTACK PLAYER
+                            IconButton(
+                                // ATTACK PLAYER
                                 onClick = {
                                     viewModel.specialAttack()
                                 },
@@ -225,7 +262,8 @@ fun SuperHeroCombat(
                                 )
                             }
 
-                            IconButton( // DEFENSE PLAYER
+                            IconButton(
+                                // DEFENSE PLAYER
                                 onClick = {
                                     viewModel.specialDefense()
                                 },
@@ -245,7 +283,8 @@ fun SuperHeroCombat(
                             }
                         }
 
-                        Card( // CARD PLAYER
+                        Card(
+                            // CARD PLAYER
                             modifier =
                                 Modifier
                                     .width(240.dp)
@@ -301,7 +340,8 @@ fun SuperHeroCombat(
                     }
                 }
 
-                Box( // BOX COM
+                Box(
+                    // BOX COM
                     modifier =
                         Modifier
                             .fillMaxHeight()
@@ -316,7 +356,8 @@ fun SuperHeroCombat(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceAround,
                         ) {
-                            IconButton( // HEAL COM
+                            IconButton(
+                                // HEAL COM
                                 onClick = {
                                 },
                                 enabled = (iconButtonPotionCom && enableButton),
@@ -334,7 +375,8 @@ fun SuperHeroCombat(
                                 )
                             }
 
-                            IconButton( // ATTACK COM
+                            IconButton(
+                                // ATTACK COM
                                 onClick = {
                                 },
                                 enabled = iconButtonPowerUpCom && enableButton,
@@ -352,7 +394,8 @@ fun SuperHeroCombat(
                                 )
                             }
 
-                            IconButton( // DEFENSE COM
+                            IconButton(
+                                // DEFENSE COM
                                 onClick = {
                                 },
                                 enabled = iconButtonDefensiveCom && enableButton,
@@ -371,7 +414,8 @@ fun SuperHeroCombat(
                             }
                         }
 
-                        Card( // CARD COM
+                        Card(
+                            // CARD COM
                             modifier =
                                 Modifier
                                     .width(240.dp)
@@ -436,7 +480,8 @@ fun SuperHeroCombat(
                 color = Color.White,
             )
 
-            Box( // BUTTON ATTACK
+            Box(
+                // BUTTON ATTACK
                 modifier =
                     Modifier
                         .align(Alignment.BottomCenter)
@@ -464,7 +509,7 @@ fun SuperHeroCombat(
             }
         }
 
-        Row( // LifePlayer
+        Row(
             modifier =
                 Modifier
                     .fillMaxWidth()
@@ -472,6 +517,7 @@ fun SuperHeroCombat(
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.Top,
         ) {
+            // LifePlayer
             Box(
                 modifier =
                     Modifier
@@ -494,26 +540,26 @@ fun SuperHeroCombat(
                             ),
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = "Player",
+                        text = nickName,
                         textAlign = TextAlign.Start,
                         fontSize = 24.sp,
-                        modifier = Modifier.padding(start = 8.dp),
                         color = Color.Gray,
                     )
                     Text(
                         text = "${superHeroPlayer!!.life}/$lifePlayer",
                         textAlign = TextAlign.End,
                         fontSize = 24.sp,
-                        modifier = Modifier.padding(end = 8.dp, start = 120.dp),
                         color = Color.Gray,
                     )
                 }
             }
 
-            Box( // round
+            Box(
+                // round
                 modifier =
                     Modifier
                         .height(70.dp)
@@ -571,7 +617,8 @@ fun SuperHeroCombat(
                 )
             }
 
-            Box( // lifeCom
+            Box(
+                // lifeCom
                 modifier =
                     Modifier
                         .width(300.dp)

@@ -5,7 +5,10 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.R
 import ar.edu.unlam.mobile.scaffolding.evolution.data.local.Background
 import ar.edu.unlam.mobile.scaffolding.evolution.domain.model.SuperHeroCombat
-import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCombatDataScreen
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCombatDataScreenUseCase
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.GetCurrentUserUseCase
+import ar.edu.unlam.mobile.scaffolding.evolution.domain.usecases.SetResultDataScreenUseCase
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,8 +26,13 @@ lateinit var backgroundData: Background
 class CombatViewModel
     @Inject
     constructor(
-        getCombatDataScreen: GetCombatDataScreen,
+        getCombatDataScreenUseCase: GetCombatDataScreenUseCase,
+        private val setResultDataScreen: SetResultDataScreenUseCase,
+        private val getCurrentUserUseCase: GetCurrentUserUseCase,
+        private val firebaseAuth: FirebaseAuth,
     ) : ViewModel() {
+        private val _nickName = MutableStateFlow("")
+        val nickName = _nickName.asStateFlow()
         private var _superHeroPlayer = MutableStateFlow<SuperHeroCombat?>(null)
         val superHeroPlayer = _superHeroPlayer.asStateFlow()
         private var _superHeroCom = MutableStateFlow<SuperHeroCombat?>(null)
@@ -47,6 +55,8 @@ class CombatViewModel
         val navigationDone = _navigationDone.asStateFlow()
         private var _attackPlayer = MutableStateFlow(true)
         val attackPlayer = _attackPlayer.asStateFlow()
+        private var _vibratorActivated = MutableStateFlow(false)
+        val vibratorActivated = _vibratorActivated.asStateFlow()
 
         private var _iconButtonPotion = MutableStateFlow(true)
         val iconButtonPotion = _iconButtonPotion.asStateFlow()
@@ -75,9 +85,15 @@ class CombatViewModel
         val comHealingActivated = _comHealingActivated.asStateFlow()
 
         init {
-            val combatDataScreen = getCombatDataScreen()
+            val combatDataScreen = getCombatDataScreenUseCase()
             _isLoading.value = true
             viewModelScope.launch {
+                _nickName.value =
+                    if (firebaseAuth.currentUser != null) {
+                        getCurrentUserUseCase().nickname!!
+                    } else {
+                        "Player"
+                    }
                 delay(8000)
                 superHero1 = combatDataScreen.playerCharacter!!
                 superHero2 = combatDataScreen.comCharacter!!
@@ -211,11 +227,13 @@ class CombatViewModel
         private fun specialAttackCom() {
             viewModelScope.launch {
                 if (iconButtonPowerUpCom.value) {
+                    _vibratorActivated.value = true
                     _comAttackActivated.value = true
                     val attackAttribute = superHero2.attack
                     val attackEnhanced = attackAttribute.times(2.5)
                     _superHeroCom.value!!.attack = attackEnhanced.roundToInt()
                     delay(12000)
+                    _vibratorActivated.value = false
                     superHero2.attack = attackAttribute
                     _superHeroCom.value = superHero2
                 }
@@ -255,5 +273,12 @@ class CombatViewModel
                 randomAudio = audio.random()
             } while (randomAudio == _audioAttack.value)
             _audioAttack.value = randomAudio
+        }
+
+        fun setDataScreenResult(
+            superHeroPlayer: SuperHeroCombat,
+            superHeroCombat: SuperHeroCombat,
+        ) {
+            setResultDataScreen(superHeroPlayer, superHeroCombat, lifePlayer.toInt(), lifeCom.toInt())
         }
     }
