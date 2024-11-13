@@ -199,6 +199,7 @@ fun ContentViewHome(
                 ButtonWithBackgroundImage(
                     imageResId = R.drawable.iv_button,
                     onClick = {
+                        homeScreenViewModel.testAnalitic()
                         if (auth.currentUser != null) {
                             navController.navigate(SelectPlayerRoute)
                         } else {
