@@ -378,6 +378,7 @@ fun loginUser(
         Toast.makeText(context, "User or Password incorrect", Toast.LENGTH_SHORT).show()
     }
 }
+// test
 
 fun createUser(
     auth: FirebaseAuth,
