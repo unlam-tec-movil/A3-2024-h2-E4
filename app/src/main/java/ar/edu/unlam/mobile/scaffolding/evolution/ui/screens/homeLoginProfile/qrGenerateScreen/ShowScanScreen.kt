@@ -167,8 +167,7 @@ fun ShowScanScreen(
                             modifier =
                                 Modifier
                                     .clickable {
-                                        // startQrScanWithPermission()
-                                        throw RuntimeException("Firebase Console Crashlytics Testing")
+                                        startQrScanWithPermission()
                                     }.fillMaxWidth(),
                         ) {
                             Icon(
@@ -197,8 +196,7 @@ fun ShowScanScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier =
                                 Modifier
-                                    // .clickable { navController.navigate(Routes.QRGenerateScreenRoute) }
-                                    .clickable { throw RuntimeException("Another Firebase Console Crashlytics Testing") }
+                                    .clickable { navController.navigate(Routes.QRGenerateScreenRoute) }
                                     .fillMaxWidth(),
                         ) {
                             Icon(
