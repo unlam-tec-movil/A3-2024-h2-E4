@@ -1,6 +1,5 @@
 package ar.edu.unlam.mobile.scaffolding.evolution.ui.screens.homeLoginProfile.qrGenerateScreen.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.unlam.mobile.scaffolding.evolution.data.database.UserRanked
@@ -31,8 +30,6 @@ class ScanResultViewModel
 
                                 _user.value = userRanked
                             }
-                        } else {
-                            Log.d("ScanResultViewModel", "UserID no encontrado")
                         }
                     }
                 }

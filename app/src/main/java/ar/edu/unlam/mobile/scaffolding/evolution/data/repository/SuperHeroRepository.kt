@@ -253,12 +253,12 @@ class SuperHeroRepository
                     return documentSnapshot.getString("url")
                         ?: "" // si existe el documento y el campo correcto, lo devuelvo
                 } else {
-                    errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                    errorRef = "default_url" // TODO Mensaje de exception para devolver el avatar por default
                     return errorRef
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                errorRef = "default_url" // TODO tengo manejar los errores como gente que sabe
+                errorRef = "default_url" // TODO Mensaje de exception para devolver el avatar por default
                 return errorRef
             }
         }
